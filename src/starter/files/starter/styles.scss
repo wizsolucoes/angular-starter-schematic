@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+  --primary-color: #1E88E5;
+  --syz-primary-color: var(--primary-color);
+}
+
+.button.is-primary {
+  background-color: var(--primary-color);
+}
+
+.button.is-primary:hover {
+  background-color: var(--primary-color);
+  filter: brightness(1.1);
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "ng-add": {
+      "description": "Ng Add Support",
+      "factory": "./ng-add/index#ngAdd"
+    },
+    "starter": {
+      "description": "Generates Wiz boilerplate Angular starter application.",
+      "factory": "./starter/index#main"
+    }
+  }
+}

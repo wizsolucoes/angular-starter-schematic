@@ -1,0 +1,14 @@
+export const ssoConfig = {
+  apiPath: '<<urldo servico>>',
+  clientID: '<<Cliente ID>>',
+  clientSecret: '<<Cliente Secret>>',
+  grantType: '<<Grant Type>>',
+  authedPaths: ['<<dns a ser autenticado>>'],
+  scope: '<<scope do projeto>>',
+  options: {
+    // parâmetro opcional
+    ssoTimeOut: 60000, // parâmetro opcional, determina o timeout para o SSO
+    tokenAutoRefresh: true, // parâmetro opcional, determina se o token deve ser renovado
+    loginRoute: 'login', // url que aponta para onde redirecionar no caso de não haver token
+  },
+};
