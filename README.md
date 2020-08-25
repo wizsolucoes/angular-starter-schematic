@@ -1,7 +1,8 @@
 # Wiz Anglar Starter Schematic
 
-Repositório para o Schematic para gerar código bolierplate com a [arquitetura de referência para aplicações Angular](https://github.com/wizsolucoes/angular-starter).
+Schematic para gerar código bolierplate com a [arquitetura de referência para aplicações Angular](https://github.com/wizsolucoes/angular-starter).
 
+Compatível com as [versões suportadas do Anuglar](https://angular.io/guide/releases#support-policy-and-schedule) (^8.0.0, ^9.0.0 e ^10.0.0) e otimizado para a versões ^10.0.0.
 
 ## Uso
 
