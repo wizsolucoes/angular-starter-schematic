@@ -66,6 +66,7 @@ describe('ErrorHandlerService', () => {
     it('should NOT call monitoringService #logException', () => {
       // Given
       const error = new Error('fake error');
+      spyOn(console, 'error').and.callFake(() => {});
 
       // When
       service.handleError(error);
