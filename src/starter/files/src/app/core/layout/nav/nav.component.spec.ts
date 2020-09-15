@@ -4,6 +4,7 @@ import { NavComponent } from './nav.component';
 import { SSOConectorService, NgxWizSSOModule } from '@wizsolucoes/ngx-wiz-sso';
 import { ssoConfig } from '../../../../config/sso_config';
 import { Util } from '../../../shared/utils/util';
+import { fakeToken } from '../../../../testing/fakes/fake_token';
 
 describe('NavComponent', () => {
   let component: NavComponent;
@@ -12,13 +13,15 @@ describe('NavComponent', () => {
   let mockSSO: jasmine.SpyObj<SSOConectorService>;
 
   beforeEach(() => {
-    mockSSO = jasmine.createSpyObj('mockSSO', ['logOut']);
+    mockSSO = jasmine.createSpyObj('mockSSO', ['logOut', 'checkLogged']);
 
     TestBed.configureTestingModule({
       imports: [NgxWizSSOModule.forRoot(ssoConfig)],
       declarations: [NavComponent],
       providers: [{ provide: SSOConectorService, useValue: mockSSO }],
     });
+
+    mockSSO.checkLogged.and.returnValue(of(fakeToken));
   });
 
   beforeEach(() => {
