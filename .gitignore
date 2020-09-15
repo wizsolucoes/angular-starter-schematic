@@ -21,5 +21,6 @@ yarn-error.log*
 # Generated files
 *.tgz
 
-# Include commit lint rules
+# Include configuration files
 !src/**/commitlint.config.js
+!src/**/ngcc.config.js
