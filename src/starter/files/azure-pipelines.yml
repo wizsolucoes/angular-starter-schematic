@@ -1,67 +1,88 @@
 # Node.js with Angular
-# Build a Node.js project that uses Angular
+# Build a Node.js project that uses Angular.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 # YAML reference:
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema
 
 variables:
-  BuildRootFolder: '$(System.DefaultWorkingDirectory)/dist/<<nome-do-projeto>>'
-  CoverageFolder: '$(System.DefaultWorkingDirectory)/coverage/<<nome-do-projeto>>'
-  TestResultPath: '**/tests.xml'
+    TestResultPath: '**/tests-results/tests.xml'
+    AzureStorageHml: ''
+    AzureStoragePrd: ''
 
 resources:
   repositories:
-      - repository: angulartemplate
-        type: git
-        name: WizPipelines/angular-template
-        ref: refs/heads/master
+    - repository: angulartemplate
+      type: git
+      name: WizPipelines/angular-template
 
 trigger:
-  batch: 'true'
+    batch: 'true'
 
 stages:
   - stage: Build
-    pool: 'Hosted Ubuntu 1604'
     jobs:
-        - job: Build
-          displayName: 'Build Solution'
-          condition: succeeded()
-          steps:
-              - template: angularci.yml@angulartemplate
-                parameters:
-                    skipPublish: true
-                    skipSonar: true
-                    distFolder: $(BuildRootFolder)
-  - stage: Staging
-    pool: 'Hosted Ubuntu 1604'
-    condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/'))
-    dependsOn: [Build]
+      - job: Build
+        displayName: 'Build Solution'
+        condition: succeeded()
+        steps:
+          - template: angularci.yml@angulartemplate
+            parameters:
+              skipPublish: true
+  - stage: Uat
+    condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')))
     jobs:
-        - job: Build
-          displayName: 'Build Solution'
-          condition: succeeded()
-          steps:
-              - template: angularci.yml@angulartemplate
-                parameters:
-                    artifactName: 'staging'
-                    buildConfiguration: 'production'
-                    skipPublish: true
-                    skipSonar: true
-                    distFolder: $(BuildRootFolder)
+      - job: Build
+        displayName: 'Build Solution'
+        condition: succeeded()
+        steps:
+        - template: angularci.yml@angulartemplate
+          parameters:
+            artifactName: 'staging'
+            skipLint: true
+      - deployment: 'Deploy to staging'
+        pool:
+          vmImage: windows-latest
+        dependsOn: [Build]
+        environment: staging
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: AzureFileCopy@4
+                  inputs:
+                    SourcePath: '$(Pipeline.Workspace)/staging/*'
+                    azureSubscription: 'AmbientesDevHml'
+                    Destination: 'AzureBlob'
+                    storage: '$(AzureStorageHml)'
+                    ContainerName: '$web'
+
   - stage: Production
-    pool: 'Hosted Ubuntu 1604'
-    condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
-    dependsOn: [Staging]
+    condition: and(succeeded(),eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    dependsOn: [Uat]
     jobs:
-        - job: Build
-          displayName: 'Build Solution'
-          condition: succeeded()
-          steps:
-              - template: angularci.yml@angulartemplate
-                parameters:
-                    artifactName: 'production'
-                    buildConfiguration: 'production'
-                    skipPublish: true
-                    skipSonar: true
-                    distFolder: $(BuildRootFolder)
+      - job: Build
+        displayName: 'Build Solution'
+        condition: succeeded()
+        steps:
+        - template: angularci.yml@angulartemplate
+          parameters:
+            artifactName: 'production'
+            buildConfiguration: 'production'
+            skipLint: true
+      - deployment: 'Deploy to production'
+        pool:
+          vmImage: windows-latest
+        dependsOn: [Build]
+        environment: production
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: AzureFileCopy@4
+                  inputs:
+                    SourcePath: '$(Pipeline.Workspace)/production/*'
+                    azureSubscription: 'AmbienteCorporativoExterior'
+                    Destination: 'AzureBlob'
+                    storage: '$(AzureStoragePrd)'
+                    ContainerName: '$web'
