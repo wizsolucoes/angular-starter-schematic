@@ -24,3 +24,4 @@ yarn-error.log*
 # Include configuration files
 !src/**/commitlint.config.js
 !src/**/ngcc.config.js
+!src/**/karma.conf.js
