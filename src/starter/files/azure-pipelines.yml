@@ -6,7 +6,6 @@
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema
 
 variables:
-    TestResultPath: '**/tests-results/tests.xml'
     AzureStorageHml: ''
     AzureStoragePrd: ''
 
@@ -39,8 +38,9 @@ stages:
         - template: angularci.yml@angulartemplate
           parameters:
             artifactName: 'staging'
-            skipLint: true
-      - deployment: 'Deploy to staging'
+            buildConfiguration: 'staging'
+      - deployment: DeployStaging
+        displayName: 'Deploy to Staging'
         pool:
           vmImage: windows-latest
         dependsOn: [Build]
@@ -69,8 +69,8 @@ stages:
           parameters:
             artifactName: 'production'
             buildConfiguration: 'production'
-            skipLint: true
-      - deployment: 'Deploy to production'
+      - deployment: DeployProduction
+        displayName: 'Deploy to Production'
         pool:
           vmImage: windows-latest
         dependsOn: [Build]
