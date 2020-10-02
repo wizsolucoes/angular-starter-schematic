@@ -9,6 +9,7 @@
     - [Integração NGX Wiz SSO](#integração-ngx-wiz-sso)
     - [Monitoramento com Application Insights](#monitoramento-com-application-insights)
     - [Commit lint](#commit-lint)
+    - [CI/CD](#cicd)
 - [Desenvolvimento do schematic](#desenvolvimento-do-schematic)
   - [Por onde começar](#por-onde-começar)
   - [Testando o schematic localmente](#testando-o-schematic-localmente)
@@ -170,6 +171,15 @@ export const environment = {
 
 #### Commit lint
 As mensagens de commit devem seguir a convenção de [Conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) que é o padrão para todos os projetos da Wiz. Este projeto já tem commit lint configurado com [husky](https://github.com/typicode/husky) para te ajudar. [Consulte a convenção Angular se tiver dúvidas sobre o tipo correto para seu commit.](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#type)
+
+#### CI/CD
+O código gerado irá conter um arquivo `azure-pipelines.yml` com a configuração de integração contínua de de deploy da aplicação. O deploy por padrão é feito para um Azure Storage e é necessário preencher os valores para os variáveis `AzureStorageHml` e `AzureStoragePrd`.
+
+```yaml
+variables:
+    AzureStorageHml: ''
+    AzureStoragePrd: ''
+```
 
 ## Desenvolvimento do schematic
 ### Por onde começar
