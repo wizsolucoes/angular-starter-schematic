@@ -96,6 +96,11 @@ Módulos lazy loaded ajudam a diminuir o tempo de inicialização da aplicação
 
 Observe que se o módulo de _feature_ tiver mais de um componente, criamos sub-pastas para a cada componente (Ex. `feature2`) para que nenhuma pasta tenha mais de 6 arquivos conforme a [recomendação](https://angular.io/guide/styleguide#flat) do style guide do Angular.
 
+> Para gerar um novo módulo *lazy loaded* use a o schematic `ng generate module` com a flag `--route`. Por exemplo, para gerar uma nova rota `/privacy`:
+```bash
+ng g m features/privacy --route privacy --module app.module.ts
+```
+
 <!-- omit in toc -->
 #### Shared
 O shared é onde todos os componentes compartilhados, pipes, filters e services devem ir. O shared pode ser importado em qualquer module. Assim esses itens serão reutilizados. O shared module deve ser independente do restante do aplicativo. Portanto, não deve ter referências de outro módulo.
