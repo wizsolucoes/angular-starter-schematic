@@ -2,85 +2,69 @@
   <form (ngSubmit)="onSubmit()">
     <div class="columns">
       <div class="column">
-        <div class="field">
-          <label class="label"
-            >Nome
-            <div class="control">
-              <input class="input" type="text" name="name" [(ngModel)]="name" />
-            </div>
-          </label>
-        </div>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Nome</mat-label>
+          <input
+            matInput
+            placeholder="Ex. John Doe"
+            [(ngModel)]="name"
+            name="name"
+          />
+        </mat-form-field>
       </div>
       <div class="column">
-        <div class="field">
-          <label class="label"
-            >CPF
-            <div class="control">
-              <input
-                class="input"
-                type="text"
-                name="cpf"
-                [(ngModel)]="cpf"
-                mask="CPF_CNPJ"
-              />
-            </div>
-          </label>
-        </div>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>CPF</mat-label>
+          <input
+            matInput
+            placeholder="Ex. 111.222.333-44"
+            [(ngModel)]="cpf"
+            name="cpf"
+          />
+        </mat-form-field>
       </div>
       <div class="column">
-        <div class="field">
-          <label class="label"
-            >E-mail
-            <div class="control">
-              <input
-                class="input"
-                type="text"
-                name="email"
-                [(ngModel)]="email"
-              />
-            </div>
-          </label>
-        </div>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>E-Mail</mat-label>
+          <input
+            matInput
+            placeholder="Ex. johndoe@example.com"
+            [(ngModel)]="email"
+            name="email"
+          />
+        </mat-form-field>
       </div>
     </div>
 
     <div class="columns">
       <div class="column">
-        <div class="field">
-          <label class="label"
-            >Valor do empréstimo
-            <div class="control">
-              <input
-                class="input"
-                currencyMask
-                name="loanAmount"
-                [(ngModel)]="loanAmount"
-                [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
-              />
-            </div>
-          </label>
-        </div>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Valor do empréstimo</mat-label>
+          <input
+            matInput
+            [(ngModel)]="loanAmount"
+            name="loanAmount"
+            currencyMask
+            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+            placeholder="Ex. R$ 123,00"
+          />
+        </mat-form-field>
       </div>
       <div class="column">
-        <div class="field">
-          <label class="label"
-            >Quantidade de parcelas
-            <div class="control">
-              <input
-                class="input"
-                type="number"
-                name="installments"
-                [min]="1"
-                [(ngModel)]="installments"
-              />
-            </div>
-          </label>
-        </div>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Quantidade de parcelas</mat-label>
+          <input
+            matInput
+            [(ngModel)]="installments"
+            name="installments"
+            type="number"
+          />
+        </mat-form-field>
       </div>
       <div class="column"></div>
     </div>
 
-    <button class="button is-primary" type="submit">Simular</button>
+    <button mat-raised-button color="accent" type="submit">Simular</button>
   </form>
 </div>
 

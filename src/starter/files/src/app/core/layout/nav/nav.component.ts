@@ -10,7 +10,7 @@ import { Util } from '../../../shared/utils/util';
 export class NavComponent implements OnInit {
   isLoggedIn = false;
   logoUrl =
-    'https://raw.githubusercontent.com/wizsolucoes/angular-whitelabel/master/docs/logowiz.png';
+    'https://raw.githubusercontent.com/wizsolucoes/angular-white-label-schematic/master/docs/logowiz.png';
 
   constructor(private sso: SSOConectorService) {}
 

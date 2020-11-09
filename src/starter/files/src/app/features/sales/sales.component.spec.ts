@@ -6,6 +6,10 @@ import { SalesComponent } from './sales.component';
 import { SimulationService } from 'src/app/core/services/business/simulation/simulation.service';
 import { of } from 'rxjs';
 import { SimulationRequest } from 'src/app/shared/models/simulation-request';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('SalesComponent', () => {
   let component: SalesComponent;
@@ -18,7 +22,15 @@ describe('SalesComponent', () => {
     ]);
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, FormsModule, SharedModule],
+      imports: [
+        HttpClientTestingModule,
+        FormsModule,
+        SharedModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+      ],
       declarations: [SalesComponent],
       providers: [
         { provide: SimulationService, useValue: mockSimulationService },

@@ -31,7 +31,6 @@ export function main(_options: Schema): Rule {
       addScripts(),
       addHuskyHook(),
       addDependencies(),
-      addBulmaCSS(_options),
       generateProjectFiles(_options),
     ])(tree, _context);
   };
@@ -127,34 +126,6 @@ function addHuskyHook(): Rule {
     };
 
     tree.overwrite("package.json", JSON.stringify(packageJsonObject, null, 2));
-
-    return tree;
-  };
-}
-
-function addBulmaCSS(_options: Schema): Rule {
-  return (tree: Tree, _context: SchematicContext) => {
-    const workspaceConfigBuffer = tree.read("angular.json");
-
-    if (!workspaceConfigBuffer) {
-      throw new SchematicsException("No angular.json file found");
-    }
-
-    const workspaceConfigObject = JSON.parse(workspaceConfigBuffer.toString());
-    const projectName =
-      _options.project || workspaceConfigObject.defaultProject;
-    workspaceConfigObject.projects[
-      projectName
-    ].architect.build.options.styles.splice(
-      0,
-      0,
-      "node_modules/bulma/css/bulma.min.css"
-    );
-
-    tree.overwrite(
-      "angular.json",
-      JSON.stringify(workspaceConfigObject, null, 2)
-    );
 
     return tree;
   };
