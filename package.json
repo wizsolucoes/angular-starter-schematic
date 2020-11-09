@@ -24,8 +24,9 @@
     "typescript": "~3.9.7"
   },
   "devDependencies": {
-    "@types/node": "^12.11.1",
     "@types/jasmine": "~3.5.0",
+    "@types/node": "^12.11.1",
+    "@wizsolucoes/ng-material-theme": "^1.0.0",
     "jasmine": "^3.5.0"
   }
 }
