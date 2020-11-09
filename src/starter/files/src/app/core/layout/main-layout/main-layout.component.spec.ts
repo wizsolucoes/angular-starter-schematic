@@ -5,6 +5,7 @@ import { NavComponent } from '../nav/nav.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NgxWizSSOModule } from '@wizsolucoes/ngx-wiz-sso';
 import { ssoConfig } from '../../../../config/sso_config';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 describe('MainLayoutComponent', () => {
   let component: MainLayoutComponent;
@@ -16,6 +17,7 @@ describe('MainLayoutComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         NgxWizSSOModule.forRoot(ssoConfig),
+        MatToolbarModule,
       ],
       declarations: [MainLayoutComponent, NavComponent],
     }).compileComponents();

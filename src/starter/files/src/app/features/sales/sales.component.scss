@@ -1,12 +1,21 @@
-.app-money {
-  text-align: end;
-}
+form {
+  display: flex;
+  flex-direction: column;
 
-.app-table-header {
-  background: var(--primary-color);
-}
+  .columns {
+    display: flex;
 
-.app-table-header th,
-.app-table-header td {
-  color: white;
+    .column {
+      flex: 1;
+
+      .example-full-width {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      & + .column {
+        margin-left: 20px;
+      }
+    }
+  }
 }

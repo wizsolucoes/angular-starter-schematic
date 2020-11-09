@@ -1,33 +1,24 @@
-<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+<mat-toolbar color="accent" data-test="mat-toolbar">
   <div class="navbar-brand">
     <a class="navbar-item" routerLink="home">
       <img [src]="logoUrl" alt="logo" data-test="logo-img" />
     </a>
   </div>
 
-  <div *ngIf="isLoggedIn" data-test="navbar-menu" class="navbar-menu">
-    <div class="navbar-start">
-      <a class="navbar-item" routerLink="sales" data-test="sales-link">
-        Vendas
-      </a>
+  <a mat-button *ngIf="isLoggedIn" routerLink="sales" data-test="sales-link">
+    Vendas
+  </a>
+  <a
+    mat-button
+    *ngIf="isLoggedIn"
+    routerLink="documentation"
+    data-test="documentation-link"
+  >
+    Documentação
+  </a>
 
-      <a
-        class="navbar-item"
-        routerLink="documentation"
-        data-test="documentation-link"
-      >
-        Documentação
-      </a>
-    </div>
-
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="buttons">
-          <a class="button is-light" (click)="logOut()" (keyup)="logOut()">
-            Log out
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</nav>
+  <span class="navbar-spacer"></span>
+  <button *ngIf="isLoggedIn" mat-button (click)="logOut()" (keyup)="logOut()">
+    Logout
+  </button>
+</mat-toolbar>

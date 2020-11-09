@@ -7,9 +7,10 @@
 
 <!-- User is not logged in -->
 <button
+  mat-raised-button
+  color="accent"
   data-test="login-form"
   *ngIf="!isLoggedIn && !isLoggingIn"
-  class="button is-primary"
   type="submit"
   (click)="onSubmitLogin()"
 >
