@@ -45,11 +45,13 @@ export function main(_options: Schema): Rule {
       addHuskyHook(),
       addDependencies(),
       generateProjectFiles(_options),
+      createStagingEnvironment(),
+      configureTSLint(),
     ]);
   };
 }
 
-export function generateProjectFiles(_options: Schema): Rule {
+function generateProjectFiles(_options: Schema): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     const projectPath = defaultPath.replace("src/app", "");
 
@@ -103,7 +105,9 @@ function addScripts(): Rule {
 
     const packageJsonObject = JSON.parse(packageJsonBuffer.toString());
     const scripts = packageJsonObject.scripts;
-    scripts["server"] = "json-server --watch server/db.json";
+
+    scripts["format:check"] = "prettier **/*.{html,ts,js,json,scss} --check";
+    scripts["format:write"] = "prettier **/*.{html,ts,js,json,scss} --write";
 
     tree.overwrite("package.json", JSON.stringify(packageJsonObject, null, 2));
 
@@ -133,6 +137,91 @@ function addHuskyHook(): Rule {
   };
 }
 
+function createStagingEnvironment(): Rule {
+  return (tree: Tree, _context: SchematicContext) => {
+    return chain([
+      _createStagingEnvironmentFile(defaultPath),
+      _createStagingEnvironmentConfig(),
+    ])(tree, _context);
+  };
+}
+
+function configureTSLint(): Rule {
+  return (tree: Tree, _context: SchematicContext) => {
+    const fileName = "tslint.json";
+    const tsLintConfigBuffer = tree.read(fileName);
+    const tsLintConfig = JSON.parse(tsLintConfigBuffer!.toString());
+
+    tsLintConfig.extends = ["tslint:recommended", "tslint-config-prettier"];
+
+    tree.overwrite(fileName, JSON.stringify(tsLintConfig, null, 2));
+
+    return tree;
+  };
+}
+
+function _createStagingEnvironmentFile(defaultProjectPath: string): Rule {
+  return (tree: Tree, _context: SchematicContext) => {
+    const environmentFilePath = defaultProjectPath.replace(
+      "/app",
+      "/environments/environment.ts"
+    );
+
+    const environmentFileContent = tree.read(environmentFilePath)!.toString();
+
+    const stagingEnvFilePath = environmentFilePath.replace(
+      "environment.ts",
+      "environment.staging.ts"
+    );
+
+    tree.create(stagingEnvFilePath, environmentFileContent);
+
+    return tree;
+  };
+}
+
+function _createStagingEnvironmentConfig(): Rule {
+  return (tree: Tree, _context: SchematicContext) => {
+    const workspaceConfig = _getWorkspaceConfig(tree);
+    const projectName: string = workspaceConfig.defaultProject;
+    const projectArchitect = workspaceConfig.projects[projectName].architect;
+
+    const buildConfigs = projectArchitect.build.configurations;
+    const serveConfigs = projectArchitect.serve.configurations;
+    const e2eConfigs = projectArchitect.e2e.configurations;
+
+    const stagingEnvironmentBuildConfig = _copyObject(buildConfigs.production);
+    const stagingEnvironmentServeConfig = _copyObject(serveConfigs.production);
+    const stagingEnvironmentE2eConfig = _copyObject(e2eConfigs.production);
+
+    stagingEnvironmentBuildConfig.fileReplacements.forEach(
+      (replacement: { [key: string]: string }) => {
+        if (replacement.with) {
+          replacement.with = replacement.with.replace("prod", "staging");
+        }
+      }
+    );
+
+    stagingEnvironmentServeConfig.browserTarget = stagingEnvironmentServeConfig.browserTarget.replace(
+      "production",
+      "staging"
+    );
+
+    stagingEnvironmentE2eConfig.devServerTarget = stagingEnvironmentE2eConfig.devServerTarget.replace(
+      "production",
+      "staging"
+    );
+
+    buildConfigs["staging"] = stagingEnvironmentBuildConfig;
+    serveConfigs["staging"] = stagingEnvironmentServeConfig;
+    e2eConfigs["staging"] = stagingEnvironmentE2eConfig;
+
+    tree.overwrite("angular.json", JSON.stringify(workspaceConfig, null, 2));
+
+    return tree;
+  };
+}
+
 function _nodeDependencyFactory(
   packageName: string,
   version: string,
@@ -146,7 +235,7 @@ function _nodeDependencyFactory(
   };
 }
 
-export function _overwriteIfExists(host: Tree): Rule {
+function _overwriteIfExists(host: Tree): Rule {
   return forEach((fileEntry) => {
     if (host.exists(fileEntry.path)) {
       host.overwrite(fileEntry.path, fileEntry.content);
@@ -154,4 +243,13 @@ export function _overwriteIfExists(host: Tree): Rule {
     }
     return fileEntry;
   });
+}
+
+function _getWorkspaceConfig(tree: Tree): { [key: string]: any } {
+  const workspaceConfigBuffer = tree.read("angular.json");
+  return JSON.parse(workspaceConfigBuffer!.toString());
+}
+
+function _copyObject(obj: { [key: string]: any }): { [key: string]: any } {
+  return JSON.parse(JSON.stringify(obj));
 }
