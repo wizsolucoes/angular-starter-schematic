@@ -39,6 +39,39 @@ describe("starter", () => {
     expect(appTree.files).toContain("/my-app/src/app/app.module.ts");
   });
 
+  describe("prettier", () => {
+    it("adds scripts to package.json", () => {
+      const packageJsonBuffer = appTree.read("package.json");
+      const packageJsonObject = JSON.parse(packageJsonBuffer!!.toString());
+
+      expect(packageJsonObject.scripts).toEqual(
+        jasmine.objectContaining({
+          "format:check": "prettier **/*.{html,ts,js,json,scss} --check",
+          "format:write": "prettier **/*.{html,ts,js,json,scss} --write",
+        })
+      );
+    });
+
+    it("modifies tslint.json extends property", () => {
+      const tsLintBuffer = appTree.read("tslint.json");
+      const tsLintObject = JSON.parse(tsLintBuffer!!.toString());
+
+      expect(tsLintObject.extends).toEqual([
+        "tslint:recommended",
+        "tslint-config-prettier",
+      ]);
+    });
+
+    it("adds configuration files", () => {
+      expect(appTree.files).toEqual(
+        jasmine.arrayContaining([
+          "/my-app/.prettierrc",
+          "/my-app/.prettierignore",
+        ])
+      );
+    });
+  });
+
   describe("commit lint", () => {
     it("adds commitlint.config.js file", async () => {
       expect(appTree.files).toContain("/my-app/commitlint.config.js");

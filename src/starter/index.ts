@@ -33,6 +33,7 @@ export function main(_options: Schema): Rule {
       addDependencies(),
       generateProjectFiles(_options),
       createStagingEnvironment(),
+      configureTSLint(),
     ])(tree, _context);
   };
 }
@@ -92,7 +93,9 @@ function addScripts(): Rule {
 
     const packageJsonObject = JSON.parse(packageJsonBuffer.toString());
     const scripts = packageJsonObject.scripts;
-    scripts["server"] = "json-server --watch server/db.json";
+
+    scripts["format:check"] = "prettier **/*.{html,ts,js,json,scss} --check";
+    scripts["format:write"] = "prettier **/*.{html,ts,js,json,scss} --write";
 
     tree.overwrite("package.json", JSON.stringify(packageJsonObject, null, 2));
 
@@ -129,6 +132,20 @@ function createStagingEnvironment(): Rule {
       _createStagingEnvironmentFile(defaultProjectPath),
       _createStagingEnvironmentConfig(),
     ])(tree, _context);
+  };
+}
+
+function configureTSLint(): Rule {
+  return (tree: Tree, _context: SchematicContext) => {
+    const fileName = "tslint.json";
+    const tsLintConfigBuffer = tree.read(fileName);
+    const tsLintConfig = JSON.parse(tsLintConfigBuffer!.toString());
+
+    tsLintConfig.extends = ["tslint:recommended", "tslint-config-prettier"];
+
+    tree.overwrite(fileName, JSON.stringify(tsLintConfig, null, 2));
+
+    return tree;
   };
 }
 
