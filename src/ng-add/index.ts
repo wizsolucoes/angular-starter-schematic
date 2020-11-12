@@ -13,7 +13,11 @@ export function ngAdd(_options: any): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     return chain([
       schematic("starter", _options),
-      externalSchematic("@wizsolucoes/ng-material-theme", "ng-add", {}),
+      externalSchematic(
+        "@wizsolucoes/ng-material-theme",
+        "ng-add",
+        { 'white-label': false }
+      ),
     ])(tree, _context);
   };
 }

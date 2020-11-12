@@ -21,23 +21,14 @@ import {
 } from "@schematics/angular/utility/dependencies";
 
 import { Schema } from "./schema";
-import { buildDefaultPath } from "@schematics/angular/utility/project";
+import { createDefaultPath } from "@schematics/angular/utility/workspace";
 
 import { dependencies, devDependencies } from "../dependencies";
 
-export function main(_options: Schema): Rule {
-  return (tree: Tree, _context: SchematicContext) => {
-    return chain([
-      addScripts(),
-      addHuskyHook(),
-      addDependencies(),
-      generateProjectFiles(_options),
-    ])(tree, _context);
-  };
-}
+let defaultPath: string;
 
-export function generateProjectFiles(_options: Schema): Rule {
-  return (tree: Tree, _context: SchematicContext) => {
+export function main(_options: Schema): Rule {
+  return async (tree: Tree, _context: SchematicContext) => {
     const workspaceConfigBuffer = tree.read("angular.json");
 
     if (!workspaceConfigBuffer) {
@@ -46,10 +37,21 @@ export function generateProjectFiles(_options: Schema): Rule {
 
     const workspaceConfig = JSON.parse(workspaceConfigBuffer.toString());
     const projectName = _options.project || workspaceConfig.defaultProject;
-    const project = workspaceConfig.projects[projectName];
 
-    const defaultProjectPath = buildDefaultPath(project);
-    const projectPath = defaultProjectPath.replace("src/app", "");
+    defaultPath = await createDefaultPath(tree, projectName);
+
+    return chain([
+      addScripts(),
+      addHuskyHook(),
+      addDependencies(),
+      generateProjectFiles(_options),
+    ]);
+  };
+}
+
+export function generateProjectFiles(_options: Schema): Rule {
+  return (tree: Tree, _context: SchematicContext) => {
+    const projectPath = defaultPath.replace("src/app", "");
 
     const sourceTemplates = url("./files");
 
