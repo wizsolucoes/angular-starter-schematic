@@ -1,0 +1,135 @@
+<div>
+  <form (ngSubmit)="onSubmit()">
+    <div class="columns">
+      <div class="column">
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Nome</mat-label>
+          <input
+            matInput
+            placeholder="Ex. John Doe"
+            [(ngModel)]="name"
+            name="name"
+          />
+        </mat-form-field>
+      </div>
+      <div class="column">
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>CPF</mat-label>
+          <input
+            matInput
+            placeholder="Ex. 111.222.333-44"
+            [(ngModel)]="cpf"
+            name="cpf"
+          />
+        </mat-form-field>
+      </div>
+      <div class="column">
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>E-Mail</mat-label>
+          <input
+            matInput
+            placeholder="Ex. johndoe@example.com"
+            [(ngModel)]="email"
+            name="email"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="columns">
+      <div class="column">
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Valor do empréstimo</mat-label>
+          <input
+            matInput
+            [(ngModel)]="loanAmount"
+            name="loanAmount"
+            currencyMask
+            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+            placeholder="Ex. R$ 123,00"
+          />
+        </mat-form-field>
+      </div>
+      <div class="column">
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Quantidade de parcelas</mat-label>
+          <input
+            matInput
+            [(ngModel)]="installments"
+            name="installments"
+            type="number"
+          />
+        </mat-form-field>
+      </div>
+      <div class="column"></div>
+    </div>
+
+    <button mat-raised-button color="accent" type="submit">Simular</button>
+  </form>
+</div>
+
+<hr />
+
+<div *ngIf="isLoadingSimulation" style="width: 65px;">
+  <wiz-loading type="spinner-continuous"> </wiz-loading>
+</div>
+
+<div *ngIf="simulationResult">
+  <table class="table is-bordered is-striped">
+    <tbody>
+      <tr>
+        <th>Modalidade de amortização:</th>
+        <td>{{ simulationResult.method | uppercase }}</td>
+      </tr>
+      <tr>
+        <th>Valor a ser financiado:</th>
+        <td>
+          {{
+            simulationResult.amountFinanced | currency: "BRL":"":"1.2-2":"pt-BR"
+          }}
+        </td>
+      </tr>
+      <tr>
+        <th>Prestação:</th>
+        <td>
+          {{
+            simulationResult.installment | currency: "BRL":"":"1.2-2":"pt-BR"
+          }}
+        </td>
+      </tr>
+      <tr>
+        <th>Número de períodos:</th>
+        <td>{{ simulationResult.quantity }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="table is-bordered is-striped">
+    <thead>
+      <tr class="app-table-header">
+        <th>No.</th>
+        <th>Prestação</th>
+        <th>Amortização</th>
+        <th>Juros</th>
+        <th>Saldo devedor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of simulationResult.itens">
+        <th>{{ item.number }}</th>
+        <td class="app-money">
+          {{ item.installment | currency: "BRL":"":"1.2-2":"pt-BR" }}
+        </td>
+        <td class="app-money">
+          {{ item.amortization | currency: "BRL":"":"1.2-2":"pt-BR" }}
+        </td>
+        <td class="app-money">
+          {{ item.tax | currency: "BRL":"":"1.2-2":"pt-BR" }}
+        </td>
+        <td class="app-money">
+          {{ item.outstandingBalance | currency: "BRL":"":"1.2-2":"pt-BR" }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

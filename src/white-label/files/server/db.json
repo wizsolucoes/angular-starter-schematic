@@ -1,0 +1,11 @@
+{
+  "config": {
+    "id": 4200,
+    "theme": {
+      "primaryColor": "#F8D117",
+      "accentColor": "#0038A8"
+    },
+    "logoImageUrl": "https://www.bb.com.br/pbb/img.ImgWriter?codigo=40846&origem=CCI&v=202007281",
+    "features": ["sales", "documentation"]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "AngularWhiteLabelSchematics",
+  "title": "Angular white-label Schema",
+  "type": "object",
+  "description": "Generates Wiz boilerplate Angular white-label application.",
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "Generate in specific Anuglar CLI workspace project"
+    }
+  }
+}
