@@ -26,7 +26,7 @@ describe("white-label", () => {
       .runExternalSchematicAsync(
         "@schematics/angular",
         "application",
-        { name: "my-app" },
+        { name: "my-app", style: 'scss' },
         appTree
       )
       .toPromise();
