@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "AngularStarterSchematics",
+  "title": "Angular starter Schema",
+  "type": "object",
+  "description": "Generates Wiz boilerplate Angular starter application.",
+  "properties": {
+    "white-label": {
+      "type": "boolean",
+      "description": "Generate in specific Anuglar CLI workspace project",
+      "x-prompt": "Essa aplicação é 'White-Label'?"
+    }
+  },
+  "required": ["white-label"]
+}

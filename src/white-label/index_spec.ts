@@ -7,7 +7,7 @@ import * as path from "path";
 const collectionPath = path.join(__dirname, "../collection.json");
 const runner = new SchematicTestRunner("schematics", collectionPath);
 
-describe("starter", () => {
+describe("white-label", () => {
   let appTree: UnitTestTree;
 
   beforeAll(async () => {
@@ -26,13 +26,13 @@ describe("starter", () => {
       .runExternalSchematicAsync(
         "@schematics/angular",
         "application",
-        { name: "my-app", style: 'scss' },
+        { name: "my-app" },
         appTree
       )
       .toPromise();
 
     // Our schematic
-    await runner.runSchematicAsync("starter", {}, appTree).toPromise();
+    await runner.runSchematicAsync("white-label", {}, appTree).toPromise();
   });
 
   it("works", async () => {

@@ -8,6 +8,10 @@
     "starter": {
       "description": "Generates Wiz boilerplate Angular starter application.",
       "factory": "./starter/index#main"
+    },
+    "white-label": {
+      "description": "Generates Wiz boilerplate Angular white-label application.",
+      "factory": "./white-label/index#main"
     }
   }
 }

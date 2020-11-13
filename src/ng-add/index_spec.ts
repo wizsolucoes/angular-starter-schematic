@@ -22,14 +22,24 @@ describe("ng-add", () => {
       .runExternalSchematicAsync(
         "@schematics/angular",
         "application",
-        { name: "my-app" },
+        { name: "my-app", style: 'scss' },
         appTree
       )
       .toPromise();
   });
 
-  it("works", async () => {
-    const options = { name: "Toure" };
+  it("works for starter", async () => {
+    const options = { name: "Toure", 'white-label': false };
+
+    const tree = await runner
+      .runSchematicAsync("ng-add", options, appTree)
+      .toPromise();
+
+    expect(tree.files).toContain("/my-app/src/app/app.module.ts");
+  });
+
+  it("works for white-label", async () => {
+    const options = { name: "Toure", 'white-label': true };
 
     const tree = await runner
       .runSchematicAsync("ng-add", options, appTree)
