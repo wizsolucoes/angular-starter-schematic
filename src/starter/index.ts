@@ -21,12 +21,25 @@ import {
 } from "@schematics/angular/utility/dependencies";
 
 import { Schema } from "./schema";
-import { buildDefaultPath } from "@schematics/angular/utility/project";
+import { createDefaultPath } from "@schematics/angular/utility/workspace";
 
 import { dependencies, devDependencies } from "../dependencies";
 
+let defaultPath: string;
+
 export function main(_options: Schema): Rule {
-  return (tree: Tree, _context: SchematicContext) => {
+  return async (tree: Tree, _context: SchematicContext) => {
+    const workspaceConfigBuffer = tree.read("angular.json");
+
+    if (!workspaceConfigBuffer) {
+      throw new SchematicsException("Not an Angular CLI workspace");
+    }
+
+    const workspaceConfig = JSON.parse(workspaceConfigBuffer.toString());
+    const projectName = _options.project || workspaceConfig.defaultProject;
+
+    defaultPath = await createDefaultPath(tree, projectName);
+
     return chain([
       addScripts(),
       addHuskyHook(),
@@ -34,14 +47,13 @@ export function main(_options: Schema): Rule {
       generateProjectFiles(_options),
       createStagingEnvironment(),
       configureTSLint(),
-    ])(tree, _context);
+    ]);
   };
 }
 
 function generateProjectFiles(_options: Schema): Rule {
   return (tree: Tree, _context: SchematicContext) => {
-    const defaultProjectPath = _getDefaultProjectPath(tree);
-    const projectPath = defaultProjectPath.replace("src/app", "");
+    const projectPath = defaultPath.replace("src/app", "");
 
     const sourceTemplates = url("./files");
 
@@ -127,9 +139,8 @@ function addHuskyHook(): Rule {
 
 function createStagingEnvironment(): Rule {
   return (tree: Tree, _context: SchematicContext) => {
-    const defaultProjectPath = _getDefaultProjectPath(tree);
     return chain([
-      _createStagingEnvironmentFile(defaultProjectPath),
+      _createStagingEnvironmentFile(defaultPath),
       _createStagingEnvironmentConfig(),
     ])(tree, _context);
   };
@@ -232,16 +243,6 @@ function _overwriteIfExists(host: Tree): Rule {
     }
     return fileEntry;
   });
-}
-
-function _getDefaultProjectPath(tree: Tree) {
-  const workspaceConfig = _getWorkspaceConfig(tree);
-  const projectName: string = workspaceConfig.defaultProject;
-  const project = workspaceConfig.projects[projectName];
-
-  const defaultProjectPath = buildDefaultPath(project);
-
-  return defaultProjectPath;
 }
 
 function _getWorkspaceConfig(tree: Tree): { [key: string]: any } {

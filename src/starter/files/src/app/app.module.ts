@@ -1,30 +1,38 @@
-import { registerLocaleData } from '@angular/common';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import localePt from '@angular/common/locales/pt';
-import {
-  CUSTOM_ELEMENTS_SCHEMA,
-  LOCALE_ID,
-  NgModule,
-  ErrorHandler,
-} from '@angular/core';
-import { AppRoutingModule } from './app-routing.module';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, ErrorHandler } from '@angular/core';
 import { AppComponent } from './app.component';
-import { CoreModule } from './core/core.module';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
 import { DefaultInterceptor } from './core/interceptors/default.interceptor';
+import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { ErrorHandlerService } from './core/services/monitoring/error-handler.service';
+import { AppRoutingModule } from './app-routing.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  NgApplicationInsightsModule,
+  NgApplicationInsightsErrorHandler,
+} from '@wizsolucoes/ng-application-insights';
 
 registerLocaleData(localePt, 'pt-BR');
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [AppRoutingModule, CoreModule, SharedModule],
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    CoreModule,
+    SharedModule,
+    AppRoutingModule,
+    NgApplicationInsightsModule.forRoot({
+      enabled: true,
+      instrumentationKey: '',
+    })
+  ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true },
-    { provide: ErrorHandler, useClass: ErrorHandlerService },
+    { provide: ErrorHandler, useClass: NgApplicationInsightsErrorHandler }
   ],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule {}
+export class AppModule { }
