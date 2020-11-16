@@ -5,7 +5,6 @@ import {
   chain,
   schematic,
   externalSchematic,
-  noop
 } from "@angular-devkit/schematics";
 import { Schema } from './schema';
 
@@ -14,8 +13,7 @@ import { Schema } from './schema';
 export function ngAdd(_options: Schema): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     return chain([
-      _options["white-label"] ? schematic("white-label", _options) : noop(),
-      !_options["white-label"] ? schematic("starter", _options) : noop(),
+      schematic("starter", _options),
       externalSchematic(
         "@wizsolucoes/ng-material-theme",
         "ng-add",

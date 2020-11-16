@@ -32,7 +32,11 @@ describe("starter", () => {
       .toPromise();
 
     // Our schematic
-    await runner.runSchematicAsync("starter", {}, appTree).toPromise();
+    await runner.runSchematicAsync(
+      "starter",
+      { 'white-label': !!Math.round(Math.random()) },
+      appTree
+    ).toPromise();
   });
 
   it("works", async () => {
@@ -133,5 +137,110 @@ describe("starter", () => {
         })
       );
     });
+  });
+});
+
+describe('starter no white label', () => {
+  let appTree: UnitTestTree;
+
+  beforeAll(async () => {
+    // Run ng g workspace schematic
+    appTree = await runner
+      .runExternalSchematicAsync(
+        "@schematics/angular",
+        "workspace",
+        { name: "test", version: "10.0.5" },
+        appTree
+      )
+      .toPromise();
+
+    // Run ng g application schematic
+    appTree = await runner
+      .runExternalSchematicAsync(
+        "@schematics/angular",
+        "application",
+        { name: "my-app", style: 'scss' },
+        appTree
+      )
+      .toPromise();
+
+    // Our schematic
+    await runner.runSchematicAsync(
+      "starter",
+      { 'white-label': false },
+      appTree
+    ).toPromise();
+  });
+
+  it('should not contain: tenant, configuration, theme, api responses and tsconfigs files', () => {
+    expect(appTree.files).not.toContain('/my-app/tsconfig.base.json');
+    expect(appTree.files).not.toContain('/my-app/tsconfig.json');
+    expect(appTree.files).not.toContain(
+      '/my-app/src/testing/fakes/api-responses/get-config.json'
+    );
+    expect(appTree.files).not.toContain(
+      '/my-app/src/app/core/interceptors/tenant.interceptor.ts'
+    );
+    expect(appTree.files).not.toContain(
+      '/my-app/src/app/core/services/configuration/configuration.ts'
+    );
+    expect(appTree.files).not.toContain(
+      '/my-app/src/app/core/services/theming/theming.service.ts'
+    );
+  });
+});
+
+describe('starter white label', () => {
+  let appTree: UnitTestTree;
+
+  beforeAll(async () => {
+    // Run ng g workspace schematic
+    appTree = await runner
+      .runExternalSchematicAsync(
+        "@schematics/angular",
+        "workspace",
+        { name: "test", version: "10.0.5" },
+        appTree
+      )
+      .toPromise();
+
+    // Run ng g application schematic
+    appTree = await runner
+      .runExternalSchematicAsync(
+        "@schematics/angular",
+        "application",
+        { name: "my-app", style: 'scss' },
+        appTree
+      )
+      .toPromise();
+
+    // Our schematic
+    await runner.runSchematicAsync(
+      "starter",
+      { 'white-label': true },
+      appTree
+    ).toPromise();
+  });
+
+  it('should contain: tenant, configuration, theme, api responses and tsconfigs files', () => {
+    expect(appTree.files).toContain('/my-app/tsconfig.app.json');
+    expect(appTree.files).toContain('/my-app/tsconfig.base.json');
+    expect(appTree.files).toContain('/my-app/tsconfig.json');
+    expect(appTree.files).toContain('/my-app/tsconfig.spec.json');
+    expect(appTree.files).toContain(
+      '/my-app/src/testing/fakes/api-responses/get-config.json'
+    );
+    expect(appTree.files).toContain(
+      '/my-app/src/app/core/interceptors/tenant.interceptor.ts'
+    );
+    expect(appTree.files).not.toContain(
+      '/my-app/src/app/core/interceptors/default.interceptor.ts'
+    );
+    expect(appTree.files).toContain(
+      '/my-app/src/app/core/services/configuration/configuration.ts'
+    );
+    expect(appTree.files).toContain(
+      '/my-app/src/app/core/services/theming/theming.service.ts'
+    );
   });
 });

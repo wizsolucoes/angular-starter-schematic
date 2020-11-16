@@ -8,6 +8,10 @@
     "project": {
       "type": "string",
       "description": "Generate in specific Anuglar CLI workspace project"
+    },
+    "white-label": {
+      "type": "boolean",
+      "description": "Tells if the project is a 'white-label' project or not"
     }
   }
 }

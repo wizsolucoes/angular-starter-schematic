@@ -10,6 +10,7 @@ import {
   chain,
   MergeStrategy,
   forEach,
+  noop,
 } from "@angular-devkit/schematics";
 
 import { NodePackageInstallTask } from "@angular-devkit/schematics/tasks";
@@ -45,6 +46,9 @@ export function main(_options: Schema): Rule {
       addHuskyHook(),
       addDependencies(),
       generateProjectFiles(_options),
+      _options['white-label'] ? 
+        generateWhiteLabelProjectFiles(_options) :
+        noop(),
       createStagingEnvironment(),
       configureTSLint(),
     ]);
@@ -56,6 +60,26 @@ function generateProjectFiles(_options: Schema): Rule {
     const projectPath = defaultPath.replace("src/app", "");
 
     const sourceTemplates = url("./files");
+
+    const sourceParamatrizedTemplates = apply(sourceTemplates, [
+      move(projectPath),
+      _overwriteIfExists(tree),
+    ]);
+
+    return mergeWith(sourceParamatrizedTemplates, MergeStrategy.Overwrite)(
+      tree,
+      _context
+    );
+  };
+}
+
+function generateWhiteLabelProjectFiles(_options: Schema): Rule {
+  return (tree: Tree, _context: SchematicContext) => {
+    tree.delete(`${defaultPath}/core/interceptors/default.interceptor.ts`);
+
+    const projectPath = defaultPath.replace("src/app", "");
+
+    const sourceTemplates = url("./files-white-label");
 
     const sourceParamatrizedTemplates = apply(sourceTemplates, [
       move(projectPath),
@@ -106,6 +130,7 @@ function addScripts(): Rule {
     const packageJsonObject = JSON.parse(packageJsonBuffer.toString());
     const scripts = packageJsonObject.scripts;
 
+    scripts["server"] = "json-server --watch server/db.json";
     scripts["format:check"] = "prettier **/*.{html,ts,js,json,scss} --check";
     scripts["format:write"] = "prettier **/*.{html,ts,js,json,scss} --write";
 

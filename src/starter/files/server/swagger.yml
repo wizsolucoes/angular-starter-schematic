@@ -1,0 +1,51 @@
+swagger: "2.0"
+info:
+  version: 0.0.0
+  title: API Configuração
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+tags:
+  - name: config
+paths:
+  /config/{tenantId}:
+    get:
+      tags:
+        - config
+      summary: Get application configuration
+      parameters:
+      - name: "tenantId"
+        in: "path"
+        description: "ID of tenant"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: "#/definitions/config"
+        "400":
+          description: bad request
+        "401":
+          description: unauthorized
+        "500":
+          description: Internal Server Error
+definitions:
+  config:
+    type: object
+    properties:
+      theme:
+        type: object
+        properties:
+          primary-color:
+            type: string
+      logoImageUrl:
+        type: string
+      features:
+        type: array
+        items:
+          type: string
