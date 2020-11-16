@@ -7,22 +7,33 @@ import {
   NgModule,
   ErrorHandler,
 } from '@angular/core';
+import {
+  NgApplicationInsightsModule,
+  NgApplicationInsightsErrorHandler,
+} from '@wizsolucoes/ng-application-insights';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { TenantInterceptor } from './core/interceptors/tenant.interceptor';
 import { SharedModule } from './shared/shared.module';
-import { ErrorHandlerService } from './core/services/monitoring/error-handler.service';
+import { TenantInterceptor } from './core/interceptors/tenant.interceptor';
 
 registerLocaleData(localePt, 'pt-BR');
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [AppRoutingModule, CoreModule, SharedModule],
+  imports: [
+    AppRoutingModule,
+    CoreModule,
+    SharedModule,
+    NgApplicationInsightsModule.forRoot({
+      enabled: true,
+      instrumentationKey: '',
+    })
+  ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: HTTP_INTERCEPTORS, useClass: TenantInterceptor, multi: true },
-    { provide: ErrorHandler, useClass: ErrorHandlerService },
+    { provide: ErrorHandler, useClass: NgApplicationInsightsErrorHandler }
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

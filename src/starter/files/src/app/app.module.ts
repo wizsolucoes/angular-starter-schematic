@@ -1,23 +1,26 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, ErrorHandler } from '@angular/core';
-import { AppComponent } from './app.component';
 import { registerLocaleData } from '@angular/common';
-import localePt from '@angular/common/locales/pt';
-import { DefaultInterceptor } from './core/interceptors/default.interceptor';
-import { CoreModule } from './core/core.module';
-import { SharedModule } from './shared/shared.module';
-import { AppRoutingModule } from './app-routing.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import localePt from '@angular/common/locales/pt';
+import {
+  NgModule,
+  CUSTOM_ELEMENTS_SCHEMA,
+  LOCALE_ID,
+  ErrorHandler
+} from '@angular/core';
 import {
   NgApplicationInsightsModule,
   NgApplicationInsightsErrorHandler,
 } from '@wizsolucoes/ng-application-insights';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { CoreModule } from './core/core.module';
+import { SharedModule } from './shared/shared.module';
+import { DefaultInterceptor } from './core/interceptors/default.interceptor';
 
 registerLocaleData(localePt, 'pt-BR');
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     CoreModule,
     SharedModule,
