@@ -21,6 +21,11 @@ export class ThemingService {
       propertyMap.primaryColor
     );
 
+    el.nativeElement.style.setProperty(
+      `--syz-accent-color`,
+      propertyMap.accentColor
+    );
+
     // You can use this loop if the API retuns CSS properites in snake case (Eg. primary-color)
     Object.keys(propertyMap).forEach((key) => {
       el.nativeElement.style.setProperty(`--${key}`, propertyMap[key]);
