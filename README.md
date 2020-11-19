@@ -3,6 +3,8 @@
 
 - [Sobre](#sobre)
 - [Uso](#uso)
+  - [Opções](#opções)
+    - [White-label](#white-label)
 - [Sobre a aplicação gerada](#sobre-a-aplicação-gerada)
   - [Estrutura](#estrutura)
   - [Recursos](#recursos)
@@ -24,6 +26,8 @@ Schematic para gerar código boilerplate com a arquitetura de referência corpor
 
 ## Uso
 
+**IMPORTANTE: Este schematic supõe que a aplicação usa SASS e deve ser executado em projetos novos, pois faz a sobrescrita de arquivos.**
+
 ```bash
 # Gerar uma nova aplicação Angular
 ng new my-app --style=scss
@@ -31,14 +35,20 @@ ng new my-app --style=scss
 # Entrar na pasta da nova aplicação
 cd my-app
 
-# Adicionar folha de estilos Wiz
-npm i @wizsolucoes/ng-material-theme
-
 # Adicionar arquitetura
 ng add @wizsolucoes/angular-starter
 ```
 
-**IMPORTANTE: Este schematic supõe que a aplicação usa SASS e deve ser executado em projetos novos, pois faz a sobrescrita de arquivos.**
+### Opções
+#### White-label
+Ao executar o schematic, você deve escolher se a aplicação é 'White-label' ou não, respondendo este prompt na linha de comando:
+
+```bash
+? Essa aplicação é 'White-Label'? (Y/n)
+```
+
+Para entender mais sobre a arquitetura 'White-label', consulta [a documentação neste repositório.](./docs/white-label.md)
+
 
 ## Sobre a aplicação gerada
 ### Estrutura
@@ -236,9 +246,6 @@ ng new my-app --style=scss
 
 # Entrar na pasta da nova aplicação
 cd my-app
-
-# Adicionar folha de estilos Wiz
-npm i @wizsolucoes/ng-material-theme
 
 # Instalar schematic
 npm i --no-save ../path/to/angular-starter-schematic/wizsolucoes-angular-starter-1.0.1.tgz

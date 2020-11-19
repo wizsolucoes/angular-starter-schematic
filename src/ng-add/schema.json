@@ -5,13 +5,11 @@
   "type": "object",
   "description": "Generates Wiz boilerplate Angular starter application.",
   "properties": {
-    "project": {
-      "type": "string",
-      "description": "Generate in specific Anuglar CLI workspace project"
-    },
     "white-label": {
       "type": "boolean",
-      "description": "Tells if the project is a 'white-label' project or not"
+      "description": "Generate in specific Anuglar CLI workspace project",
+      "x-prompt": "Essa aplicação é 'White-Label'?"
     }
-  }
+  },
+  "required": ["white-label"]
 }

@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+  --primary-color: #FF9100;
+  --accent-color: #006eb4;
+  --syz-primary-color: var(--primary-color);
+  --syz-accent-color: var(--accent-color);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', 'Heebo', sans-serif;
+}

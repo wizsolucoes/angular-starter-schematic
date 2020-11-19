@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://whitelabel-wiz.azurewebsites.net/',
+  apiUrl: 'http://localhost:3000',
   appInsights: {
     instrumentationKey: '',
   },
