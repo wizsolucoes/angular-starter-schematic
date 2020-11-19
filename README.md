@@ -35,9 +35,6 @@ ng new my-app --style=scss
 # Entrar na pasta da nova aplicação
 cd my-app
 
-# Adicionar folha de estilos Wiz
-npm i @wizsolucoes/ng-material-theme
-
 # Adicionar arquitetura
 ng add @wizsolucoes/angular-starter
 ```
@@ -249,9 +246,6 @@ ng new my-app --style=scss
 
 # Entrar na pasta da nova aplicação
 cd my-app
-
-# Adicionar folha de estilos Wiz
-npm i @wizsolucoes/ng-material-theme
 
 # Instalar schematic
 npm i --no-save ../path/to/angular-starter-schematic/wizsolucoes-angular-starter-1.0.1.tgz
