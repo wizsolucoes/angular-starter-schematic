@@ -5,84 +5,19 @@
 # YAML reference:
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema
 
-variables:
-    AzureStorageHml: ''
-    AzureStoragePrd: ''
-
 resources:
   repositories:
-    - repository: angulartemplate
+    - repository: coretemplate
       type: git
-      name: WizPipelines/angular-template
+      name: WizPipelines/core-template
 
 trigger:
     batch: 'true'
 
-stages:
-  - stage: Build
-    jobs:
-      - job: Build
-        displayName: 'Build Solution'
-        condition: succeeded()
-        steps:
-          - template: angularci.yml@angulartemplate
-            parameters:
-              skipPublish: true
-  - stage: Uat
-    condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')))
-    jobs:
-      - job: Build
-        displayName: 'Build Solution'
-        condition: succeeded()
-        steps:
-        - template: angularci.yml@angulartemplate
-          parameters:
-            artifactName: 'staging'
-            buildConfiguration: 'staging'
-      - deployment: DeployStaging
-        displayName: 'Deploy to Staging'
-        pool:
-          vmImage: windows-latest
-        dependsOn: [Build]
-        environment: staging
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-                - task: AzureFileCopy@4
-                  inputs:
-                    SourcePath: '$(Pipeline.Workspace)/staging/*'
-                    azureSubscription: 'AmbientesDevHml'
-                    Destination: 'AzureBlob'
-                    storage: '$(AzureStorageHml)'
-                    ContainerName: '$web'
-
-  - stage: Production
-    condition: and(succeeded(),eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-    dependsOn: [Uat]
-    jobs:
-      - job: Build
-        displayName: 'Build Solution'
-        condition: succeeded()
-        steps:
-        - template: angularci.yml@angulartemplate
-          parameters:
-            artifactName: 'production'
-            buildConfiguration: 'production'
-      - deployment: DeployProduction
-        displayName: 'Deploy to Production'
-        pool:
-          vmImage: windows-latest
-        dependsOn: [Build]
-        environment: production
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-                - task: AzureFileCopy@4
-                  inputs:
-                    SourcePath: '$(Pipeline.Workspace)/production/*'
-                    azureSubscription: 'AmbienteCorporativoExterior'
-                    Destination: 'AzureBlob'
-                    storage: '$(AzureStoragePrd)'
-                    ContainerName: '$web'
+extends:
+  template: main.yml@coretemplate
+  parameters:
+    technology: 'angular'
+    deploymentType: 'storage'
+    azResourceName: << Prefixo do nome do recurso de deployment >>
+    
