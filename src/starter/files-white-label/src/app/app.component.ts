@@ -4,6 +4,7 @@ import { AppConfiguration } from './core/services/configuration/configuration';
 import { ConfigurationService } from './core/services/configuration/configuration.service';
 import { ThemingService } from './core/services/theming/theming.service';
 import hostTenantMap from './core/services/configuration/host-to-tenant-map';
+import { NgApplicationInsightsErrorHandler } from '@wizsolucoes/ng-application-insights';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,8 @@ export class AppComponent implements OnInit {
   constructor(
     private el: ElementRef,
     private themingService: ThemingService,
-    private configurationService: ConfigurationService
+    private configurationService: ConfigurationService,
+    private errorHandler: NgApplicationInsightsErrorHandler,
   ) {}
 
   isLoadingConfiguration: boolean;
@@ -35,6 +37,11 @@ export class AppComponent implements OnInit {
 
   private loadConfiguration(): Observable<AppConfiguration> {
     this.configurationService.tenantId = this.whoami();
+
+    this.errorHandler.setTenantIdForApplication(
+      this.configurationService.tenantId
+    );
+
     return this.configurationService.getConfig();
   }
 
