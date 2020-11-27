@@ -38,8 +38,9 @@ export class AppComponent implements OnInit {
   private loadConfiguration(): Observable<AppConfiguration> {
     this.configurationService.tenantId = this.whoami();
 
-    this.errorHandler.setTenantIdForApplication(
-      this.configurationService.tenantId
+    this.errorHandler.setCustomPropertyForApplication(
+      'Tenant ID',
+      this.configurationService.tenantId,
     );
 
     return this.configurationService.getConfig();
