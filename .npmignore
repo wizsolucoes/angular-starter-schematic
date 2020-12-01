@@ -3,3 +3,4 @@
 .vscode/
 azure-pipelines.yml
 docs/
+!src/**/azure-pipelines.yml
