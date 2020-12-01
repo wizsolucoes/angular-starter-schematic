@@ -1,10 +1,10 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { NgApplicationInsightsService } from '@wizsolucoes/ng-application-insights';
 import { AppConfiguration } from './core/services/configuration/configuration';
 import { ConfigurationService } from './core/services/configuration/configuration.service';
 import { ThemingService } from './core/services/theming/theming.service';
 import hostTenantMap from './core/services/configuration/host-to-tenant-map';
-import { NgApplicationInsightsErrorHandler } from '@wizsolucoes/ng-application-insights';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
     private el: ElementRef,
     private themingService: ThemingService,
     private configurationService: ConfigurationService,
-    private errorHandler: NgApplicationInsightsErrorHandler,
+    private appInsightsService: NgApplicationInsightsService,
   ) {}
 
   isLoadingConfiguration: boolean;
@@ -38,10 +38,9 @@ export class AppComponent implements OnInit {
   private loadConfiguration(): Observable<AppConfiguration> {
     this.configurationService.tenantId = this.whoami();
 
-    this.errorHandler.setCustomPropertyForApplication(
-      'Tenant ID',
-      this.configurationService.tenantId,
-    );
+    this.appInsightsService.setCustomProperty({
+      'Tenant ID': this.configurationService.tenantId,
+    });
 
     return this.configurationService.getConfig();
   }
