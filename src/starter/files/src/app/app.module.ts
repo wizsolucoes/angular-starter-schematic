@@ -28,7 +28,7 @@ registerLocaleData(localePt, 'pt-BR');
     NgApplicationInsightsModule.forRoot({
       enabled: true,
       instrumentationKey: '',
-      whiteLabel: false,
+      properties: {},
     })
   ],
   providers: [

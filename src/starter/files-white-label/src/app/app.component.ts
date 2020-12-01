@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
   private loadConfiguration(): Observable<AppConfiguration> {
     this.configurationService.tenantId = this.whoami();
 
-    this.appInsightsService.setCustomProperty({
+    this.appInsightsService.setCustomProperties({
       'Tenant ID': this.configurationService.tenantId,
     });
 
