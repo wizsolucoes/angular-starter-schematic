@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { NgApplicationInsightsService } from '@wizsolucoes/ng-application-insights';
 import { AppConfiguration } from './core/services/configuration/configuration';
 import { ConfigurationService } from './core/services/configuration/configuration.service';
 import { ThemingService } from './core/services/theming/theming.service';
@@ -14,7 +15,8 @@ export class AppComponent implements OnInit {
   constructor(
     private el: ElementRef,
     private themingService: ThemingService,
-    private configurationService: ConfigurationService
+    private configurationService: ConfigurationService,
+    private appInsightsService: NgApplicationInsightsService,
   ) {}
 
   isLoadingConfiguration: boolean;
@@ -35,6 +37,11 @@ export class AppComponent implements OnInit {
 
   private loadConfiguration(): Observable<AppConfiguration> {
     this.configurationService.tenantId = this.whoami();
+
+    this.appInsightsService.setCustomProperties({
+      'Tenant ID': this.configurationService.tenantId,
+    });
+
     return this.configurationService.getConfig();
   }
 
