@@ -179,6 +179,20 @@ function configureTSLint(): Rule {
 
     tsLintConfig.extends = ["tslint:recommended", "tslint-config-prettier"];
 
+    tsLintConfig.rules = {
+      ...tsLintConfig.rules,
+      "template-accessibility-alt-text": true,
+      "template-accessibility-elements-content": true,
+      "template-accessibility-label-for": true,
+      "template-accessibility-tabindex-no-positive": true,
+      "template-accessibility-table-scope": true,
+      "template-accessibility-valid-aria": true,
+      "template-click-events-have-key-events": true,
+      "template-mouse-events-have-key-events": true,
+      "template-no-autofocus": true,
+      "template-no-distracting-elements": true
+    }
+
     tree.overwrite(fileName, JSON.stringify(tsLintConfig, null, 2));
 
     return tree;
