@@ -5,7 +5,7 @@ import { AppConfiguration } from '../configuration/configuration';
   providedIn: 'root',
 })
 export class ThemingService {
-  setCSSVariables(el: ElementRef, propertyMap: AppConfiguration) {
+  setCSSVariables(el: ElementRef, propertyMap: AppConfiguration): void {
     el.nativeElement.style.setProperty(
       `--primary-color`,
       propertyMap.primaryColor

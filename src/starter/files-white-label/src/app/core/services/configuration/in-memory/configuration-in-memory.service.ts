@@ -7,7 +7,7 @@ import { AppConfiguration } from '../configuration';
 export class ConfigurationInMemoryService {
   private configuration: AppConfiguration;
 
-  saveConfiguration(configuration: AppConfiguration) {
+  saveConfiguration(configuration: AppConfiguration): void {
     this.configuration = configuration;
   }
 
