@@ -5,18 +5,26 @@ import { AppComponent } from 'src/app/app.component';
 import { CoreModule } from '../../core.module';
 import { MainLayoutComponent } from '../../layout/main-layout/main-layout.component';
 import { ThemingService } from './theming.service';
+import { NgApplicationInsightsService } from '@wizsolucoes/ng-application-insights';
 
 describe('ThemingService', () => {
   let service: ThemingService;
   let fixture: ComponentFixture<AppComponent>;
   let app: AppComponent;
   let template: HTMLElement;
+  let mockAppInsightsService: jasmine.SpyObj<NgApplicationInsightsService>;
+
+  mockAppInsightsService = jasmine.createSpyObj('NgApplicationInsightsService', [
+    'setCustomProperties',
+  ]);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, CoreModule, HttpClientTestingModule],
       declarations: [AppComponent, MainLayoutComponent],
-      providers: [],
+      providers: [
+        { provide: NgApplicationInsightsService, useValue: mockAppInsightsService },
+      ],
     });
     service = TestBed.inject(ThemingService);
     fixture = TestBed.createComponent(AppComponent);

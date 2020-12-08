@@ -8,10 +8,12 @@ import { ConfigurationService } from './core/services/configuration/configuratio
 import { CoreModule } from './core/core.module';
 import { MainLayoutComponent } from './core/layout/main-layout/main-layout.component';
 import { ThemingService } from './core/services/theming/theming.service';
+import { NgApplicationInsightsService } from '@wizsolucoes/ng-application-insights';
 
 describe('AppComponent', () => {
   let mockThemingSerivce: jasmine.SpyObj<ThemingService>;
   let mockConfigService: jasmine.SpyObj<ConfigurationService>;
+  let mockAppInsightsService: jasmine.SpyObj<NgApplicationInsightsService>;
   let fixture: ComponentFixture<AppComponent>;
   let app: AppComponent;
   let template: HTMLElement;
@@ -27,12 +29,17 @@ describe('AppComponent', () => {
       'disableCache',
     ]);
 
+    mockAppInsightsService = jasmine.createSpyObj('NgApplicationInsightsService', [
+      'setCustomProperties',
+    ]);
+
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, CoreModule, HttpClientTestingModule],
       declarations: [AppComponent, MainLayoutComponent],
       providers: [
         { provide: ThemingService, useValue: mockThemingSerivce },
         { provide: ConfigurationService, useValue: mockConfigService },
+        { provide: NgApplicationInsightsService, useValue: mockAppInsightsService },
       ],
     });
 
