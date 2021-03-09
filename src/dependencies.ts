@@ -7,6 +7,7 @@ export const dependencies: { [key: string]: string } = {
   "ngx-mask": "^9.1.2",
 };
 
+
 export const devDependencies: { [key: string]: string } = {
   "@commitlint/cli": "^9.1.2",
   "@commitlint/config-conventional": "^10.0.0",
