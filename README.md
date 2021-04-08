@@ -228,6 +228,9 @@ npm test
 #### 1. Gere um distribuível do schematic
 
 ```bash
+# Clonar o repositório
+git clone git@github.com:wizsolucoes/angular-starter-schematic.git
+
 # Instalar as dependências
 npm install
 
