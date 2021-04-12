@@ -38,6 +38,12 @@ cd my-app
 
 # Adicionar arquitetura
 ng add @wizsolucoes/angular-starter
+
+# Executar testes
+ng test
+
+# Rodar aplicação
+ng serve
 ```
 
 ### Opções
@@ -50,7 +56,7 @@ Ao executar o schematic, você deve escolher se a aplicação é 'White-label' o
 ? Essa aplicação é 'White-Label'? (Y/n)
 ```
 
-Para entender mais sobre a arquitetura 'White-label', consulta [a documentação neste repositório.](./docs/white-label.md)
+Para entender mais sobre a arquitetura 'White-label', consulte [a documentação neste repositório.](./docs/white-label.md)
 
 
 ## Sobre a aplicação gerada
@@ -222,13 +228,7 @@ O código gerado contem arquivos de configuração da ferramenta de formatação
 
 #### CI/CD
 
-O código gerado irá conter um arquivo `azure-pipelines.yml` com a configuração de integração contínua de de deploy da aplicação. O deploy por padrão é feito para um Azure Storage e é necessário preencher os valores para os variáveis `AzureStorageHml` e `AzureStoragePrd`.
-
-```yaml
-variables:
-    AzureStorageHml: ''
-    AzureStoragePrd: ''
-```
+O código gerado irá conter um arquivo `azure-pipelines.yml` com a configuração de integração contínua de de deploy da aplicação.
 
 ## Desenvolvimento do schematic
 
