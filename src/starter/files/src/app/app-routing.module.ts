@@ -5,7 +5,7 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'home',
+    redirectTo: 'login',
   },
   {
     path: 'home',
@@ -23,6 +23,11 @@ const routes: Routes = [
     path: 'sales',
     loadChildren: () =>
       import('./features/sales/sales.module').then((m) => m.SalesModule),
+  },
+  { 
+    path: 'login', 
+    loadChildren: () => 
+      import('./features/login/login.module').then(m => m.LoginModule), 
   },
   {
     path: '**',

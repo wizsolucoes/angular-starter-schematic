@@ -61,12 +61,12 @@ function generateProjectFiles(_options: Schema): Rule {
 
     const sourceTemplates = url("./files");
 
-    const sourceParamatrizedTemplates = apply(sourceTemplates, [
+    const sourceParameterizedTemplates = apply(sourceTemplates, [
       move(projectPath),
       _overwriteIfExists(tree),
     ]);
 
-    return mergeWith(sourceParamatrizedTemplates, MergeStrategy.Overwrite)(
+    return mergeWith(sourceParameterizedTemplates, MergeStrategy.Overwrite)(
       tree,
       _context
     );

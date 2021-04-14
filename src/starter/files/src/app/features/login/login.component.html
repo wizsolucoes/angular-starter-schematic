@@ -1,0 +1,43 @@
+<div id="formContent">
+    <h1>Login</h1>
+    <form [formGroup]="form" data-test="login" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input 
+            matInput 
+            data-test="email" 
+            type="e-mail" 
+            formControlName="email" 
+            placeholder="Email"
+            required 
+            />
+            <mat-error *ngIf="email.invalid && email.errors.required">Email obrigatório</mat-error>
+            <mat-error *ngIf="email.invalid && email.errors.email">Email inválido</mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline">
+            <mat-label>Senha</mat-label>
+            <input 
+            matInput
+            data-test="password"  
+            type="password" 
+            formControlName="password" 
+            placeholder="Senha"
+            required
+            />
+            <mat-error *ngIf="password.invalid && password.errors.required">Senha obrigatória</mat-error>
+        </mat-form-field>
+        <button 
+            type="submit" 
+            data-test="submit" 
+            mat-flat-button 
+            color="primary"
+            
+            >Entrar</button>
+    </form>
+    <div id="formFooter">
+        <a class="underlineHover" href="#">Esqueci minha senha</a>
+    </div>
+</div>
+
