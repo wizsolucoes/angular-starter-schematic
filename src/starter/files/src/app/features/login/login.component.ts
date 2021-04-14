@@ -8,10 +8,7 @@ import { Util } from 'src/app/shared/utils/util';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
-  isLoggedIn = false;
-  isLoggingIn = false;
-  
+export class LoginComponent implements OnInit {  
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],
@@ -19,9 +16,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private sso: SSOConectorService) { }
 
-  ngOnInit(): void {
-    this.isLoggedIn = !!SSOConectorService.isLogged();
-  }
+  ngOnInit(): void { }
 
     get email(): AbstractControl | null { 
       return this.form.get('email'); 
