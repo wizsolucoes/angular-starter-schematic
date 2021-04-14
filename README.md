@@ -46,6 +46,16 @@ ng test
 ng serve
 ```
 
+*Obs: se estiver usando o gitbash e encontrar o erro abaixo ao executar ng add @wizsolucoes/angular-starter, execute o comando no gitbash do VSCode ou no powershell.
+
+```bash
+$ ng g @wizsolucoes/angular-starter:ng-add
+Schematic input does not validate against the Schema: {}
+Errors:
+
+  Data path "" should have required property 'white-label'.
+```
+ 
 ### Opções
 
 #### White-label
@@ -276,7 +286,7 @@ ng new my-app --style=scss
 cd my-app
 
 # Instalar schematic
-npm i --no-save ../<path-to>/angular-starter-schematic
+npm i --no-save ../<path-to>/angular-starter-schematic/wizsolucoes-angular-starter-x.x.x.tgz
 
 # Executar schematic
 ng g @wizsolucoes/angular-starter:ng-add
