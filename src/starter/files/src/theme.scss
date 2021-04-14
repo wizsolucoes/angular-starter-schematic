@@ -1,0 +1,181 @@
+// theme.scss
+// Fonts
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&display=swap');
+
+// mat-typography-level(size, line-height, font-weight)
+$wiz-typography: mat-typography-config(
+  $font-family: 'Roboto, Heebo, sans-serif',
+);
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core($wiz-typography);
+
+// Typography Colors
+$wiz-dark-text: #50555A;
+$wiz-light-text: #FFFFFF;
+
+// Primary Color Palette
+$wiz-orange: (
+  50: #fff2e0,
+  100: #ffdeb3,
+  200: #ffc880,
+  300: #ffad42,
+  400: #ffa226,
+  500: #ff9100,
+  600: #ff8900,
+  700: #ff7e00,
+  800: #ff7400,
+  900: #f56c00,
+  A100: #ffffff,
+  A200: #fff6f2,
+  A400: #ffd4bf,
+  A700: #ffc2a6,
+  contrast: (
+    50 : $wiz-dark-text,
+    100 : $wiz-dark-text,
+    200 : $wiz-dark-text,
+    300 : $wiz-dark-text,
+    400 : $wiz-dark-text,
+    500 : $wiz-light-text,
+    600 : $wiz-dark-text,
+    700 : $wiz-dark-text,
+    800 : $wiz-dark-text,
+    900 : $wiz-dark-text,
+    A100 : $wiz-dark-text,
+    A200 : $wiz-dark-text,
+    A400 : $wiz-dark-text,
+    A700 : $wiz-dark-text,
+  )
+);
+
+// Secondary Color Palette
+$wiz-blue: (
+  50 : #e0eef6,
+  100 : #b3d4e9,
+  200 : #80b7da,
+  300 : #4d9acb,
+  400 : #2684bf,
+  500 : #006eb4,
+  600 : #0066ad,
+  700 : #005ba4,
+  800 : #00519c,
+  900 : #004e87,
+  A100 : #b8d3ff,
+  A200 : #85b2ff,
+  A400 : #5292ff,
+  A700 : #3982ff,
+  contrast: (
+    50 : $wiz-dark-text,
+    100 : $wiz-dark-text,
+    200 : $wiz-dark-text,
+    300 : $wiz-dark-text,
+    400 : $wiz-light-text,
+    500 : $wiz-light-text,
+    600 : $wiz-light-text,
+    700 : $wiz-light-text,
+    800 : $wiz-light-text,
+    900 : $wiz-light-text,
+    A100 : $wiz-dark-text,
+    A200 : $wiz-dark-text,
+    A400 : $wiz-dark-text,
+    A700 : $wiz-light-text,
+  ),
+);
+
+$wiz-green: (
+  50 : #e0f5f3,
+  100 : #b3e6e1,
+  200 : #80d5cd,
+  300 : #4dc4b9,
+  400 : #26b7aa,
+  500 : #00aa9b,
+  600 : #00a393,
+  700 : #009989,
+  800 : #00907f,
+  900 : #007f6d,
+  A100 : #adfff1,
+  A200 : #7affe9,
+  A400 : #47ffe0,
+  A700 : #2dffdc,
+  contrast: (
+    50 : $wiz-dark-text,
+    100 : $wiz-dark-text,
+    200 : $wiz-dark-text,
+    300 : $wiz-dark-text,
+    400 : $wiz-dark-text,
+    500 : $wiz-light-text,
+    600 : $wiz-light-text,
+    700 : $wiz-light-text,
+    800 : $wiz-light-text,
+    900 : $wiz-light-text,
+    A100 : $wiz-dark-text,
+    A200 : $wiz-dark-text,
+    A400 : $wiz-dark-text,
+    A700 : $wiz-dark-text,
+  ),
+);
+
+$wiz-pink: (
+  50 : #fde3ec,
+  100 : #f9b9cf,
+  200 : #f58aaf,
+  300 : #f15b8f,
+  400 : #ee3777,
+  500 : #eb145f,
+  600 : #e91257,
+  700 : #e50e4d,
+  800 : #e20b43,
+  900 : #dd0632,
+  A100 : #ffffff,
+  A200 : #ffd2d9,
+  A400 : #ff9fae,
+  A700 : #ff8699,
+  contrast: (
+    50 : $wiz-dark-text,
+    100 : $wiz-dark-text,
+    200 : $wiz-dark-text,
+    300 : $wiz-dark-text,
+    400 : $wiz-light-text,
+    500 : $wiz-light-text,
+    600 : $wiz-light-text,
+    700 : $wiz-light-text,
+    800 : $wiz-light-text,
+    900 : $wiz-light-text,
+    A100 : $wiz-dark-text,
+    A200 : $wiz-dark-text,
+    A400 : $wiz-dark-text,
+    A700 : $wiz-dark-text,
+  ),
+);
+
+// Alert Color Palette
+$alert-success: #00BF85;
+$alert-warning: #FFC136;
+$alert-information: #2175D6;
+$alert-error: #FF3535;
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$theming-material-components-primary: mat-palette($wiz-orange, 500);
+$theming-material-components-accent: mat-palette($wiz-blue, 500);
+
+// The warn palette is optional (defaults to red).
+$theming-material-components-warn: mat-palette($mat-red, 500);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$theming-material-components-theme: mat-light-theme(
+  $theming-material-components-primary,
+  $theming-material-components-accent,
+  $theming-material-components-warn,
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($theming-material-components-theme);
+@include custom-components-theme($theming-material-components-theme);
