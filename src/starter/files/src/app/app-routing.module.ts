@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from '@wizsolucoes/ngx-wiz-sso';
 
 const routes: Routes = [
   {
@@ -11,6 +12,7 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () =>
       import('./features/home/home.module').then((m) => m.HomeModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'documentation',
@@ -18,11 +20,13 @@ const routes: Routes = [
       import('./features/documentation/documentation.module').then(
         (m) => m.DocumentationModule
       ),
+      canActivate: [AuthGuard],
   },
   {
     path: 'sales',
     loadChildren: () =>
       import('./features/sales/sales.module').then((m) => m.SalesModule),
+      canActivate: [AuthGuard],
   },
   { 
     path: 'login', 
