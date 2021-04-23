@@ -6,6 +6,7 @@ import { ssoConfig } from '../../../../config/sso_config';
 import { Util } from '../../../shared/utils/util';
 import { fakeToken } from '../../../../testing/fakes/fake_token';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('NavComponent', () => {
   let component: NavComponent;
@@ -17,7 +18,11 @@ describe('NavComponent', () => {
     mockSSO = jasmine.createSpyObj('mockSSO', ['logOut', 'checkLogged']);
 
     TestBed.configureTestingModule({
-      imports: [ NgxWizSSOModule.forRoot(ssoConfig), MatToolbarModule ],
+      imports: [
+        NgxWizSSOModule.forRoot(ssoConfig),
+        MatToolbarModule,
+        RouterTestingModule,
+      ],
       declarations: [NavComponent],
       providers: [{ provide: SSOConectorService, useValue: mockSSO }],
     });
@@ -53,7 +58,7 @@ describe('NavComponent', () => {
       });
     });
 
-    describe('when user if NOT logged in', () => {
+    describe('when user is NOT logged in', () => {
       beforeEach(() => {
         // Given
         userIsLoggedOut();
@@ -64,9 +69,7 @@ describe('NavComponent', () => {
 
       it('should NOT display nav bar menu', () => {
         // Then
-        expect(
-          template.querySelector('[data-test="mat-toolbar"]').children.length
-        ).toBe(2);
+        expect(template.querySelector('[data-test="mat-toolbar"]')).toBeNull();
       });
     });
   });
@@ -87,7 +90,16 @@ describe('NavComponent', () => {
   });
 
   describe('a11y', () => {
-    it('images should be acessible', () => {
+    beforeEach(() => {
+      // Given
+      userIsLoggedIn();
+
+      // When
+      fixture.detectChanges();
+    });
+
+    //Then
+    it('images should be accessible', () => {
       expect(template.querySelector('[data-test="logo-img"]')).toBeTruthy();
 
       const logoImage = template.querySelector(

@@ -1,16 +1,15 @@
-<mat-toolbar color="accent" data-test="mat-toolbar">
+<mat-toolbar color="accent" data-test="mat-toolbar" *ngIf="showNav">
   <div class="navbar-brand">
     <a class="navbar-item" routerLink="home">
       <img [src]="logoUrl" alt="logo" data-test="logo-img" />
     </a>
   </div>
 
-  <a mat-button *ngIf="isLoggedIn" routerLink="sales" data-test="sales-link">
+  <a mat-button routerLink="sales" data-test="sales-link">
     Vendas
   </a>
   <a
     mat-button
-    *ngIf="isLoggedIn"
     routerLink="documentation"
     data-test="documentation-link"
   >
@@ -18,7 +17,7 @@
   </a>
 
   <span class="navbar-spacer"></span>
-  <button *ngIf="isLoggedIn" mat-button (click)="logOut()" (keyup)="logOut()">
+  <button mat-button (click)="logOut()" (keyup)="logOut()">
     Logout
   </button>
 </mat-toolbar>
