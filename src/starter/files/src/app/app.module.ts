@@ -29,14 +29,12 @@ registerLocaleData(localePt, 'pt-BR');
       enabled: true,
       instrumentationKey: '',
       properties: {},
-    })
+    }),
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true },
     { provide: ErrorHandler, useClass: NgApplicationInsightsErrorHandler }
   ],
-  bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

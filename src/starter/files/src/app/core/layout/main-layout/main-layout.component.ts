@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SSOConectorService } from '@wizsolucoes/ngx-wiz-sso';
 
 @Component({
   selector: 'app-main-layout',
@@ -6,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main-layout.component.scss'],
 })
 export class MainLayoutComponent implements OnInit {
-  constructor() {}
+  isLoggedIn = false;
+  constructor(private sso: SSOConectorService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isLoggedIn = !!SSOConectorService.isLogged();
+  }
 }
