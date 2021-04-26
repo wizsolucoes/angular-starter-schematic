@@ -36,5 +36,6 @@ registerLocaleData(localePt, 'pt-BR');
     { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true },
     { provide: ErrorHandler, useClass: NgApplicationInsightsErrorHandler }
   ],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -3,7 +3,6 @@ import { FormControl, AbstractControl, FormBuilder, Validators } from '@angular/
 import { SSOConectorService } from '@wizsolucoes/ngx-wiz-sso';
 import { Router } from "@angular/router";
 import { ElementArrayFinder } from 'protractor';
-import { Util } from 'src/app/shared/utils/util';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
