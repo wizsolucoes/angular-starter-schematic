@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { SSOConectorService } from '@wizsolucoes/ngx-wiz-sso';
 import { Router } from "@angular/router";
-import { ElementArrayFinder } from 'protractor';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
