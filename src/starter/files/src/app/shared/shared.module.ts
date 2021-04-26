@@ -26,7 +26,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  ],  
 })
 export class SharedModule {}

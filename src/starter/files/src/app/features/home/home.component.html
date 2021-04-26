@@ -1,23 +1,4 @@
-<!-- User is logged in -->
-
-<p data-test="my-paragarph" *ngIf="isLoggedIn">
+<p data-test="my-paragarph">
   Acesse o módulo de <strong>Vendas</strong> pelo menu superior para fazer seu
   cálculo.
 </p>
-
-<!-- User is not logged in -->
-<button
-  mat-raised-button
-  color="accent"
-  data-test="login-form"
-  *ngIf="!isLoggedIn && !isLoggingIn"
-  type="submit"
-  (click)="onSubmitLogin()"
->
-  Login
-</button>
-
-<!-- User is logging in -->
-<div *ngIf="isLoggingIn" style="width: 65px;">
-  <wiz-loading type="spinner-continuous"> </wiz-loading>
-</div>

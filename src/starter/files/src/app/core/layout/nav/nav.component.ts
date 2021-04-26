@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SSOConectorService, Token } from '@wizsolucoes/ngx-wiz-sso';
-import { Observable } from 'rxjs';
-import { Util } from '../../../shared/utils/util';
+import { SSOConectorService } from '@wizsolucoes/ngx-wiz-sso';
 
 @Component({
   selector: 'app-nav',
@@ -10,7 +8,6 @@ import { Util } from '../../../shared/utils/util';
   styleUrls: ['./nav.component.scss'],
 })
 export class NavComponent implements OnInit {
-  isLoggedIn = false;
   showNav = false;
   logoUrl =
     'https://raw.githubusercontent.com/wizsolucoes/angular-white-label-schematic/master/docs/logowiz.png';
@@ -23,15 +20,13 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
     this.showNav = !!SSOConectorService.isLogged();
 
-    this.router.events.subscribe((event) => {
+    this.router.events.subscribe(() => {
       this.showNav = !!SSOConectorService.isLogged();
     });
-
-    this.isLoggedIn = !!SSOConectorService.isLogged();
   }
 
   logOut(): void {
     this.sso.logOut();
-    Util.windowReload();
+    this.router.navigate(['/login']);
   }
 }
