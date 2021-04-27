@@ -7,7 +7,6 @@ import {
   applyPolyfills,
   defineCustomElements,
 } from '@wizsolucoes/wiz-loader/loader';
-import { defineCustomElements as defineWizAlert } from '@wizsolucoes/wiz-alerts/loader';
 
 if (environment.production) {
   enableProdMode();
@@ -19,5 +18,4 @@ platformBrowserDynamic()
 
 applyPolyfills().then(() => {
   defineCustomElements();
-  defineWizAlert();
 });
