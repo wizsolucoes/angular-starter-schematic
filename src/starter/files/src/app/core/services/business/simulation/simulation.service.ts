@@ -17,7 +17,7 @@ export class SimulationService {
 
   doSimulation(request: SimulationRequest): Observable<any> {
     return this.http.post(
-      `${this.environment.ssoConfig.apiPath}${SimulationService.PATH}`,
+      `${this.environment.apiUrl}${SimulationService.PATH}`,
       {
         name: request.name,
         cpf: request.cpf,
