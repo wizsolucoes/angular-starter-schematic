@@ -6,9 +6,10 @@ import { RouterModule } from '@angular/router';
 import { NavComponent } from './layout/nav/nav.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxWizSSOModule } from '@wizsolucoes/ngx-wiz-sso';
-import { ssoConfig } from '../../config/sso_config';
+import { environment } from 'src/environments/environment';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+
 
 @NgModule({
   declarations: [MainLayoutComponent, NavComponent],
@@ -17,7 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
     BrowserAnimationsModule,
     RouterModule,
     HttpClientModule,
-    NgxWizSSOModule.forRoot(ssoConfig),
+    NgxWizSSOModule.forRoot(environment.ssoConfig),
     MatToolbarModule,
     MatButtonModule,
   ],

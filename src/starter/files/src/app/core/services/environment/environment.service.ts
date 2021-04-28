@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 export class EnvironmentService {
   production: boolean = environment.production;
   apiUrl: string = environment.apiUrl;
+  ssoConfig = environment.ssoConfig;
   appInsights: { [key: string]: string } = {
     instrumentationKey: environment.appInsights.instrumentationKey,
   };

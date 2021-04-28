@@ -1,9 +1,9 @@
+import { environment } from 'src/environments/environment';
 import { LoginComponent } from './../../../features/login/login.component';
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { NavComponent } from './nav.component';
 import { SSOConectorService, NgxWizSSOModule } from '@wizsolucoes/ngx-wiz-sso';
-import { ssoConfig } from '../../../../config/sso_config';
 import { fakeToken } from '../../../../testing/fakes/fake_token';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -25,7 +25,7 @@ describe('NavComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        NgxWizSSOModule.forRoot(ssoConfig),
+        NgxWizSSOModule.forRoot(environment.ssoConfig),
         MatToolbarModule,
         RouterTestingModule.withRoutes(routes),
       ],
