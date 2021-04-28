@@ -29,7 +29,7 @@ registerLocaleData(localePt, 'pt-BR');
       enabled: true,
       instrumentationKey: '',
       properties: {},
-    })
+    }),
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
@@ -37,6 +37,5 @@ registerLocaleData(localePt, 'pt-BR');
     { provide: ErrorHandler, useClass: NgApplicationInsightsErrorHandler }
   ],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

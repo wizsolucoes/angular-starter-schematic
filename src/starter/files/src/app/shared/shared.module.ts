@@ -7,12 +7,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
-
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule, 
-    NgxMaskModule.forRoot(), 
+    imports: [
+    CommonModule,
+    NgxMaskModule.forRoot(),
     CurrencyMaskModule,
     MatFormFieldModule,
     MatInputModule,
@@ -20,13 +18,13 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
   ],
   exports: [
-    CommonModule, 
-    NgxMaskModule, 
+    CommonModule,
+    NgxMaskModule,
     CurrencyMaskModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
-  ],
+  ],  
 })
 export class SharedModule {}

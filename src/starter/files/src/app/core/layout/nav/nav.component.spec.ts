@@ -1,23 +1,34 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { environment } from 'src/environments/environment';
+import { LoginComponent } from './../../../features/login/login.component';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { NavComponent } from './nav.component';
 import { SSOConectorService, NgxWizSSOModule } from '@wizsolucoes/ngx-wiz-sso';
-import { ssoConfig } from '../../../../config/sso_config';
-import { Util } from '../../../shared/utils/util';
 import { fakeToken } from '../../../../testing/fakes/fake_token';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
 
 describe('NavComponent', () => {
   let component: NavComponent;
   let fixture: ComponentFixture<NavComponent>;
   let template: HTMLElement;
   let mockSSO: jasmine.SpyObj<SSOConectorService>;
+  let router: Router;
 
   beforeEach(() => {
     mockSSO = jasmine.createSpyObj('mockSSO', ['logOut', 'checkLogged']);
+    const routes = [{
+      path: 'login',
+      component: LoginComponent
+    }];
 
     TestBed.configureTestingModule({
-      imports: [ NgxWizSSOModule.forRoot(ssoConfig), MatToolbarModule ],
+      imports: [
+        NgxWizSSOModule.forRoot(environment.ssoConfig),
+        MatToolbarModule,
+        RouterTestingModule.withRoutes(routes),
+      ],
       declarations: [NavComponent],
       providers: [{ provide: SSOConectorService, useValue: mockSSO }],
     });
@@ -29,6 +40,7 @@ describe('NavComponent', () => {
     fixture = TestBed.createComponent(NavComponent);
     component = fixture.componentInstance;
     template = fixture.nativeElement;
+    router = TestBed.inject(Router);
   });
 
   it('should create', () => {
@@ -53,7 +65,7 @@ describe('NavComponent', () => {
       });
     });
 
-    describe('when user if NOT logged in', () => {
+    describe('when user is NOT logged in', () => {
       beforeEach(() => {
         // Given
         userIsLoggedOut();
@@ -64,9 +76,7 @@ describe('NavComponent', () => {
 
       it('should NOT display nav bar menu', () => {
         // Then
-        expect(
-          template.querySelector('[data-test="mat-toolbar"]').children.length
-        ).toBe(2);
+        expect(template.querySelector('[data-test="mat-toolbar"]')).toBeNull();
       });
     });
   });
@@ -76,8 +86,6 @@ describe('NavComponent', () => {
       // Given
       userIsLoggedIn();
 
-      spyOn(Util, 'windowReload').and.callFake(() => {});
-
       // When
       component.logOut();
 
@@ -86,8 +94,55 @@ describe('NavComponent', () => {
     });
   });
 
+  describe('on navigation', () => {
+    it("should set showNav to true if user is logged in", fakeAsync(() => {
+      // Given
+      userIsLoggedIn();
+
+      // When
+      component.ngOnInit();
+
+      fixture.ngZone.run(() => {
+        router.initialNavigation();
+      });
+
+      tick();
+
+      // Then
+      expect(SSOConectorService.isLogged).toHaveBeenCalled();
+      expect(component.showNav).toBeTrue();
+    }));
+
+    it("should set showNav to false if user is NOT logged in", fakeAsync(() => {
+      // Given
+      userIsLoggedOut();
+
+      // When
+      component.ngOnInit();
+
+      fixture.ngZone.run(() => {
+        router.initialNavigation();
+      });
+
+      tick();
+
+      // Then
+      expect(SSOConectorService.isLogged).toHaveBeenCalled();
+      expect(component.showNav).toBeFalse();
+    }));
+  });
+
   describe('a11y', () => {
-    it('images should be acessible', () => {
+    beforeEach(() => {
+      // Given
+      userIsLoggedIn();
+
+      // When
+      fixture.detectChanges();
+    });
+
+    //Then
+    it('images should be accessible', () => {
       expect(template.querySelector('[data-test="logo-img"]')).toBeTruthy();
 
       const logoImage = template.querySelector(
