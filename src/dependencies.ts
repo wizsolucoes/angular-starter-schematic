@@ -9,8 +9,8 @@ export const dependencies: { [key: string]: string } = {
 };
 
 export const devDependencies: { [key: string]: string } = {
-  "@commitlint/cli": "^9.1.2",
-  "@commitlint/config-conventional": "^10.0.0",
+  "@commitlint/cli": "^12.1.1",
+  "@commitlint/config-conventional": "^12.1.1",
   "commitlint-azure-pipelines-cli": "^1.0.3",
   husky: "^4.2.5",
   "json-server": "^0.16.1",
