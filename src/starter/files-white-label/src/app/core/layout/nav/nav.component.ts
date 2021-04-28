@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigurationService } from '../../services/configuration/configuration.service';
 import { SSOConectorService } from '@wizsolucoes/ngx-wiz-sso';
-import { Util } from '../../../shared/utils/util';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -9,21 +9,26 @@ import { Util } from '../../../shared/utils/util';
   styleUrls: ['./nav.component.scss'],
 })
 export class NavComponent implements OnInit {
-  isLoggedIn = false;
+  showNav = false;
   features: string[];
   logoUrl: string;
 
   constructor(
     private configurationService: ConfigurationService,
-    private sso: SSOConectorService
+    private sso: SSOConectorService,
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {
-    this.isLoggedIn = !!SSOConectorService.isLogged();
-
     this.configurationService.getConfig().subscribe((data) => {
       this.features = data.features;
       this.logoUrl = data.logoImageUrl;
+    });
+
+    this.showNav = !!SSOConectorService.isLogged();
+
+    this.router.events.subscribe(() => {
+      this.showNav = !!SSOConectorService.isLogged();
     });
   }
 
@@ -33,6 +38,6 @@ export class NavComponent implements OnInit {
 
   logOut(): void {
     this.sso.logOut();
-    Util.windowReload();
+    this.router.navigate(['/login']);
   }
 }

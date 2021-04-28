@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000'
+  apiUrl: 'http://localhost:3000',
   ssoConfig: {
     apiPath: '<<urldo servico>>',
     clientID: '<<Cliente ID>>',
@@ -17,10 +17,10 @@ export const environment = {
       ssoTimeOut: 60000, // parâmetro opcional, determina o timeout para o SSO
       tokenAutoRefresh: true, // parâmetro opcional, determina se o token deve ser renovado
       loginRoute: 'login', // url que aponta para onde redirecionar no caso de não haver token
-    },
-    appInsights: {
-      instrumentationKey: '',
-    },
+    }
+  },
+  appInsights: {
+    instrumentationKey: '',
   },
 };
 
