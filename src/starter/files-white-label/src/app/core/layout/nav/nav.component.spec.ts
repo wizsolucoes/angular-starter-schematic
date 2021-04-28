@@ -1,12 +1,14 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { NavComponent } from './nav.component';
 import { ConfigurationService } from '../../services/configuration/configuration.service';
 import { SSOConectorService, NgxWizSSOModule } from '@wizsolucoes/ngx-wiz-sso';
 import { ssoConfig } from '../../../../config/sso_config';
-import { Util } from '../../../shared/utils/util';
 import { fakeToken } from '../../../../testing/fakes/fake_token';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { LoginComponent } from './../../../features/login/login.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
 
 describe('NavComponent', () => {
   let component: NavComponent;
@@ -14,6 +16,7 @@ describe('NavComponent', () => {
   let template: HTMLElement;
   let mockConfigService: jasmine.SpyObj<ConfigurationService>;
   let mockSSO: jasmine.SpyObj<SSOConectorService>;
+  let router: Router;
 
   beforeEach(() => {
     mockConfigService = jasmine.createSpyObj('ConfigurationService', [
@@ -21,9 +24,19 @@ describe('NavComponent', () => {
     ]);
 
     mockSSO = jasmine.createSpyObj('mockSSO', ['logOut', 'checkLogged']);
+    const routes = [
+      {
+        path: 'login',
+        component: LoginComponent,
+      },
+    ];
 
     TestBed.configureTestingModule({
-      imports: [ NgxWizSSOModule.forRoot(ssoConfig), MatToolbarModule ],
+      imports: [
+        NgxWizSSOModule.forRoot(ssoConfig),
+        MatToolbarModule,
+        RouterTestingModule.withRoutes(routes),
+      ],
       declarations: [NavComponent],
       providers: [
         { provide: ConfigurationService, useValue: mockConfigService },
@@ -39,6 +52,7 @@ describe('NavComponent', () => {
     component = fixture.componentInstance;
     template = fixture.nativeElement;
     component.features = [];
+    router = TestBed.inject(Router);
   });
 
   it('should create', () => {
@@ -161,8 +175,6 @@ describe('NavComponent', () => {
       // Given
       userIsLoggedIn();
 
-      spyOn(Util, 'windowReload').and.callFake(() => {});
-
       // When
       component.logOut();
 
@@ -171,14 +183,73 @@ describe('NavComponent', () => {
     });
   });
 
-  describe('a11y', () => {
-    it('images should be acessible', () => {
-      expect(template.querySelector('[data-test="logo-img"]')).toBeTruthy();
+  describe('on navigation', () => {
+    it("should set showNav to true if user is logged in", fakeAsync(() => {
+      // Given
+      userIsLoggedIn();
 
-      const logoImage = template.querySelector(
-        '[data-test="logo-img"]'
-      ) as HTMLImageElement;
-      expect(logoImage.alt).toEqual('logo');
+      const data = {
+        features: ['sales', 'documentation'],
+      };
+
+      mockConfigService.getConfig.and.returnValue(of(data));
+
+      // When
+      component.ngOnInit();
+
+      fixture.ngZone.run(() => {
+        router.initialNavigation();
+      });
+
+      tick();
+
+      // Then
+      expect(SSOConectorService.isLogged).toHaveBeenCalled();
+      expect(component.showNav).toBeTrue();
+    }));
+
+    it("should set showNav to false if user is NOT logged in", fakeAsync(() => {
+      // Given
+      userIsLoggedOut();
+
+      const data = {
+        features: ['sales', 'documentation'],
+      };
+
+      mockConfigService.getConfig.and.returnValue(of(data));
+
+      // When
+      component.ngOnInit();
+
+      fixture.ngZone.run(() => {
+        router.initialNavigation();
+      });
+
+      tick();
+
+      // Then
+      expect(SSOConectorService.isLogged).toHaveBeenCalled();
+      expect(component.showNav).toBeFalse();
+    }));
+  });
+
+  describe('a11y', () => {
+    beforeEach(() => {
+      // Given
+      userIsLoggedIn();
+
+      // When
+      fixture.detectChanges();
+
+      //Then
+      it('images should be accessible', () => {
+        expect(template.querySelector('[data-test="logo-img"]')).toBeTruthy();
+
+        const logoImage = template.querySelector(
+          '[data-test="logo-img"]'
+        ) as HTMLImageElement;
+        expect(logoImage.alt).toEqual('logo');
+      });
     });
   });
 });
