@@ -165,23 +165,22 @@ Integração com [NGX Wiz SSO](https://github.com/wizsolucoes/ngx-wiz-sso). Um m
 <!-- omit in toc -->
 ##### Configuração
 
-Adicione as configurações de SSO do seu projeto ao arquivo [src/config/sso_config.ts](./src/config/sso_config.ts).
+Adicione as configurações de SSO do seu projeto aos arquivos da pasta [src/environments](./src/starter/files/src/environments).
 
 ```typescript
-export const ssoConfig = {
-  apiPath: '<<urldo servico>>',
-  clientID: '<<Cliente ID>>',
-  clientSecret: '<<Cliente Secret>>',
-  grantType: '<<Grant Type>>',
-  authedPaths: ['<<dns a ser autenticado>>'],
-  scope: '<<scope do projeto>>',
-  options: {
-    // parâmetros opcionais
-    ssoTimeOut: 60000, // parâmetro opcional, determina o timeout para o SSO
-    tokenAutoRefresh: true, // parâmetro opcional, determina se o token deve ser renovado
-    loginRoute: 'login', // url que aponta para onde redirecionar no caso de não haver token
-  },
-};
+ssoConfig: {
+    apiPath: '<<urldo servico>>',
+    clientID: '<<Cliente ID>>',
+    clientSecret: '<<Cliente Secret>>',
+    grantType: '<<Grant Type>>',
+    authedPaths: ['<<dns a ser autenticado>>'],
+    scope: '<<scope do projeto>>',
+    options: {
+      // parâmetro opcional
+      ssoTimeOut: 60000, // parâmetro opcional, determina o timeout para o SSO
+      tokenAutoRefresh: true, // parâmetro opcional, determina se o token deve ser renovado
+      loginRoute: 'login', // url que aponta para onde redirecionar no caso de não haver token
+    },
 ```
 
 O módulo do NGX Wiz SSO está importado no `CoreModule`.
@@ -193,14 +192,14 @@ O módulo do NGX Wiz SSO está importado no `CoreModule`.
     BrowserModule,
     RouterModule,
     HttpClientModule,
-    NgxWizSSOModule.forRoot(ssoConfig), // <--- import do NGX Wiz SSO
+    NgxWizSSOModule.forRoot(environment.ssoConfig), // <--- import do NGX Wiz SSO
   ],
   exports: [MainLayoutComponent, NgxWizSSOModule],
 })
 export class CoreModule {}
 ```
 
-O componente `home` tem um botão de "Login" que exemplifica como usar o plugin. Para entender melhor as configurações consulte a documentação do projeto [NGX Wiz SSO](https://github.com/wizsolucoes/ngx-wiz-sso). 
+O componente `login` tem um botão de "Entrar" que exemplifica como usar o plugin. Para entender melhor as configurações consulte a documentação do projeto [NGX Wiz SSO](https://github.com/wizsolucoes/ngx-wiz-sso). 
 
 #### Monitoramento com Application Insights
 
