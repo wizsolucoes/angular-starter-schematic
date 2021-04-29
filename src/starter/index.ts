@@ -133,6 +133,7 @@ function addScripts(): Rule {
     scripts["server"] = "json-server --watch server/db.json";
     scripts["format:check"] = "prettier **/*.{html,ts,js,json,scss} --check";
     scripts["format:write"] = "prettier **/*.{html,ts,js,json,scss} --write";
+    scripts["test:ci"] = "ng test --watch=false --code-coverage --browsers=ChromeHeadless";
 
     tree.overwrite("package.json", JSON.stringify(packageJsonObject, null, 2));
 
