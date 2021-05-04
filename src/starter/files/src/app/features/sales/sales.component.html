@@ -76,13 +76,14 @@
 
 <div *ngIf="simulationResult">
   <table class="table is-bordered is-striped">
+    <caption>Resultado da simulação</caption>
     <tbody>
       <tr>
-        <th>Modalidade de amortização:</th>
+        <th scope="auto">Modalidade de amortização:</th>
         <td>{{ simulationResult.method | uppercase }}</td>
       </tr>
       <tr>
-        <th>Valor a ser financiado:</th>
+        <th scope="auto">Valor a ser financiado:</th>
         <td>
           {{
             simulationResult.amountFinanced | currency: "BRL":"":"1.2-2":"pt-BR"
@@ -90,7 +91,7 @@
         </td>
       </tr>
       <tr>
-        <th>Prestação:</th>
+        <th scope="auto">Prestação:</th>
         <td>
           {{
             simulationResult.installment | currency: "BRL":"":"1.2-2":"pt-BR"
@@ -98,25 +99,26 @@
         </td>
       </tr>
       <tr>
-        <th>Número de períodos:</th>
+        <th scope="auto">Número de períodos:</th>
         <td>{{ simulationResult.quantity }}</td>
       </tr>
     </tbody>
   </table>
 
   <table class="table is-bordered is-striped">
+    <caption>Cabeçalho</caption>
     <thead>
       <tr class="app-table-header">
-        <th>No.</th>
-        <th>Prestação</th>
-        <th>Amortização</th>
-        <th>Juros</th>
-        <th>Saldo devedor</th>
+        <th scope="auto">No.</th>
+        <th scope="auto">Prestação</th>
+        <th scope="auto">Amortização</th>
+        <th scope="auto">Juros</th>
+        <th scope="auto">Saldo devedor</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let item of simulationResult.itens">
-        <th>{{ item.number }}</th>
+        <th scope="auto">{{ item.number }}</th>
         <td class="app-money">
           {{ item.installment | currency: "BRL":"":"1.2-2":"pt-BR" }}
         </td>

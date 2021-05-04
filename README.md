@@ -20,7 +20,6 @@
     - [2. Gere uma nova aplicação e instale e execute o schematic](#2-gere-uma-nova-aplicação-e-instale-e-execute-o-schematic)
   - [Aprenda mais sobre schematics](#aprenda-mais-sobre-schematics)
 
-
 ## Sobre
 
 Schematic para gerar código boilerplate com a arquitetura de referência corporativa para aplicações Angular. Compatível com as [versões suportadas do Angular](https://angular.io/guide/releases#support-policy-and-schedule) (^8.0.0, ^9.0.0 e ^10.0.0) e otimizado para as versões ^10.0.0.
@@ -55,7 +54,7 @@ Errors:
 
   Data path "" should have required property 'white-label'.
 ```
- 
+
 ### Opções
 
 #### White-label
@@ -68,14 +67,14 @@ Ao executar o schematic, você deve escolher se a aplicação é 'White-label' o
 
 Para entender mais sobre a arquitetura 'White-label', consulte [a documentação neste repositório.](./docs/white-label.md)
 
-
 ## Sobre a aplicação gerada
 
 ### Estrutura
 
 A aplicação tem 2 partes principais:
- - A parte "eager" que será carregada na inicialização na aplicação (o `main.js` bundle).
- - A parte "lazy" composta por funcionalidades da aplicação e que será carregada sob demanda como resultado da navegação do usuário.
+
+- A parte "eager" que será carregada na inicialização na aplicação (o `main.js` bundle).
+- A parte "lazy" composta por funcionalidades da aplicação e que será carregada sob demanda como resultado da navegação do usuário.
 
 !["arquitetura da aplicação"](docs/arquitecture.jpeg "arquitetura da aplicação")
 
@@ -149,12 +148,12 @@ O shared é onde todos os componentes compartilhados, pipes, filters e services 
 #### Referências
 
 A estrutura é inspirada nas seguintes fontes:
- - [Como estruturar componentes em grandes projetos - Bruno Brito](https://www.brunobrito.net.br/estruturando-components-angular/)
- - [How to architect epic Angular app in less than 10 minutes! - Tomas Trajan](https://medium.com/@tomastrajan/how-to-build-epic-angular-app-with-clean-architecture-91640ed1656)
- - [Application structure and NgModules - Angular coding style guide](https://angular.io/guide/styleguide#application-structure-and-ngmodules)
 
+- [Como estruturar componentes em grandes projetos - Bruno Brito](https://www.brunobrito.net.br/estruturando-components-angular/)
+- [How to architect epic Angular app in less than 10 minutes! - Tomas Trajan](https://medium.com/@tomastrajan/how-to-build-epic-angular-app-with-clean-architecture-91640ed1656)
+- [Application structure and NgModules - Angular coding style guide](https://angular.io/guide/styleguide#application-structure-and-ngmodules)
 
-### Recursos 
+### Recursos
 
 O seguintes recursos já estão implementados na aplicação starter. Para alguns dos recursos é necessário fazer uma configuração antes de utilizá-los.
 
@@ -163,7 +162,7 @@ O seguintes recursos já estão implementados na aplicação starter. Para algun
 Integração com [NGX Wiz SSO](https://github.com/wizsolucoes/ngx-wiz-sso). Um módulo Angular feito para facilitar processo de autenticação e renovação de token no SSO da Wiz.
 
 <!-- omit in toc -->
-##### Configuração
+##### Configuração SSO
 
 Adicione as configurações de SSO do seu projeto aos arquivos da pasta [src/environments](./src/starter/files/src/environments).
 
@@ -199,14 +198,14 @@ O módulo do NGX Wiz SSO está importado no `CoreModule`.
 export class CoreModule {}
 ```
 
-O componente `login` tem um botão de "Entrar" que exemplifica como usar o plugin. Para entender melhor as configurações consulte a documentação do projeto [NGX Wiz SSO](https://github.com/wizsolucoes/ngx-wiz-sso). 
+O componente `login` tem um botão de "Entrar" que exemplifica como usar o plugin. Para entender melhor as configurações consulte a documentação do projeto [NGX Wiz SSO](https://github.com/wizsolucoes/ngx-wiz-sso).
 
 #### Monitoramento com Application Insights
 
 Monitoramento de erros e de performance da aplicação Angular usando o [Azure Application Insights](https://docs.microsoft.com/en-us/azure/azure-monitor/app/javascript).
 
 <!-- omit in toc -->
-##### Configuração
+##### Configuração Application Insights
 
 Adicione sua chave de instrumentação ao [arquivo de variáveis por ambiente](./src/environments/environment.prod.ts):
 
