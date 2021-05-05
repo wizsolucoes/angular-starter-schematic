@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
     password: ['', [Validators.required]],
   });
   loginErrorMessage: string;
-  loginButtonMessage: string = 'Entrar';
+  loginButtonMessage = 'Entrar';
 
   constructor(
     private fb: FormBuilder,

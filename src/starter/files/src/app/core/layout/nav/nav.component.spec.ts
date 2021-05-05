@@ -141,14 +141,11 @@ describe('NavComponent', () => {
 
   describe('a11y', () => {
     beforeEach(() => {
-      // Given
       userIsLoggedIn();
 
-      // When
       fixture.detectChanges();
     });
 
-    //Then
     it('images should be accessible', () => {
       expect(template.querySelector('[data-test="logo-img"]')).toBeTruthy();
 
