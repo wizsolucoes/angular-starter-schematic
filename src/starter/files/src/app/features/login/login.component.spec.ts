@@ -70,10 +70,13 @@ describe('LoginComponent', () => {
         })
       );
 
+      const email = 'email';
+      const password = 'password';
+
       spyOn(router, 'navigate');
 
-      component.form.controls['email'].setErrors(null);
-      component.form.controls['password'].setErrors(null);
+      component.form.controls[email].setErrors(null);
+      component.form.controls[password].setErrors(null);
 
       // When
       component.onSubmit();
@@ -88,9 +91,11 @@ describe('LoginComponent', () => {
 
     it('should not call sso loginWithCredentials when form is invalid', () => {
       // Given
+      const email = 'email';
+      const password = 'password';
 
-      component.form.controls['email'].setErrors({ required: true });
-      component.form.controls['password'].setErrors({ required: true });
+      component.form.controls[email].setErrors({ required: true });
+      component.form.controls[password].setErrors({ required: true });
 
       // When
       component.onSubmit();
@@ -101,12 +106,15 @@ describe('LoginComponent', () => {
 
     it('should handle sso errors', () => {
       // Given
+      const email = 'email';
+      const password = 'password';
+
       mockSSO.loginWithCredentials.and.callFake(() => {
         return throwError('fake error');
       });
 
-      component.form.controls['email'].setErrors(null);
-      component.form.controls['password'].setErrors(null);
+      component.form.controls[email].setErrors(null);
+      component.form.controls[password].setErrors(null);
 
       // When
       component.onSubmit();
