@@ -153,7 +153,7 @@ describe('NavComponent', () => {
   });
 });
 
-// Helper funtions
+// Helper functions
 
 function userIsLoggedIn(): void {
   spyOn(SSOConectorService, 'isLogged').and.returnValue({
