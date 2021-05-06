@@ -30,7 +30,7 @@ module.exports = function (config) {
    },
     reporters: ['progress', 'kjhtml', 'coverage', 'junit'],
     junitReporter: {
-      outputDir: 'test-results',
+      outputDir: './coverage/test-results',
       outputFile: 'junit.xml',
       useBrowserName: false,
     },
