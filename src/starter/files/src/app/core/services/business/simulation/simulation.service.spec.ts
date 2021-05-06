@@ -25,7 +25,7 @@ describe('SimulationService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should send simulatio request to http client', () => {
+  it('should send simulation request to http client', () => {
     // Given
     const fakeRequest: SimulationRequest = {
       name: 'My name',

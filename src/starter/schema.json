@@ -7,7 +7,7 @@
   "properties": {
     "project": {
       "type": "string",
-      "description": "Generate in specific Anuglar CLI workspace project"
+      "description": "Generate in specific Angular CLI workspace project"
     },
     "white-label": {
       "type": "boolean",
