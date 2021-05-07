@@ -20,18 +20,18 @@ const routes: Routes = [
       import('./features/documentation/documentation.module').then(
         (m) => m.DocumentationModule
       ),
-      canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'sales',
     loadChildren: () =>
       import('./features/sales/sales.module').then((m) => m.SalesModule),
-      canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
-  { 
-    path: 'login', 
-    loadChildren: () => 
-      import('./features/login/login.module').then(m => m.LoginModule), 
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./features/login/login.module').then((m) => m.LoginModule),
   },
   {
     path: '**',

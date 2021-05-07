@@ -1,12 +1,12 @@
-import { Component, OnInit } from "@angular/core";
-import { ConfigurationService } from "../../services/configuration/configuration.service";
-import { SSOConectorService } from "@wizsolucoes/ngx-wiz-sso";
-import { Router } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { ConfigurationService } from '../../services/configuration/configuration.service';
+import { SSOConectorService } from '@wizsolucoes/ngx-wiz-sso';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: "app-nav",
-  templateUrl: "./nav.component.html",
-  styleUrls: ["./nav.component.scss"],
+  selector: 'app-nav',
+  templateUrl: './nav.component.html',
+  styleUrls: ['./nav.component.scss'],
 })
 export class NavComponent implements OnInit {
   showNav = false;
@@ -39,6 +39,6 @@ export class NavComponent implements OnInit {
 
   logOut(): void {
     this.sso.logOut();
-    this.router.navigate(["/login"]);
+    this.router.navigate(['/login']);
   }
 }

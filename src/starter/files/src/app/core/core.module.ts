@@ -10,7 +10,6 @@ import { environment } from 'src/environments/environment';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 
-
 @NgModule({
   declarations: [MainLayoutComponent, NavComponent],
   imports: [

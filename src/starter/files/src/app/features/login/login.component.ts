@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormControl,
+  AbstractControl,
+  FormBuilder,
+  Validators,
+} from '@angular/forms';
 import { SSOConectorService } from '@wizsolucoes/ngx-wiz-sso';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,12 +18,13 @@ export class LoginComponent implements OnInit {
     password: ['', [Validators.required]],
   });
   loginErrorMessage: string;
-  loginButtonMessage: string = "Entrar";
+  loginButtonMessage: string = 'Entrar';
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private sso: SSOConectorService,
-    private router: Router,
-     ) {}
+    private router: Router
+  ) {}
 
   ngOnInit(): void {}
 
@@ -34,7 +40,7 @@ export class LoginComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    this.loginButtonMessage = "Entrando";
+    this.loginButtonMessage = 'Entrando';
     this.sso
       .loginWithCredentials({
         userName: this.form.value.email,
@@ -46,7 +52,7 @@ export class LoginComponent implements OnInit {
         },
         (error) => {
           this.loginErrorMessage = error.error_description;
-          this.loginButtonMessage = "Entrar";
+          this.loginButtonMessage = 'Entrar';
         }
       );
   }

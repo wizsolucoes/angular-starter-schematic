@@ -18,17 +18,22 @@ describe('LoginComponent', () => {
 
   beforeEach(async () => {
     mockSSO = jasmine.createSpyObj('mockSSO', ['loginWithCredentials']);
-    const routes = [{
-      path: 'home',
-      component: HomeComponent
-    }];
+    const routes = [
+      {
+        path: 'home',
+        component: HomeComponent,
+      },
+    ];
 
     await TestBed.configureTestingModule({
-      declarations: [ LoginComponent ],
-      imports: [SharedModule, BrowserAnimationsModule, RouterTestingModule.withRoutes(routes)],
+      declarations: [LoginComponent],
+      imports: [
+        SharedModule,
+        BrowserAnimationsModule,
+        RouterTestingModule.withRoutes(routes),
+      ],
       providers: [{ provide: SSOConectorService, useValue: mockSSO }],
-    })
-    .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -43,7 +48,7 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have login form', () =>{
+  it('should have login form', () => {
     expect(template.querySelector('form[data-test="login"]')).toBeTruthy();
 
     expect(template.querySelector('input[data-test="email"]')).toBeTruthy();
@@ -53,7 +58,7 @@ describe('LoginComponent', () => {
     expect(template.querySelector('button[data-test="submit"]')).toBeTruthy();
   });
 
-  describe("#onSubmit", () => {
+  describe('#onSubmit', () => {
     it('should call sso loginWithCredentials when form is valid', () => {
       // Given
       mockSSO.loginWithCredentials.and.returnValue(
@@ -67,8 +72,8 @@ describe('LoginComponent', () => {
 
       spyOn(router, 'navigate');
 
-      component.form.controls["email"].setErrors(null);
-      component.form.controls["password"].setErrors(null);
+      component.form.controls['email'].setErrors(null);
+      component.form.controls['password'].setErrors(null);
 
       // When
       component.onSubmit();
@@ -76,7 +81,7 @@ describe('LoginComponent', () => {
       // Then
       expect(mockSSO.loginWithCredentials).toHaveBeenCalledWith({
         userName: component.form.value.email,
-        password: component.form.value.password
+        password: component.form.value.password,
       });
       expect(router.navigate).toHaveBeenCalledWith(['/home']);
     });
@@ -84,8 +89,8 @@ describe('LoginComponent', () => {
     it('should not call sso loginWithCredentials when form is invalid', () => {
       // Given
 
-      component.form.controls["email"].setErrors({ 'required': true });
-      component.form.controls["password"].setErrors({ 'required': true });
+      component.form.controls['email'].setErrors({ required: true });
+      component.form.controls['password'].setErrors({ required: true });
 
       // When
       component.onSubmit();
@@ -97,11 +102,11 @@ describe('LoginComponent', () => {
     it('should handle sso errors', () => {
       // Given
       mockSSO.loginWithCredentials.and.callFake(() => {
-        return throwError("fake error");
+        return throwError('fake error');
       });
 
-      component.form.controls["email"].setErrors(null);
-      component.form.controls["password"].setErrors(null);
+      component.form.controls['email'].setErrors(null);
+      component.form.controls['password'].setErrors(null);
 
       // When
       component.onSubmit();

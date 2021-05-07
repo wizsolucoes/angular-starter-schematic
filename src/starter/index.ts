@@ -11,29 +11,29 @@ import {
   MergeStrategy,
   forEach,
   noop,
-} from "@angular-devkit/schematics";
+} from '@angular-devkit/schematics';
 
-import { NodePackageInstallTask } from "@angular-devkit/schematics/tasks";
+import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 
 import {
   addPackageJsonDependency,
   NodeDependency,
   NodeDependencyType,
-} from "@schematics/angular/utility/dependencies";
+} from '@schematics/angular/utility/dependencies';
 
-import { Schema } from "./schema";
-import { createDefaultPath } from "@schematics/angular/utility/workspace";
+import { Schema } from './schema';
+import { createDefaultPath } from '@schematics/angular/utility/workspace';
 
-import { dependencies, devDependencies } from "../dependencies";
+import { dependencies, devDependencies } from '../dependencies';
 
 let defaultPath: string;
 
 export function main(_options: Schema): Rule {
   return async (tree: Tree, _context: SchematicContext) => {
-    const workspaceConfigBuffer = tree.read("angular.json");
+    const workspaceConfigBuffer = tree.read('angular.json');
 
     if (!workspaceConfigBuffer) {
-      throw new SchematicsException("Not an Angular CLI workspace");
+      throw new SchematicsException('Not an Angular CLI workspace');
     }
 
     const workspaceConfig = JSON.parse(workspaceConfigBuffer.toString());
@@ -46,9 +46,9 @@ export function main(_options: Schema): Rule {
       addHuskyHook(),
       addDependencies(),
       generateProjectFiles(_options),
-      _options['white-label'] ? 
-        generateWhiteLabelProjectFiles(_options) :
-        noop(),
+      _options['white-label']
+        ? generateWhiteLabelProjectFiles(_options)
+        : noop(),
       createStagingEnvironment(),
       configureTSLint(),
     ]);
@@ -57,9 +57,9 @@ export function main(_options: Schema): Rule {
 
 function generateProjectFiles(_options: Schema): Rule {
   return (tree: Tree, _context: SchematicContext) => {
-    const projectPath = defaultPath.replace("src/app", "");
+    const projectPath = defaultPath.replace('src/app', '');
 
-    const sourceTemplates = url("./files");
+    const sourceTemplates = url('./files');
 
     const sourceParameterizedTemplates = apply(sourceTemplates, [
       move(projectPath),
@@ -77,9 +77,9 @@ function generateWhiteLabelProjectFiles(_options: Schema): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     tree.delete(`${defaultPath}/core/interceptors/default.interceptor.ts`);
 
-    const projectPath = defaultPath.replace("src/app", "");
+    const projectPath = defaultPath.replace('src/app', '');
 
-    const sourceTemplates = url("./files-white-label");
+    const sourceTemplates = url('./files-white-label');
 
     const sourceParamatrizedTemplates = apply(sourceTemplates, [
       move(projectPath),
@@ -121,21 +121,22 @@ function addDependencies(): Rule {
 
 function addScripts(): Rule {
   return (tree: Tree, _context: SchematicContext) => {
-    const packageJsonBuffer = tree.read("package.json");
+    const packageJsonBuffer = tree.read('package.json');
 
     if (!packageJsonBuffer) {
-      throw new SchematicsException("No package.json file found");
+      throw new SchematicsException('No package.json file found');
     }
 
     const packageJsonObject = JSON.parse(packageJsonBuffer.toString());
     const scripts = packageJsonObject.scripts;
 
-    scripts["server"] = "json-server --watch server/db.json";
-    scripts["format:check"] = "prettier **/*.{html,ts,js,json,scss} --check";
-    scripts["format:write"] = "prettier **/*.{html,ts,js,json,scss} --write";
-    scripts["test:ci"] = "ng test --watch=false --code-coverage --browsers=ChromeHeadless";
+    scripts['server'] = 'json-server --watch server/db.json';
+    scripts['format:check'] = 'prettier **/*.{html,ts,js,json,scss} --check';
+    scripts['format:write'] = 'prettier **/*.{html,ts,js,json,scss} --write';
+    scripts['test:ci'] =
+      'ng test --watch=false --code-coverage --browsers=ChromeHeadless';
 
-    tree.overwrite("package.json", JSON.stringify(packageJsonObject, null, 2));
+    tree.overwrite('package.json', JSON.stringify(packageJsonObject, null, 2));
 
     return tree;
   };
@@ -143,21 +144,21 @@ function addScripts(): Rule {
 
 function addHuskyHook(): Rule {
   return (tree: Tree, _context: SchematicContext) => {
-    const packageJsonBuffer = tree.read("package.json");
+    const packageJsonBuffer = tree.read('package.json');
 
     if (!packageJsonBuffer) {
-      throw new SchematicsException("No package.json file found");
+      throw new SchematicsException('No package.json file found');
     }
 
     const packageJsonObject = JSON.parse(packageJsonBuffer.toString());
 
-    packageJsonObject["husky"] = {
+    packageJsonObject['husky'] = {
       hooks: {
-        "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+        'commit-msg': 'commitlint -E HUSKY_GIT_PARAMS',
       },
     };
 
-    tree.overwrite("package.json", JSON.stringify(packageJsonObject, null, 2));
+    tree.overwrite('package.json', JSON.stringify(packageJsonObject, null, 2));
 
     return tree;
   };
@@ -174,11 +175,11 @@ function createStagingEnvironment(): Rule {
 
 function configureTSLint(): Rule {
   return (tree: Tree, _context: SchematicContext) => {
-    const fileName = "tslint.json";
+    const fileName = 'tslint.json';
     const tsLintConfigBuffer = tree.read(fileName);
     const tsLintConfig = JSON.parse(tsLintConfigBuffer!.toString());
 
-    tsLintConfig.extends = ["tslint:recommended", "tslint-config-prettier"];
+    tsLintConfig.extends = ['tslint:recommended', 'tslint-config-prettier'];
 
     tree.overwrite(fileName, JSON.stringify(tsLintConfig, null, 2));
 
@@ -189,15 +190,15 @@ function configureTSLint(): Rule {
 function _createStagingEnvironmentFile(defaultProjectPath: string): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     const environmentFilePath = defaultProjectPath.replace(
-      "/app",
-      "/environments/environment.ts"
+      '/app',
+      '/environments/environment.ts'
     );
 
     const environmentFileContent = tree.read(environmentFilePath)!.toString();
 
     const stagingEnvFilePath = environmentFilePath.replace(
-      "environment.ts",
-      "environment.staging.ts"
+      'environment.ts',
+      'environment.staging.ts'
     );
 
     tree.create(stagingEnvFilePath, environmentFileContent);
@@ -223,26 +224,26 @@ function _createStagingEnvironmentConfig(): Rule {
     stagingEnvironmentBuildConfig.fileReplacements.forEach(
       (replacement: { [key: string]: string }) => {
         if (replacement.with) {
-          replacement.with = replacement.with.replace("prod", "staging");
+          replacement.with = replacement.with.replace('prod', 'staging');
         }
       }
     );
 
     stagingEnvironmentServeConfig.browserTarget = stagingEnvironmentServeConfig.browserTarget.replace(
-      "production",
-      "staging"
+      'production',
+      'staging'
     );
 
     stagingEnvironmentE2eConfig.devServerTarget = stagingEnvironmentE2eConfig.devServerTarget.replace(
-      "production",
-      "staging"
+      'production',
+      'staging'
     );
 
-    buildConfigs["staging"] = stagingEnvironmentBuildConfig;
-    serveConfigs["staging"] = stagingEnvironmentServeConfig;
-    e2eConfigs["staging"] = stagingEnvironmentE2eConfig;
+    buildConfigs['staging'] = stagingEnvironmentBuildConfig;
+    serveConfigs['staging'] = stagingEnvironmentServeConfig;
+    e2eConfigs['staging'] = stagingEnvironmentE2eConfig;
 
-    tree.overwrite("angular.json", JSON.stringify(workspaceConfig, null, 2));
+    tree.overwrite('angular.json', JSON.stringify(workspaceConfig, null, 2));
 
     return tree;
   };
@@ -272,7 +273,7 @@ function _overwriteIfExists(host: Tree): Rule {
 }
 
 function _getWorkspaceConfig(tree: Tree): { [key: string]: any } {
-  const workspaceConfigBuffer = tree.read("angular.json");
+  const workspaceConfigBuffer = tree.read('angular.json');
   return JSON.parse(workspaceConfigBuffer!.toString());
 }
 

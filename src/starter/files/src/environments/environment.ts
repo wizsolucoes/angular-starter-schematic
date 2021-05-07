@@ -17,7 +17,7 @@ export const environment = {
       ssoTimeOut: 60000, // parâmetro opcional, determina o timeout para o SSO
       tokenAutoRefresh: true, // parâmetro opcional, determina se o token deve ser renovado
       loginRoute: 'login', // url que aponta para onde redirecionar no caso de não haver token
-    }
+    },
   },
   appInsights: {
     instrumentationKey: '',

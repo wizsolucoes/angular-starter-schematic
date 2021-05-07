@@ -9,7 +9,9 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "build:watch": "tsc -p tsconfig.json --watch",
-    "test": "npm run build && jasmine src/**/*_spec.js"
+    "test": "npm run build && jasmine src/**/*_spec.js",
+    "format:check": "prettier **/*.{html,ts,json,scss} --check",
+    "format:write": "prettier **/*.{html,ts,json,scss} --write"
   },
   "keywords": [
     "schematics"
@@ -27,6 +29,7 @@
   "devDependencies": {
     "@types/jasmine": "~3.5.0",
     "@types/node": "^12.11.1",
-    "jasmine": "^3.5.0"
+    "jasmine": "^3.5.0",
+    "prettier": "^2.2.1"
   }
 }
