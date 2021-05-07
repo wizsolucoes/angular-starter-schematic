@@ -1,6 +1,11 @@
 import { environment } from 'src/environments/environment';
 import { LoginComponent } from './../../../features/login/login.component';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { of } from 'rxjs';
 import { NavComponent } from './nav.component';
 import { SSOConectorService, NgxWizSSOModule } from '@wizsolucoes/ngx-wiz-sso';
@@ -18,10 +23,12 @@ describe('NavComponent', () => {
 
   beforeEach(() => {
     mockSSO = jasmine.createSpyObj('mockSSO', ['logOut', 'checkLogged']);
-    const routes = [{
-      path: 'login',
-      component: LoginComponent
-    }];
+    const routes = [
+      {
+        path: 'login',
+        component: LoginComponent,
+      },
+    ];
 
     TestBed.configureTestingModule({
       imports: [
@@ -95,7 +102,7 @@ describe('NavComponent', () => {
   });
 
   describe('on navigation', () => {
-    it("should set showNav to true if user is logged in", fakeAsync(() => {
+    it('should set showNav to true if user is logged in', fakeAsync(() => {
       // Given
       userIsLoggedIn();
 
@@ -113,7 +120,7 @@ describe('NavComponent', () => {
       expect(component.showNav).toBeTrue();
     }));
 
-    it("should set showNav to false if user is NOT logged in", fakeAsync(() => {
+    it('should set showNav to false if user is NOT logged in', fakeAsync(() => {
       // Given
       userIsLoggedOut();
 

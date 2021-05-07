@@ -1,16 +1,16 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { of } from 'rxjs';
-import { AppComponent } from './app.component';
-import { AppConfiguration } from './core/services/configuration/configuration';
-import { ConfigurationService } from './core/services/configuration/configuration.service';
-import { CoreModule } from './core/core.module';
-import { MainLayoutComponent } from './core/layout/main-layout/main-layout.component';
-import { ThemingService } from './core/services/theming/theming.service';
-import { NgApplicationInsightsService } from '@wizsolucoes/ng-application-insights';
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { RouterTestingModule } from "@angular/router/testing";
+import { of } from "rxjs";
+import { AppComponent } from "./app.component";
+import { AppConfiguration } from "./core/services/configuration/configuration";
+import { ConfigurationService } from "./core/services/configuration/configuration.service";
+import { CoreModule } from "./core/core.module";
+import { MainLayoutComponent } from "./core/layout/main-layout/main-layout.component";
+import { ThemingService } from "./core/services/theming/theming.service";
+import { NgApplicationInsightsService } from "@wizsolucoes/ng-application-insights";
 
-describe('AppComponent', () => {
+describe("AppComponent", () => {
   let mockThemingSerivce: jasmine.SpyObj<ThemingService>;
   let mockConfigService: jasmine.SpyObj<ConfigurationService>;
   let mockAppInsightsService: jasmine.SpyObj<NgApplicationInsightsService>;
@@ -20,18 +20,20 @@ describe('AppComponent', () => {
   let data: AppConfiguration;
 
   beforeEach(() => {
-    mockThemingSerivce = jasmine.createSpyObj('ThemingService', [
-      'setCSSVariables',
+    mockThemingSerivce = jasmine.createSpyObj("ThemingService", [
+      "setCSSVariables",
     ]);
 
-    mockConfigService = jasmine.createSpyObj('ConfigurationService', [
-      'getConfig',
-      'disableCache',
+    mockConfigService = jasmine.createSpyObj("ConfigurationService", [
+      "getConfig",
+      "disableCache",
+      "getConfigSync",
     ]);
 
-    mockAppInsightsService = jasmine.createSpyObj('NgApplicationInsightsService', [
-      'setCustomProperties',
-    ]);
+    mockAppInsightsService = jasmine.createSpyObj(
+      "NgApplicationInsightsService",
+      ["setCustomProperties"]
+    );
 
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, CoreModule, HttpClientTestingModule],
@@ -39,7 +41,10 @@ describe('AppComponent', () => {
       providers: [
         { provide: ThemingService, useValue: mockThemingSerivce },
         { provide: ConfigurationService, useValue: mockConfigService },
-        { provide: NgApplicationInsightsService, useValue: mockAppInsightsService },
+        {
+          provide: NgApplicationInsightsService,
+          useValue: mockAppInsightsService,
+        },
       ],
     });
 
@@ -51,19 +56,19 @@ describe('AppComponent', () => {
   beforeEach(() => {
     data = {
       theme: {
-        'primary-color': 'red',
-        'secondary-color': 'teal',
+        "primary-color": "red",
+        "secondary-color": "teal",
       },
     };
 
     mockConfigService.getConfig.and.returnValue(of(data));
   });
 
-  it('should create the app', () => {
+  it("should create the app", () => {
     expect(app).toBeTruthy();
   });
 
-  it('should delegate theming to theming service', () => {
+  it("should delegate theming to theming service", () => {
     // Act / When
     fixture.detectChanges();
 
@@ -74,19 +79,19 @@ describe('AppComponent', () => {
     );
   });
 
-  it('should NOT render main layout when loading configuration', () => {
+  it("should NOT render main layout when loading configuration", () => {
     // Given
     app.isLoadingConfiguration = true;
 
     // Then
-    expect(template.querySelector('app-main-layout')).toBeFalsy();
+    expect(template.querySelector("app-main-layout")).toBeFalsy();
   });
 
-  it('should render main layout after it loads configuration', () => {
+  it("should render main layout after it loads configuration", () => {
     // Act / When
     fixture.detectChanges();
 
     // Assert / Then
-    expect(template.querySelector('app-main-layout')).toBeTruthy();
+    expect(template.querySelector("app-main-layout")).toBeTruthy();
   });
 });
