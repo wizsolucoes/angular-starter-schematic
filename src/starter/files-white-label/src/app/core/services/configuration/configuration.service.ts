@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-import { ConfigurationApiService } from './api/configuration-api.service';
-import { ConfigurationCacheService } from './cache/configuration-cache.service';
-import { AppConfiguration } from './configuration';
-import defaultConfig from './default-configuration';
-import { ConfigurationInMemoryService } from './in-memory/configuration-in-memory.service';
+import { Injectable } from "@angular/core";
+import { Observable, of } from "rxjs";
+import { catchError, tap } from "rxjs/operators";
+import { ConfigurationApiService } from "./api/configuration-api.service";
+import { ConfigurationCacheService } from "./cache/configuration-cache.service";
+import { AppConfiguration } from "./configuration";
+import defaultConfig from "./default-configuration";
+import { ConfigurationInMemoryService } from "./in-memory/configuration-in-memory.service";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class ConfigurationService {
   constructor(
@@ -45,6 +45,11 @@ export class ConfigurationService {
     }
 
     return this.getFromApi();
+  }
+
+  getConfigSync(): AppConfiguration {
+    const inMemoryConfiguration = this.getFromMemory();
+    return inMemoryConfiguration;
   }
 
   private getFromApi(isCacheEnabled = false): Observable<AppConfiguration> {

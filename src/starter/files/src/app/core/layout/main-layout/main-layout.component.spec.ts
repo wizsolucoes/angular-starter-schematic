@@ -11,17 +11,19 @@ describe('MainLayoutComponent', () => {
   let component: MainLayoutComponent;
   let fixture: ComponentFixture<MainLayoutComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
-        NgxWizSSOModule.forRoot(environment.ssoConfig),
-        MatToolbarModule,
-      ],
-      declarations: [MainLayoutComponent, NavComponent],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          RouterTestingModule,
+          HttpClientTestingModule,
+          NgxWizSSOModule.forRoot(environment.ssoConfig),
+          MatToolbarModule,
+        ],
+        declarations: [MainLayoutComponent, NavComponent],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MainLayoutComponent);
