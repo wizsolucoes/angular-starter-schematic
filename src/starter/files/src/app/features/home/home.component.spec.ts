@@ -8,7 +8,6 @@ describe('HomeComponent', () => {
   let template: HTMLElement;
 
   beforeEach(() => {
-
     TestBed.configureTestingModule({
       declarations: [HomeComponent, NavComponent],
     });
@@ -24,4 +23,3 @@ describe('HomeComponent', () => {
     expect(component).toBeTruthy();
   });
 });
-

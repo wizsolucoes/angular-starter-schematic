@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
-    imports: [
+  imports: [
     CommonModule,
     NgxMaskModule.forRoot(),
     CurrencyMaskModule,
@@ -25,6 +25,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
-  ],  
+  ],
 })
 export class SharedModule {}

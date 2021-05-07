@@ -5,22 +5,14 @@
     </a>
   </div>
 
-  <a mat-button routerLink="sales" data-test="sales-link">
-    Vendas
-  </a>
-  <a
-    mat-button
-    routerLink="documentation"
-    data-test="documentation-link"
-  >
+  <a mat-button routerLink="sales" data-test="sales-link"> Vendas </a>
+  <a mat-button routerLink="documentation" data-test="documentation-link">
     Documentação
   </a>
 
   <span class="navbar-spacer"></span>
   <button mat-button (click)="logOut()" (keyup)="logOut()">
     Logout
-    <span class="material-icons">
-      logout
-    </span>    
+    <span class="material-icons"> logout </span>
   </button>
 </mat-toolbar>

@@ -5,7 +5,7 @@ import {
   NgModule,
   CUSTOM_ELEMENTS_SCHEMA,
   LOCALE_ID,
-  ErrorHandler
+  ErrorHandler,
 } from '@angular/core';
 import {
   NgApplicationInsightsModule,
@@ -34,8 +34,8 @@ registerLocaleData(localePt, 'pt-BR');
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true },
-    { provide: ErrorHandler, useClass: NgApplicationInsightsErrorHandler }
+    { provide: ErrorHandler, useClass: NgApplicationInsightsErrorHandler },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

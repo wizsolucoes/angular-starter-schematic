@@ -4,5 +4,5 @@ export const fakeToken: Token = {
   tokenType: 'string',
   hash: 'string',
   expiresIn: 'string',
-  refreshToken: 'string'
+  refreshToken: 'string',
 };

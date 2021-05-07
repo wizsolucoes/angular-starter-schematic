@@ -14,8 +14,8 @@ export class NavComponent implements OnInit {
 
   constructor(
     private sso: SSOConectorService,
-    private readonly router: Router,
-    ) {}
+    private readonly router: Router
+  ) {}
 
   ngOnInit(): void {
     this.showNav = !!SSOConectorService.isLogged();

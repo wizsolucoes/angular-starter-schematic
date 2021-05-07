@@ -14,16 +14,20 @@ describe('ThemingService', () => {
   let template: HTMLElement;
   let mockAppInsightsService: jasmine.SpyObj<NgApplicationInsightsService>;
 
-  mockAppInsightsService = jasmine.createSpyObj('NgApplicationInsightsService', [
-    'setCustomProperties',
-  ]);
+  mockAppInsightsService = jasmine.createSpyObj(
+    'NgApplicationInsightsService',
+    ['setCustomProperties']
+  );
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, CoreModule, HttpClientTestingModule],
       declarations: [AppComponent, MainLayoutComponent],
       providers: [
-        { provide: NgApplicationInsightsService, useValue: mockAppInsightsService },
+        {
+          provide: NgApplicationInsightsService,
+          useValue: mockAppInsightsService,
+        },
       ],
     });
     service = TestBed.inject(ThemingService);
@@ -40,7 +44,7 @@ describe('ThemingService', () => {
     // When
     service.setCSSVariables(fixture, {
       primaryColor: 'teal',
-      accentColor: 'pink'
+      accentColor: 'pink',
     });
 
     // Then

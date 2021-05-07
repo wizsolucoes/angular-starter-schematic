@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
     private el: ElementRef,
     private themingService: ThemingService,
     private configurationService: ConfigurationService,
-    private appInsightsService: NgApplicationInsightsService,
+    private appInsightsService: NgApplicationInsightsService
   ) {}
 
   isLoadingConfiguration: boolean;
