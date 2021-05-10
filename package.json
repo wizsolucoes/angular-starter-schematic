@@ -1,6 +1,6 @@
 {
   "name": "@wizsolucoes/angular-starter",
-  "version": "1.6.8",
+  "version": "1.6.10",
   "description": "Generates Wiz boilerplate Angular starter application.",
   "private": false,
   "publishConfig": {
@@ -27,6 +27,7 @@
   "devDependencies": {
     "@types/jasmine": "~3.5.0",
     "@types/node": "^12.11.1",
-    "jasmine": "^3.5.0"
+    "jasmine": "^3.5.0",
+    "karma": "^6.3.2"
   }
 }

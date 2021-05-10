@@ -1,16 +1,21 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { of } from 'rxjs';
-import { NavComponent } from './nav.component';
-import { ConfigurationService } from '../../services/configuration/configuration.service';
-import { SSOConectorService, NgxWizSSOModule } from '@wizsolucoes/ngx-wiz-sso';
-import { ssoConfig } from '../../../../config/sso_config';
-import { fakeToken } from '../../../../testing/fakes/fake_token';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { LoginComponent } from './../../../features/login/login.component';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Router } from '@angular/router';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from "@angular/core/testing";
+import { of } from "rxjs";
+import { NavComponent } from "./nav.component";
+import { ConfigurationService } from "../../services/configuration/configuration.service";
+import { SSOConectorService, NgxWizSSOModule } from "@wizsolucoes/ngx-wiz-sso";
+import { fakeToken } from "../../../../testing/fakes/fake_token";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { LoginComponent } from "./../../../features/login/login.component";
+import { RouterTestingModule } from "@angular/router/testing";
+import { Router } from "@angular/router";
+import { environment } from "src/environments/environment";
 
-describe('NavComponent', () => {
+describe("NavComponent", () => {
   let component: NavComponent;
   let fixture: ComponentFixture<NavComponent>;
   let template: HTMLElement;
@@ -19,21 +24,21 @@ describe('NavComponent', () => {
   let router: Router;
 
   beforeEach(() => {
-    mockConfigService = jasmine.createSpyObj('ConfigurationService', [
-      'getConfig',
+    mockConfigService = jasmine.createSpyObj("ConfigurationService", [
+      "getConfig",
     ]);
 
-    mockSSO = jasmine.createSpyObj('mockSSO', ['logOut', 'checkLogged']);
+    mockSSO = jasmine.createSpyObj("mockSSO", ["logOut", "checkLogged"]);
     const routes = [
       {
-        path: 'login',
+        path: "login",
         component: LoginComponent,
       },
     ];
 
     TestBed.configureTestingModule({
       imports: [
-        NgxWizSSOModule.forRoot(ssoConfig),
+        NgxWizSSOModule.forRoot(environment.ssoConfig),
         MatToolbarModule,
         RouterTestingModule.withRoutes(routes),
       ],
@@ -55,19 +60,19 @@ describe('NavComponent', () => {
     router = TestBed.inject(Router);
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 
-  describe('handles user authentication', () => {
+  describe("handles user authentication", () => {
     beforeEach(() => {
       const data = {
-        features: ['sales', 'documentation'],
+        features: ["sales", "documentation"],
       };
       mockConfigService.getConfig.and.returnValue(of(data));
     });
 
-    describe('when user is logged in', () => {
+    describe("when user is logged in", () => {
       beforeEach(() => {
         // Given
         userIsLoggedIn();
@@ -76,7 +81,7 @@ describe('NavComponent', () => {
         fixture.detectChanges();
       });
 
-      it('should display nav bar menu', () => {
+      it("should display nav bar menu", () => {
         // Then
         expect(
           template.querySelector('[data-test="mat-toolbar"]').children.length
@@ -84,7 +89,7 @@ describe('NavComponent', () => {
       });
     });
 
-    describe('when user if NOT logged in', () => {
+    describe("when user if NOT logged in", () => {
       beforeEach(() => {
         // Given
         userIsLoggedOut();
@@ -93,7 +98,7 @@ describe('NavComponent', () => {
         fixture.detectChanges();
       });
 
-      it('should NOT display nav bar menu', () => {
+      it("should NOT display nav bar menu", () => {
         // Then
         expect(
           template.querySelector('[data-test="navbar-menu"]')
@@ -102,15 +107,15 @@ describe('NavComponent', () => {
     });
   });
 
-  describe('configuration', () => {
+  describe("configuration", () => {
     beforeEach(() => {
       userIsLoggedIn();
     });
 
-    it('should get enabled features from configuration service', () => {
+    it("should get enabled features from configuration service", () => {
       // Given
       const data = {
-        features: ['sales', 'documentation'],
+        features: ["sales", "documentation"],
       };
 
       mockConfigService.getConfig.and.returnValue(of(data));
@@ -124,10 +129,10 @@ describe('NavComponent', () => {
       );
     });
 
-    it('should get logo from configuration service', () => {
+    it("should get logo from configuration service", () => {
       // Given
       const data = {
-        logoImageUrl: 'https://bulma.io/images/bulma-logo.png',
+        logoImageUrl: "https://bulma.io/images/bulma-logo.png",
       };
 
       mockConfigService.getConfig.and.returnValue(of(data));
@@ -139,23 +144,23 @@ describe('NavComponent', () => {
       expect(component.logoUrl).toBe(data.logoImageUrl);
     });
 
-    it('#isFeatureEnabled', () => {
+    it("#isFeatureEnabled", () => {
       // Given
       const data = {
-        features: ['documentation'],
+        features: ["documentation"],
       };
       mockConfigService.getConfig.and.returnValue(of(data));
 
       fixture.detectChanges();
 
-      expect(component.isFeatureEnabled('sales')).toBe(false);
-      expect(component.isFeatureEnabled('documentation')).toBe(true);
+      expect(component.isFeatureEnabled("sales")).toBe(false);
+      expect(component.isFeatureEnabled("documentation")).toBe(true);
     });
 
-    it('should only have a link to enabled features', () => {
+    it("should only have a link to enabled features", () => {
       // Given
       const data = {
-        features: ['documentation'],
+        features: ["documentation"],
       };
       mockConfigService.getConfig.and.returnValue(of(data));
 
@@ -170,8 +175,8 @@ describe('NavComponent', () => {
     });
   });
 
-  describe('actions', () => {
-    it('#logout should call SSO logout', () => {
+  describe("actions", () => {
+    it("#logout should call SSO logout", () => {
       // Given
       userIsLoggedIn();
 
@@ -183,13 +188,13 @@ describe('NavComponent', () => {
     });
   });
 
-  describe('on navigation', () => {
+  describe("on navigation", () => {
     it("should set showNav to true if user is logged in", fakeAsync(() => {
       // Given
       userIsLoggedIn();
 
       const data = {
-        features: ['sales', 'documentation'],
+        features: ["sales", "documentation"],
       };
 
       mockConfigService.getConfig.and.returnValue(of(data));
@@ -213,7 +218,7 @@ describe('NavComponent', () => {
       userIsLoggedOut();
 
       const data = {
-        features: ['sales', 'documentation'],
+        features: ["sales", "documentation"],
       };
 
       mockConfigService.getConfig.and.returnValue(of(data));
@@ -233,7 +238,7 @@ describe('NavComponent', () => {
     }));
   });
 
-  describe('a11y', () => {
+  describe("a11y", () => {
     beforeEach(() => {
       // Given
       userIsLoggedIn();
@@ -242,13 +247,13 @@ describe('NavComponent', () => {
       fixture.detectChanges();
 
       //Then
-      it('images should be accessible', () => {
+      it("images should be accessible", () => {
         expect(template.querySelector('[data-test="logo-img"]')).toBeTruthy();
 
         const logoImage = template.querySelector(
           '[data-test="logo-img"]'
         ) as HTMLImageElement;
-        expect(logoImage.alt).toEqual('logo');
+        expect(logoImage.alt).toEqual("logo");
       });
     });
   });
@@ -257,14 +262,14 @@ describe('NavComponent', () => {
 // Helper funtions
 
 function userIsLoggedIn(): void {
-  spyOn(SSOConectorService, 'isLogged').and.returnValue({
-    tokenType: 'foo',
-    hash: 'foo',
-    expiresIn: 'foo',
-    refreshToken: 'foo',
+  spyOn(SSOConectorService, "isLogged").and.returnValue({
+    tokenType: "foo",
+    hash: "foo",
+    expiresIn: "foo",
+    refreshToken: "foo",
   });
 }
 
 function userIsLoggedOut(): void {
-  spyOn(SSOConectorService, 'isLogged').and.returnValue(null);
+  spyOn(SSOConectorService, "isLogged").and.returnValue(null);
 }
