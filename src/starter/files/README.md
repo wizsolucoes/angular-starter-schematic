@@ -28,6 +28,9 @@ ng test
 
 # Executar os testes e gerar relatório de cobertura de código
 ng test --code-coverage
+
+# Executar o mesmo comando de teste executado pelo pipeline de CI
+npm run test:ci
 ```
 
 ## Dependências
