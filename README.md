@@ -39,7 +39,7 @@ cd my-app
 ng add @wizsolucoes/angular-starter
 
 # Executar testes
-ng test
+npm run test:ci
 
 # Rodar aplicação
 ng serve
