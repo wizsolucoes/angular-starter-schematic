@@ -16,7 +16,6 @@ export const devDependencies: { [key: string]: string } = {
   'json-server': '^0.16.1',
   prettier: '^2.0.5',
   'karma-coverage': '^2.0.3',
-  'karma-coverage-istanbul-reporter': '^3.0.3',
   'karma-junit-reporter': '^2.0.1',
   'tslint-config-prettier': '^1.18.0',
 };

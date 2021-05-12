@@ -9,25 +9,25 @@ module.exports = function (config) {
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
-      require('karma-coverage-istanbul-reporter'),
       require('@angular-devkit/build-angular/plugins/karma'),
       require('karma-junit-reporter'),
       require('karma-coverage'),
     ],
     client: {
-      clearContext: false // leave Jasmine Spec Runner output visible in browser
-    },
-    coverageIstanbulReporter: {
-      dir: require('path').join(__dirname, './coverage'),
-      reports: ['html', 'lcovonly', 'text-summary'],
-      fixWebpackSourcePaths: true
+      clearContext: false, // leave Jasmine Spec Runner output visible in browser
     },
     coverageReporter: {
-      type : 'cobertura',
-      dir : 'coverage',
-      subdir:'.',
-      file: 'cobertura-coverage.xml'
-   },
+      type: 'cobertura',
+      dir: 'coverage',
+      subdir: '.',
+      file: 'cobertura-coverage.xml',
+      reporters: [
+        { type: 'html' },
+        { type: 'text-summary' },
+        { type: 'lcovonly', file: 'lcov.info' },
+      ],
+      fixWebpackSourcePaths: true,
+    },
     reporters: ['progress', 'kjhtml', 'coverage', 'junit'],
     junitReporter: {
       outputDir: './coverage/test-results',
@@ -40,6 +40,6 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: ['Chrome'],
     singleRun: false,
-    restartOnFileChange: true
+    restartOnFileChange: true,
   });
 };
