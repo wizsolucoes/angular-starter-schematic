@@ -48,8 +48,7 @@ export class ConfigurationService {
   }
 
   getConfigSync(): AppConfiguration {
-    const inMemoryConfiguration = this.getFromMemory();
-    return inMemoryConfiguration;
+    return this.getFromMemory();
   }
 
   private getFromApi(isCacheEnabled = false): Observable<AppConfiguration> {
