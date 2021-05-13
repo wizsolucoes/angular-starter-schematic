@@ -1,34 +1,31 @@
-import { Injectable, ElementRef } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AppConfiguration } from '../configuration/configuration';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ThemingService {
-  setCSSVariables(el: ElementRef, propertyMap: AppConfiguration): void {
-    el.nativeElement.style.setProperty(
+  setCSSVariables(document: Document, propertyMap: AppConfiguration): void {
+    document.body.style.setProperty(
       `--primary-color`,
       propertyMap.primaryColor
     );
 
-    el.nativeElement.style.setProperty(
-      `--accent-color`,
-      propertyMap.accentColor
-    );
+    document.body.style.setProperty(`--accent-color`, propertyMap.accentColor);
 
-    el.nativeElement.style.setProperty(
+    document.body.style.setProperty(
       `--syz-primary-color`,
       propertyMap.primaryColor
     );
 
-    el.nativeElement.style.setProperty(
+    document.body.style.setProperty(
       `--syz-accent-color`,
       propertyMap.accentColor
     );
 
     // You can use this loop if the API retuns CSS properites in snake case (Eg. primary-color)
     Object.keys(propertyMap).forEach((key) => {
-      el.nativeElement.style.setProperty(`--${key}`, propertyMap[key]);
+      document.body.style.setProperty(`--${key}`, propertyMap[key]);
     });
   }
 }

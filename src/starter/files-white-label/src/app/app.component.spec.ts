@@ -11,7 +11,7 @@ import { ThemingService } from './core/services/theming/theming.service';
 import { NgApplicationInsightsService } from '@wizsolucoes/ng-application-insights';
 
 describe('AppComponent', () => {
-  let mockThemingSerivce: jasmine.SpyObj<ThemingService>;
+  let mockThemingService: jasmine.SpyObj<ThemingService>;
   let mockConfigService: jasmine.SpyObj<ConfigurationService>;
   let mockAppInsightsService: jasmine.SpyObj<NgApplicationInsightsService>;
   let fixture: ComponentFixture<AppComponent>;
@@ -20,7 +20,7 @@ describe('AppComponent', () => {
   let data: AppConfiguration;
 
   beforeEach(() => {
-    mockThemingSerivce = jasmine.createSpyObj('ThemingService', [
+    mockThemingService = jasmine.createSpyObj('ThemingService', [
       'setCSSVariables',
     ]);
 
@@ -39,7 +39,7 @@ describe('AppComponent', () => {
       imports: [RouterTestingModule, CoreModule, HttpClientTestingModule],
       declarations: [AppComponent, MainLayoutComponent],
       providers: [
-        { provide: ThemingService, useValue: mockThemingSerivce },
+        { provide: ThemingService, useValue: mockThemingService },
         { provide: ConfigurationService, useValue: mockConfigService },
         {
           provide: NgApplicationInsightsService,
@@ -73,8 +73,8 @@ describe('AppComponent', () => {
     fixture.detectChanges();
 
     // Assert / Then
-    expect(mockThemingSerivce.setCSSVariables).toHaveBeenCalledWith(
-      fixture.elementRef,
+    expect(mockThemingService.setCSSVariables).toHaveBeenCalledWith(
+      document,
       data.theme
     );
   });
