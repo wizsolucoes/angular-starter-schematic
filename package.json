@@ -1,6 +1,6 @@
 {
   "name": "@wizsolucoes/angular-starter",
-  "version": "1.6.13",
+  "version": "1.6.14",
   "description": "Generates Wiz boilerplate Angular starter application.",
   "private": false,
   "publishConfig": {
@@ -11,7 +11,8 @@
     "build:watch": "tsc -p tsconfig.json --watch",
     "test": "npm run build && jasmine src/**/*_spec.js",
     "format:check": "prettier **/*.{html,ts,json,scss} --check",
-    "format:write": "prettier **/*.{html,ts,json,scss} --write"
+    "format:write": "prettier **/*.{html,ts,json,scss} --write",
+    "test:ci": "ng test --watch=false --code-coverage --browsers=ChromeHeadless"
   },
   "keywords": [
     "schematics"
