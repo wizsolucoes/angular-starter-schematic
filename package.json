@@ -9,9 +9,11 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "build:watch": "tsc -p tsconfig.json --watch",
-    "test": "npm run build && jasmine src/**/*_spec.js && npx zx ./test-generated-app.mjs && npx zx ./test-generated-app-whitelabel.mjs",
+    "test": "npm run build && jasmine src/**/*_spec.js && npm run test:generated:apps",
     "format:check": "prettier **/*.{html,ts,json,scss} --check",
-    "format:write": "prettier **/*.{html,ts,json,scss} --write"
+    "test:generated:apps": "npm run test:generated:app && npm run test:generated:whitelabel",
+    "test:generated:app": "npx zx ./test-generated-app.mjs",
+    "test:generated:whitelabel": "npx zx ./test-generated-app-whitelabel.mjs"
   },
   "keywords": [
     "schematics"
