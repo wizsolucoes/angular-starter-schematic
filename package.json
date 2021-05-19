@@ -9,7 +9,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "build:watch": "tsc -p tsconfig.json --watch",
-    "test": "npm run build && jasmine src/**/*_spec.js && npm run test:generated:apps",
+    "test": "npm run build && jasmine src/**/*_spec.js && npx zx script.mjs",
     "format:check": "prettier **/*.{html,ts,json,scss} --check",
     "test:generated:apps": "npm run test:generated:app && npm run test:generated:whitelabel",
     "test:generated:app": "npx zx ./test-generated-app.mjs",
