@@ -11,6 +11,7 @@ resources:
     - repository: coretemplate
       type: git
       name: WizPipelines/core-template
+      ref: node14
 
 extends:
   template: main.yml@coretemplate
