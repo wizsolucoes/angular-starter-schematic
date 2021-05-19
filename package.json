@@ -9,7 +9,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "build:watch": "tsc -p tsconfig.json --watch",
-    "test": "npm run build && jasmine src/**/*_spec.js && npx zx script.mjs",
+    "test": "npm run build && jasmine src/**/*_spec.js && zx script.mjs",
     "format:check": "prettier **/*.{html,ts,json,scss} --check",
     "test:generated:apps": "npm run test:generated:app && npm run test:generated:whitelabel",
     "test:generated:app": "npx zx ./test-generated-app.mjs",
@@ -26,7 +26,8 @@
     "@angular-devkit/schematics": "^10.2.0",
     "@schematics/angular": "^10.2.0",
     "@wizsolucoes/ng-material-theme": "^1.1.2",
-    "typescript": "^4.0.5"
+    "typescript": "^4.0.5",
+    "zx": "^1.8.0"
   },
   "devDependencies": {
     "@types/jasmine": "~3.5.0",
