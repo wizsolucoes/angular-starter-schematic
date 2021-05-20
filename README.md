@@ -1,3 +1,7 @@
+> **AVISO IMPORTANTE: Este schematic não está compatível com versões 12.x do CLI do Angular nem com Strict mode habilitado.**
+
+[Esta](https://github.com/wizsolucoes/angular-starter-schematic/issues/56) e [esta](https://github.com/wizsolucoes/angular-starter-schematic/issues/68) issue estão abertas para fazer a adequação. Enquanto isso é necessário usar uma versão 10.x ou 11.x do CLI com `--strict=false`. Voce pode seguir [estes passos](https://stackoverflow.com/a/48282236) para instalar uma [versão específica do CLI](https://www.npmjs.com/package/@angular/cli?activeTab=versions).
+
 <!-- omit in toc -->
 # Wiz Angular Starter Schematic
 
