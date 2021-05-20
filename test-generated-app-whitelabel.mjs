@@ -14,6 +14,6 @@ cd('../schematics-whitelabel-test-app');
 await $`npm i --no-save ${__dirname}/wizsolucoes-angular-starter-${version}.tgz`;
 await $`ng g @wizsolucoes/angular-starter:ng-add --white-label=true`;
 
-await $`ng test --no-watch --code-coverage`;
+await $`ng test --no-watch --code-coverage --browsers=ChromeHeadless`;
 
 await $`ng lint`;
