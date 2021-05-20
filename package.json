@@ -15,7 +15,7 @@
     "test:generated:apps": "npm run test:generated:app && npm run test:generated:whitelabel",
     "test:generated:app": "npx zx ./test-generated-app.mjs",
     "test:generated:whitelabel": "npx zx ./test-generated-app-whitelabel.mjs",
-    "pretest:generated:apps": "npm install -g @angular/cli && ng --version"
+    "pretest:generated:apps": "npm install -g @angular/cli@11.2.13 && ng --version"
   },
   "keywords": [
     "schematics"
