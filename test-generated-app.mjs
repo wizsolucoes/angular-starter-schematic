@@ -11,7 +11,7 @@ cd('..');
 await $`ng new schematics-test-app --style=scss`;
 cd('../schematics-test-app');
 
-// await $`npm i --no-save ${__dirname}/wizsolucoes-angular-starter-${version}.tgz`;
+await $`npm i --no-save ${__dirname}/wizsolucoes-angular-starter-${version}.tgz`;
 // await $`ng g @wizsolucoes/angular-starter:ng-add --white-label=false`;
 
 // await $`ng test --no-watch --code-coverage`;
