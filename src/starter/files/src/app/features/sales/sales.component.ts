@@ -8,12 +8,12 @@ import { SimulationService } from 'src/app/core/services/business/simulation/sim
 })
 export class SalesComponent {
   simulationResult: any;
-  name: string;
-  cpf: string;
-  email: string;
-  loanAmount: number;
-  installments: number;
-  isLoadingSimulation: boolean;
+  name!: string;
+  cpf!: string;
+  email!: string;
+  loanAmount!: number;
+  installments!: number;
+  isLoadingSimulation!: boolean;
 
   constructor(private simulationService: SimulationService) {}
 

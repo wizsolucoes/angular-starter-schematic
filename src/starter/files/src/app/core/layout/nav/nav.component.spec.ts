@@ -169,5 +169,5 @@ function userIsLoggedIn(): void {
 }
 
 function userIsLoggedOut(): void {
-  spyOn(SSOConectorService, 'isLogged').and.returnValue(null);
+  spyOn(SSOConectorService, 'isLogged').and.returnValue(null as any);
 }
