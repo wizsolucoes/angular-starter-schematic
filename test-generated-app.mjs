@@ -14,5 +14,5 @@ cd('../schematics-test-app');
 await $`npm i --no-save ${__dirname}/wizsolucoes-angular-starter-${version}.tgz`;
 await $`ng g @wizsolucoes/angular-starter:ng-add --white-label=false`;
 
-await $`ng test --no-watch --code-coverage`;
+// await $`ng test --no-watch --code-coverage`;
 await $`npx ng lint`;
