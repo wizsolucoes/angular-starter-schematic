@@ -5,6 +5,8 @@
 
 trigger:
   batch: 'true'
+  paths:
+    exclude: [ 'CONTRIBUTING.md' ] 
 
 resources:
   repositories:
