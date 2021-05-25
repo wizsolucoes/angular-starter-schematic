@@ -11,6 +11,7 @@ import {
   MergeStrategy,
   forEach,
   noop,
+  externalSchematic,
 } from '@angular-devkit/schematics';
 
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
@@ -50,7 +51,7 @@ export function main(_options: Schema): Rule {
         ? generateWhiteLabelProjectFiles(_options)
         : noop(),
       createStagingEnvironment(),
-      configureTSLint(),
+      addESLint(_options),
     ]);
   };
 }
@@ -119,6 +120,12 @@ function addDependencies(): Rule {
   };
 }
 
+function addESLint(_options: any): Rule {
+  return (_tree: Tree, _context: SchematicContext) => {
+    return externalSchematic('@angular-eslint/schematics', 'ng-add', _options);
+  };
+}
+
 function addScripts(): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     const packageJsonBuffer = tree.read('package.json');
@@ -173,20 +180,6 @@ function createStagingEnvironment(): Rule {
   };
 }
 
-function configureTSLint(): Rule {
-  return (tree: Tree, _context: SchematicContext) => {
-    const fileName = 'tslint.json';
-    const tsLintConfigBuffer = tree.read(fileName);
-    const tsLintConfig = JSON.parse(tsLintConfigBuffer!.toString());
-
-    tsLintConfig.extends = ['tslint:recommended', 'tslint-config-prettier'];
-
-    tree.overwrite(fileName, JSON.stringify(tsLintConfig, null, 2));
-
-    return tree;
-  };
-}
-
 function _createStagingEnvironmentFile(defaultProjectPath: string): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     const environmentFilePath = defaultProjectPath.replace(
@@ -210,16 +203,15 @@ function _createStagingEnvironmentFile(defaultProjectPath: string): Rule {
 function _createStagingEnvironmentConfig(): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     const workspaceConfig = _getWorkspaceConfig(tree);
+    console.log(workspaceConfig);
     const projectName: string = workspaceConfig.defaultProject;
     const projectArchitect = workspaceConfig.projects[projectName].architect;
 
     const buildConfigs = projectArchitect.build.configurations;
     const serveConfigs = projectArchitect.serve.configurations;
-    const e2eConfigs = projectArchitect.e2e.configurations;
 
     const stagingEnvironmentBuildConfig = _copyObject(buildConfigs.production);
     const stagingEnvironmentServeConfig = _copyObject(serveConfigs.production);
-    const stagingEnvironmentE2eConfig = _copyObject(e2eConfigs.production);
 
     stagingEnvironmentBuildConfig.fileReplacements.forEach(
       (replacement: { [key: string]: string }) => {
@@ -234,14 +226,8 @@ function _createStagingEnvironmentConfig(): Rule {
       'staging'
     );
 
-    stagingEnvironmentE2eConfig.devServerTarget = stagingEnvironmentE2eConfig.devServerTarget.replace(
-      'production',
-      'staging'
-    );
-
     buildConfigs['staging'] = stagingEnvironmentBuildConfig;
     serveConfigs['staging'] = stagingEnvironmentServeConfig;
-    e2eConfigs['staging'] = stagingEnvironmentE2eConfig;
 
     tree.overwrite('angular.json', JSON.stringify(workspaceConfig, null, 2));
 

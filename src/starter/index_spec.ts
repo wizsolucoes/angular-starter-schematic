@@ -58,15 +58,15 @@ describe('starter', () => {
       );
     });
 
-    it('modifies tslint.json extends property', () => {
-      const tsLintBuffer = appTree.read('tslint.json');
-      const tsLintObject = JSON.parse(tsLintBuffer!!.toString());
+    // it('modifies tslint.json extends property', () => {
+    //   const tsLintBuffer = appTree.read('tslint.json');
+    //   const tsLintObject = JSON.parse(tsLintBuffer!!.toString());
 
-      expect(tsLintObject.extends).toEqual([
-        'tslint:recommended',
-        'tslint-config-prettier',
-      ]);
-    });
+    //   expect(tsLintObject.extends).toEqual([
+    //     'tslint:recommended',
+    //     'tslint-config-prettier',
+    //   ]);
+    // });
 
     it('adds configuration files', () => {
       expect(appTree.files).toEqual(
@@ -78,26 +78,26 @@ describe('starter', () => {
     });
   });
 
-  describe('commit lint', () => {
-    it('adds commitlint.config.js file', async () => {
-      expect(appTree.files).toContain('/my-app/commitlint.config.js');
-    });
+  // describe('commit lint', () => {
+  //   it('adds commitlint.config.js file', async () => {
+  //     expect(appTree.files).toContain('/my-app/commitlint.config.js');
+  //   });
 
-    it('adds git hook', async () => {
-      const packageJsonBuffer = appTree.read('package.json');
-      const packageJsonObject = JSON.parse(packageJsonBuffer!!.toString());
+  //   it('adds git hook', async () => {
+  //     const packageJsonBuffer = appTree.read('package.json');
+  //     const packageJsonObject = JSON.parse(packageJsonBuffer!!.toString());
 
-      expect(packageJsonObject).toEqual(
-        jasmine.objectContaining({
-          husky: {
-            hooks: {
-              'commit-msg': 'commitlint -E HUSKY_GIT_PARAMS',
-            },
-          },
-        })
-      );
-    });
-  });
+  //     expect(packageJsonObject).toEqual(
+  //       jasmine.objectContaining({
+  //         husky: {
+  //           hooks: {
+  //             'commit-msg': 'commitlint -E HUSKY_GIT_PARAMS',
+  //           },
+  //         },
+  //       })
+  //     );
+  //   });
+  // });
 
   describe('create staging environment', () => {
     it('creates staging environment file', () => {
@@ -114,7 +114,6 @@ describe('starter', () => {
 
       const buildConfigs = projectArchitect.build.configurations;
       const serveConfigs = projectArchitect.serve.configurations;
-      const e2eConfigs = projectArchitect.e2e.configurations;
 
       expect(buildConfigs.staging.fileReplacements).toContain(
         jasmine.objectContaining({
@@ -127,14 +126,6 @@ describe('starter', () => {
         jasmine.objectContaining({
           staging: {
             browserTarget: 'my-app:build:staging',
-          },
-        })
-      );
-
-      expect(e2eConfigs).toEqual(
-        jasmine.objectContaining({
-          staging: {
-            devServerTarget: 'my-app:serve:staging',
           },
         })
       );
