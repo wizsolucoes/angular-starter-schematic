@@ -8,7 +8,7 @@ $`npm pack`;
 
 cd('..');
 
-await $`ng new schematics-whitelabel-test-app --style=scss`;
+await $`ng new schematics-whitelabel-test-app --style=scss --strict=false`;
 cd('../schematics-whitelabel-test-app');
 
 await $`npm i --no-save ${__dirname}/wizsolucoes-angular-starter-${version}.tgz`;

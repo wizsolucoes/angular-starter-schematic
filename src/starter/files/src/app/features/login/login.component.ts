@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) {}
 
+  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {}
 
   get email(): AbstractControl | null {
