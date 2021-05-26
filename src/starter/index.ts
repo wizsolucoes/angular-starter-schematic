@@ -203,7 +203,6 @@ function _createStagingEnvironmentFile(defaultProjectPath: string): Rule {
 function _createStagingEnvironmentConfig(): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     const workspaceConfig = _getWorkspaceConfig(tree);
-    console.log(workspaceConfig);
     const projectName: string = workspaceConfig.defaultProject;
     const projectArchitect = workspaceConfig.projects[projectName].architect;
 
