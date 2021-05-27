@@ -1,6 +1,6 @@
 {
   "name": "@wizsolucoes/angular-starter",
-  "version": "1.6.15",
+  "version": "1.6.16",
   "description": "Generates Wiz boilerplate Angular starter application.",
   "private": false,
   "publishConfig": {
@@ -15,7 +15,7 @@
     "test:generated:apps": "npm run test:generated:app && npm run test:generated:whitelabel",
     "test:generated:app": "npx zx ./test-generated-app.mjs",
     "test:generated:whitelabel": "npx zx ./test-generated-app-whitelabel.mjs",
-    "pretest": "npm install -g @angular/cli@11.2.13 && ng --version"
+    "pretest": "npm install -g @angular/cli && ng --version"
   },
   "keywords": [
     "schematics"
@@ -26,6 +26,7 @@
   "dependencies": {
     "@angular-devkit/core": "^10.2.0",
     "@angular-devkit/schematics": "^10.2.0",
+    "@angular-eslint/schematics": "^12.0.0",
     "@schematics/angular": "^10.2.0",
     "@wizsolucoes/ng-material-theme": "^1.1.2",
     "typescript": "^4.0.5"

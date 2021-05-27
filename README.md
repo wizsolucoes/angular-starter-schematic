@@ -1,6 +1,6 @@
-> **AVISO IMPORTANTE: Este schematic não está compatível com versões 12.x do CLI do Angular nem com Strict mode habilitado.**
+> **AVISO IMPORTANTE: Este schematic é compatível com a versão 12 do Angular CLI com strict mode desativado**
 
-[Esta](https://github.com/wizsolucoes/angular-starter-schematic/issues/56) e [esta](https://github.com/wizsolucoes/angular-starter-schematic/issues/68) issue estão abertas para fazer a adequação. Enquanto isso é necessário usar uma versão 10.x ou 11.x do CLI com `--strict=false`. Voce pode seguir [estes passos](https://stackoverflow.com/a/48282236) para instalar uma [versão específica do CLI](https://www.npmjs.com/package/@angular/cli?activeTab=versions).
+[Esta](https://github.com/wizsolucoes/angular-starter-schematic/issues/56) issue está aberta para fazer a adequação. Enquanto isso é necessário usar CLI com `--strict=false`.
 
 <!-- omit in toc -->
 # Wiz Angular Starter Schematic
@@ -26,7 +26,7 @@
 
 ## Sobre
 
-Schematic para gerar código boilerplate com a arquitetura de referência corporativa para aplicações Angular. Compatível com as [versões suportadas do Angular](https://angular.io/guide/releases#support-policy-and-schedule) (^8.0.0, ^9.0.0 e ^10.0.0) e otimizado para as versões ^10.0.0.
+Schematic para gerar código boilerplate com a arquitetura de referência corporativa para aplicações Angular. Compatível com as [versões suportadas do Angular](https://angular.io/guide/releases#support-policy-and-schedule).
 
 ## Uso
 
