@@ -58,16 +58,6 @@ describe('starter', () => {
       );
     });
 
-    // it('modifies tslint.json extends property', () => {
-    //   const tsLintBuffer = appTree.read('tslint.json');
-    //   const tsLintObject = JSON.parse(tsLintBuffer!!.toString());
-
-    //   expect(tsLintObject.extends).toEqual([
-    //     'tslint:recommended',
-    //     'tslint-config-prettier',
-    //   ]);
-    // });
-
     it('adds configuration files', () => {
       expect(appTree.files).toEqual(
         jasmine.arrayContaining([
@@ -77,27 +67,6 @@ describe('starter', () => {
       );
     });
   });
-
-  // describe('commit lint', () => {
-  //   it('adds commitlint.config.js file', async () => {
-  //     expect(appTree.files).toContain('/my-app/commitlint.config.js');
-  //   });
-
-  //   it('adds git hook', async () => {
-  //     const packageJsonBuffer = appTree.read('package.json');
-  //     const packageJsonObject = JSON.parse(packageJsonBuffer!!.toString());
-
-  //     expect(packageJsonObject).toEqual(
-  //       jasmine.objectContaining({
-  //         husky: {
-  //           hooks: {
-  //             'commit-msg': 'commitlint -E HUSKY_GIT_PARAMS',
-  //           },
-  //         },
-  //       })
-  //     );
-  //   });
-  // });
 
   describe('create staging environment', () => {
     it('creates staging environment file', () => {
@@ -213,7 +182,6 @@ describe('starter white label', () => {
 
   it('should contain: tenant, configuration, theme, api responses and tsconfigs files', () => {
     expect(appTree.files).toContain('/my-app/tsconfig.app.json');
-    expect(appTree.files).toContain('/my-app/tsconfig.base.json');
     expect(appTree.files).toContain('/my-app/tsconfig.json');
     expect(appTree.files).toContain('/my-app/tsconfig.spec.json');
     expect(appTree.files).toContain(
