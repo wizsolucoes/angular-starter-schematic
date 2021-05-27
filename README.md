@@ -26,7 +26,7 @@
 
 ## Sobre
 
-Schematic para gerar código boilerplate com a arquitetura de referência corporativa para aplicações Angular. Compatível com as [versões suportadas do Angular](https://angular.io/guide/releases#support-policy-and-schedule) e otimizado para as versões ^10.0.0.
+Schematic para gerar código boilerplate com a arquitetura de referência corporativa para aplicações Angular. Compatível com as [versões suportadas do Angular](https://angular.io/guide/releases#support-policy-and-schedule).
 
 ## Uso
 
