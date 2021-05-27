@@ -81,6 +81,27 @@ describe('starter', () => {
     });
   });
 
+  describe('commit lint', () => {
+    it('adds commitlint.config.js file', async () => {
+      expect(appTree.files).toContain('/my-app/commitlint.config.js');
+    });
+
+    it('adds git hook', async () => {
+      const packageJsonBuffer = appTree.read('package.json');
+      const packageJsonObject = JSON.parse(packageJsonBuffer!!.toString());
+
+      expect(packageJsonObject).toEqual(
+        jasmine.objectContaining({
+          husky: {
+            hooks: {
+              'commit-msg': 'commitlint -E HUSKY_GIT_PARAMS',
+            },
+          },
+        })
+      );
+    });
+  });
+
   describe('create staging environment', () => {
     it('creates staging environment file', () => {
       expect(appTree.files).toContain(
