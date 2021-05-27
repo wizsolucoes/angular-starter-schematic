@@ -68,6 +68,12 @@ describe('starter', () => {
     });
   });
 
+  // describe('should install ESLint', () => {
+  //   it('add .eslintrc.json file', async () => {
+  //     expect(appTree.files).toContain('/my-app/.eslintrc.json');
+  //   });
+  // });
+
   describe('create staging environment', () => {
     it('creates staging environment file', () => {
       expect(appTree.files).toContain(
