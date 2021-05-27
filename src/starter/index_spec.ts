@@ -58,6 +58,19 @@ describe('starter', () => {
       );
     });
 
+    it('modifies tslint.json extends property', () => {
+      const tsLintBuffer = appTree.read('tslint.json');
+      const tsLintObject = JSON.parse(tsLintBuffer!!.toString());
+
+      if (tsLintBuffer) {
+        expect(tsLintObject.extends).toEqual([
+          'tslint:recommended',
+          'tslint-config-prettier',
+        ]);
+      }
+      expect(true).toBeTruthy();
+    });
+
     it('adds configuration files', () => {
       expect(appTree.files).toEqual(
         jasmine.arrayContaining([
@@ -67,12 +80,6 @@ describe('starter', () => {
       );
     });
   });
-
-  // describe('should install ESLint', () => {
-  //   it('add .eslintrc.json file', async () => {
-  //     expect(appTree.files).toContain('/my-app/.eslintrc.json');
-  //   });
-  // });
 
   describe('create staging environment', () => {
     it('creates staging environment file', () => {

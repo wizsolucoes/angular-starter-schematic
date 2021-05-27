@@ -51,6 +51,7 @@ export function main(_options: Schema): Rule {
         ? generateWhiteLabelProjectFiles(_options)
         : noop(),
       createStagingEnvironment(),
+      configureTSLint(),
       addESLint(_options),
     ]);
   };
@@ -117,6 +118,19 @@ function addDependencies(): Rule {
     }
 
     _context.addTask(new NodePackageInstallTask());
+  };
+}
+
+function configureTSLint(): Rule {
+  return (tree: Tree, _context: SchematicContext) => {
+    const fileName = 'tslint.json';
+    const tsLintConfigBuffer = tree.read(fileName);
+
+    if (tsLintConfigBuffer) {
+      const tsLintConfig = JSON.parse(tsLintConfigBuffer!.toString());
+      tsLintConfig.extends = ['tslint:recommended', 'tslint-config-prettier'];
+      tree.overwrite(fileName, JSON.stringify(tsLintConfig, null, 2));
+    }
   };
 }
 
