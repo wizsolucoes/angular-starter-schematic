@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SimulationService } from 'src/app/core/services/business/simulation/simulation.service';
 
 @Component({
