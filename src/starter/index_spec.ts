@@ -215,9 +215,6 @@ describe('starter white label', () => {
   });
 
   it('should contain: tenant, configuration, theme, api responses and tsconfigs files', () => {
-    expect(appTree.files).toContain('/my-app/tsconfig.app.json');
-    expect(appTree.files).toContain('/my-app/tsconfig.json');
-    expect(appTree.files).toContain('/my-app/tsconfig.spec.json');
     expect(appTree.files).toContain(
       '/my-app/src/testing/fakes/api-responses/get-config.json'
     );

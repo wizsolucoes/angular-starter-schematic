@@ -53,6 +53,7 @@ export function main(_options: Schema): Rule {
       createStagingEnvironment(),
       configureTSLint(),
       addESLint(_options),
+      configureTSConfigJSON(),
     ]);
   };
 }
@@ -127,7 +128,7 @@ function configureTSLint(): Rule {
     const tsLintConfigBuffer = tree.read(fileName);
 
     if (tsLintConfigBuffer) {
-      const tsLintConfig = JSON.parse(tsLintConfigBuffer!.toString());
+      const tsLintConfig = JSON.parse(tsLintConfigBuffer.toString());
       tsLintConfig.extends = ['tslint:recommended', 'tslint-config-prettier'];
       tree.overwrite(fileName, JSON.stringify(tsLintConfig, null, 2));
     }
@@ -180,6 +181,32 @@ function addHuskyHook(): Rule {
     };
 
     tree.overwrite('package.json', JSON.stringify(packageJsonObject, null, 2));
+
+    return tree;
+  };
+}
+
+function configureTSConfigJSON(): Rule {
+  return (tree: Tree, _context: SchematicContext) => {
+    const stripJsonComments = require('strip-json-comments');
+    const tsconfigJsonBuffer = tree.read('tsconfig.json');
+
+    if (!tsconfigJsonBuffer) {
+      throw new SchematicsException('No tsconfig.json file found');
+    }
+
+    const tsconfigJsonObject = JSON.parse(
+      stripJsonComments(tsconfigJsonBuffer.toString())
+    );
+    const compilerOptions = tsconfigJsonObject.compilerOptions;
+
+    compilerOptions['resolveJsonModule'] = true;
+    compilerOptions['allowSyntheticDefaultImports'] = true;
+
+    tree.overwrite(
+      'tsconfig.json',
+      JSON.stringify(tsconfigJsonObject, null, 2)
+    );
 
     return tree;
   };
