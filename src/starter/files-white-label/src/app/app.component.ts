@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
     private appInsightsService: NgApplicationInsightsService
   ) {}
 
-  isLoadingConfiguration: boolean;
+  isLoadingConfiguration: boolean | undefined;
 
   ngOnInit(): void {
     this.confgureApplication();

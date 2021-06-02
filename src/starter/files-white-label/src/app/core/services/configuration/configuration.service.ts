@@ -17,7 +17,7 @@ export class ConfigurationService {
     private inMemory: ConfigurationInMemoryService
   ) {}
 
-  tenantId: string;
+  tenantId: string | undefined;
 
   private isCacheEnabled = true;
 
@@ -47,7 +47,7 @@ export class ConfigurationService {
     return this.getFromApi();
   }
 
-  getConfigSync(): AppConfiguration {
+  getConfigSync(): AppConfiguration | undefined {
     return this.getFromMemory();
   }
 
@@ -75,7 +75,7 @@ export class ConfigurationService {
     );
   }
 
-  private getFromMemory(): AppConfiguration {
+  private getFromMemory(): AppConfiguration | undefined {
     return this.inMemory.getConfiguration();
   }
 }

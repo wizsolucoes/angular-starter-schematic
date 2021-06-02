@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 })
 export class NavComponent implements OnInit {
   showNav = false;
-  features: string[];
-  logoUrl: string;
+  features: string[] | undefined;
+  logoUrl: string | undefined;
 
   constructor(
     private configurationService: ConfigurationService,
