@@ -7,8 +7,8 @@ import { AppConfiguration } from '../configuration';
 export class ConfigurationCacheService {
   private cacheKey = 'app_configuration';
 
-  getConfiguration(): AppConfiguration {
-    return JSON.parse(localStorage.getItem(this.cacheKey));
+  getConfiguration(): AppConfiguration | undefined {
+    return JSON.parse(localStorage.getItem(this.cacheKey)!);
   }
   saveConfiguration(configuration: AppConfiguration): void {
     localStorage.setItem(this.cacheKey, JSON.stringify(configuration));
