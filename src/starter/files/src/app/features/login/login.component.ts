@@ -17,7 +17,7 @@ export class LoginComponent {
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],
   });
-  loginErrorMessage: string;
+  loginErrorMessage: string | undefined;
   loginButtonMessage = 'Entrar';
 
   constructor(

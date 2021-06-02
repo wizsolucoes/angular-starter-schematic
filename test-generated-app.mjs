@@ -8,7 +8,7 @@ $`npm pack`;
 
 cd('..');
 
-await $`ng new schematics-test-app --style=scss --strict=false`;
+await $`ng new schematics-test-app --style=scss`;
 cd('../schematics-test-app');
 
 await $`npm i --no-save ${__dirname}/wizsolucoes-angular-starter-${version}.tgz`;
