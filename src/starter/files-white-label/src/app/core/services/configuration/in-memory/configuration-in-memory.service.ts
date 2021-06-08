@@ -5,13 +5,13 @@ import { AppConfiguration } from '../configuration';
   providedIn: 'root',
 })
 export class ConfigurationInMemoryService {
-  private configuration: AppConfiguration;
+  private configuration: AppConfiguration | undefined;
 
   saveConfiguration(configuration: AppConfiguration): void {
     this.configuration = configuration;
   }
 
-  getConfiguration(): AppConfiguration {
+  getConfiguration(): AppConfiguration | undefined {
     return this.configuration;
   }
 }

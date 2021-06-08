@@ -123,6 +123,32 @@ function addDependencies(): Rule {
   };
 }
 
+function configureTSConfigJSON(): Rule {
+  return (tree: Tree, _context: SchematicContext) => {
+    const stripJsonComments = require('strip-json-comments');
+    const tsconfigJsonBuffer = tree.read('tsconfig.json');
+
+    if (!tsconfigJsonBuffer) {
+      throw new SchematicsException('No tsconfig.json file found');
+    }
+
+    const tsconfigJsonObject = JSON.parse(
+      stripJsonComments(tsconfigJsonBuffer.toString())
+    );
+    const compilerOptions = tsconfigJsonObject.compilerOptions;
+
+    compilerOptions['resolveJsonModule'] = true;
+    compilerOptions['allowSyntheticDefaultImports'] = true;
+
+    tree.overwrite(
+      'tsconfig.json',
+      JSON.stringify(tsconfigJsonObject, null, 2)
+    );
+
+    return tree;
+  };
+}
+
 function configureTSLint(): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     const fileName = 'tslint.json';

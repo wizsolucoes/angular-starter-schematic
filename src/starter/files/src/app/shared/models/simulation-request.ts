@@ -1,7 +1,7 @@
 export interface SimulationRequest {
-  name: string;
-  cpf: string;
-  email: string;
-  loanAmount: number;
-  quantity: number;
+  name: string | undefined;
+  cpf: string | undefined;
+  email: string | undefined;
+  loanAmount: number | undefined;
+  quantity: number | undefined;
 }

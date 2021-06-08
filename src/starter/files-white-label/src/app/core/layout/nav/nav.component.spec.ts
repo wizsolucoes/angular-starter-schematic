@@ -84,7 +84,7 @@ describe('NavComponent', () => {
       it('should display nav bar menu', () => {
         // Then
         expect(
-          template.querySelector('[data-test="mat-toolbar"]').children.length
+          template.querySelector('[data-test="mat-toolbar"]')!.children.length
         ).toBe(5);
       });
     });
@@ -199,9 +199,11 @@ describe('NavComponent', () => {
       // When
       component.ngOnInit();
 
-      fixture.ngZone.run(() => {
-        router.initialNavigation();
-      });
+      if (fixture.ngZone) {
+        fixture.ngZone.run(() => {
+          router.initialNavigation();
+        });
+      }
 
       tick();
 
@@ -222,9 +224,11 @@ describe('NavComponent', () => {
       // When
       component.ngOnInit();
 
-      fixture.ngZone.run(() => {
-        router.initialNavigation();
-      });
+      if (fixture.ngZone) {
+        fixture.ngZone.run(() => {
+          router.initialNavigation();
+        });
+      }
 
       tick();
 
@@ -264,5 +268,5 @@ function userIsLoggedIn(): void {
 }
 
 function userIsLoggedOut(): void {
-  spyOn(SSOConectorService, 'isLogged').and.returnValue(null);
+  spyOn(SSOConectorService, 'isLogged').and.returnValue(null as any);
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SimulationService } from 'src/app/core/services/business/simulation/simulation.service';
 
 @Component({
@@ -8,12 +8,12 @@ import { SimulationService } from 'src/app/core/services/business/simulation/sim
 })
 export class SalesComponent {
   simulationResult: any;
-  name: string;
-  cpf: string;
-  email: string;
-  loanAmount: number;
-  installments: number;
-  isLoadingSimulation: boolean;
+  name: string | undefined;
+  cpf: string | undefined;
+  email: string | undefined;
+  loanAmount: number | undefined;
+  installments: number | undefined;
+  isLoadingSimulation: boolean | undefined;
 
   constructor(private simulationService: SimulationService) {}
 
