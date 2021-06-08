@@ -53,6 +53,8 @@ export function main(_options: Schema): Rule {
       createStagingEnvironment(),
       configureTSLint(),
       addESLint(_options),
+      configureESLintrcJsonFile(),
+      configurePrettierrc(),
     ]);
   };
 }
@@ -127,7 +129,7 @@ function configureTSLint(): Rule {
     const tsLintConfigBuffer = tree.read(fileName);
 
     if (tsLintConfigBuffer) {
-      const tsLintConfig = JSON.parse(tsLintConfigBuffer!.toString());
+      const tsLintConfig = JSON.parse(tsLintConfigBuffer.toString());
       tsLintConfig.extends = ['tslint:recommended', 'tslint-config-prettier'];
       tree.overwrite(fileName, JSON.stringify(tsLintConfig, null, 2));
     }
@@ -156,10 +158,55 @@ function addScripts(): Rule {
     scripts['format:write'] = 'prettier **/*.{html,ts,js,json,scss} --write';
     scripts['test:ci'] =
       'ng test --watch=false --code-coverage --browsers=ChromeHeadless';
+    scripts['lint'] = 'tsc --noEmit && eslint . --ext js,ts,json --quiet --fix';
 
     tree.overwrite('package.json', JSON.stringify(packageJsonObject, null, 2));
 
     return tree;
+  };
+}
+
+function configureESLintrcJsonFile(): Rule {
+  return (tree: Tree, _context: SchematicContext) => {
+    const esLintJsonBuffer = tree.read('.eslintrc.json');
+
+    if (esLintJsonBuffer) {
+      const esLintJsonObject = JSON.parse(esLintJsonBuffer.toString());
+      const overrides = esLintJsonObject.overrides;
+
+      overrides[0].extends.push(
+        'plugin:@angular-eslint/template/process-inline-templates'
+      );
+      overrides[0].extends.push('prettier');
+      overrides[0].extends.push('plugin:prettier/recommended');
+      overrides[1].extends.push('prettier');
+
+      tree.overwrite(
+        '.eslintrc.json',
+        JSON.stringify(esLintJsonObject, null, 2)
+      );
+
+      return tree;
+    }
+  };
+}
+
+function configurePrettierrc(): Rule {
+  return (tree: Tree, _context: SchematicContext) => {
+    const prettierrcJsonBuffer = tree.read('.prettierrc');
+
+    if (prettierrcJsonBuffer) {
+      const prettierrcJsonObject = JSON.parse(prettierrcJsonBuffer.toString());
+
+      prettierrcJsonObject['endOfLine'] = 'auto';
+
+      tree.overwrite(
+        '.prettierrc',
+        JSON.stringify(prettierrcJsonObject, null, 2)
+      );
+
+      return tree;
+    }
   };
 }
 
