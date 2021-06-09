@@ -17,3 +17,6 @@ await $`ng g @wizsolucoes/angular-starter:ng-add --white-label=true`;
 await $`ng test --no-watch --code-coverage --browsers=ChromeHeadless`;
 
 await $`ng lint`;
+
+cd('..');
+await $`rm -r schematics-whitelabel-test-app`;
