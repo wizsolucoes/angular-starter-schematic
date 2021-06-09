@@ -1,6 +1,6 @@
 {
   "name": "@wizsolucoes/angular-starter",
-  "version": "1.6.17",
+  "version": "1.6.19",
   "description": "Generates Wiz boilerplate Angular starter application.",
   "private": false,
   "publishConfig": {
@@ -12,9 +12,8 @@
     "test": "npm run build && jasmine src/**/*_spec.js && npm run test:generated:apps",
     "format:check": "prettier **/*.{html,ts,json,scss} --check",
     "format:write": "prettier **/*.{html,ts,json,scss} --write",
-    "test:generated:apps": "npm run test:generated:app && npm run test:generated:whitelabel",
+    "test:generated:apps": "SET IS_WHITELABLE=false && npm run test:generated:app && SET IS_WHITELABLE=true && npm run test:generated:app",
     "test:generated:app": "npx zx ./test-generated-app.mjs",
-    "test:generated:whitelabel": "npx zx ./test-generated-app-whitelabel.mjs",
     "pretest": "npm install -g @angular/cli && ng --version"
   },
   "keywords": [

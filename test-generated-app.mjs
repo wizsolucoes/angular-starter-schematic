@@ -12,7 +12,10 @@ await $`ng new schematics-test-app --style=scss`;
 cd('../schematics-test-app');
 
 await $`npm i --no-save ${__dirname}/wizsolucoes-angular-starter-${version}.tgz`;
-await $`ng g @wizsolucoes/angular-starter:ng-add --white-label=false`;
+await $`ng g @wizsolucoes/angular-starter:ng-add --white-label=$IS_WHITELABLE`;
 
-await $`ng test --no-watch --code-coverage --browsers=ChromeHeadless`;
+await $`npm run test:ci`;
 await $`ng lint`;
+
+cd('..');
+await $`rm -r schematics-test-app`;
