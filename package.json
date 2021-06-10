@@ -12,9 +12,10 @@
     "test": "npm run build && jasmine src/**/*_spec.js && npm run test:generated:apps",
     "format:check": "prettier **/*.{html,ts,json,scss} --check",
     "format:write": "prettier **/*.{html,ts,json,scss} --write",
-    "test:generated:apps": "cross-env IS_WHITELABLE=false && npm run test:generated:app && cross-env IS_WHITELABLE=true && npm run test:generated:app",
-    "test:generated:app": "npx zx ./test-generated-app.mjs",
-    "pretest": "npm install -g @angular/cli && ng --version"
+    "test:generated:apps": "npm run test:generated:app && npm run test:generated:whitelabel",
+    "test:generated:app": "cross-env WHITE_LABEL=false npx zx ./test-generated-app.mjs",
+    "test:generated:whitelabel": "cross-env WHITE_LABEL=true npx zx ./test-generated-app.mjs",
+    "pretest": "npm install -g @angular/cli && ng --version && npm i -D cross-env"
   },
   "keywords": [
     "schematics"
@@ -34,6 +35,7 @@
   "devDependencies": {
     "@types/jasmine": "~3.5.0",
     "@types/node": "^12.11.1",
+    "cross-env": "^7.0.3",
     "jasmine": "^3.5.0",
     "prettier": "^2.2.1"
   }
