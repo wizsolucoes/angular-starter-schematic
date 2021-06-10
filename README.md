@@ -1,7 +1,3 @@
-> **AVISO IMPORTANTE: Este schematic é compatível com a versão 12 do Angular CLI com strict mode desativado**
-
-[Esta](https://github.com/wizsolucoes/angular-starter-schematic/issues/56) issue está aberta para fazer a adequação. Enquanto isso é necessário usar CLI com `--strict=false`.
-
 <!-- omit in toc -->
 # Wiz Angular Starter Schematic
 
