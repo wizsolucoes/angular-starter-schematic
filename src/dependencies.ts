@@ -18,4 +18,8 @@ export const devDependencies: { [key: string]: string } = {
   'karma-coverage': '^2.0.3',
   'karma-junit-reporter': '^2.0.1',
   'tslint-config-prettier': '^1.18.0',
+  '@typescript-eslint/eslint-plugin': '^4.23.0',
+  'eslint-plugin-prettier': '^3.4.0',
+  'prettier-eslint': '^12.0.0',
+  'eslint-config-prettier': '^8.3.0',
 };

@@ -54,6 +54,7 @@ export function main(_options: Schema): Rule {
       configureTSLint(),
       addESLint(_options),
       configureTSConfigJSON(),
+      configureESLintrcJsonFile(),
     ]);
   };
 }
@@ -187,6 +188,37 @@ function addScripts(): Rule {
     tree.overwrite('package.json', JSON.stringify(packageJsonObject, null, 2));
 
     return tree;
+  };
+}
+
+function configureESLintrcJsonFile(): Rule {
+  return (tree: Tree, _context: SchematicContext) => {
+    const esLintJsonBuffer = tree.read('.eslintrc.json');
+
+    if (esLintJsonBuffer) {
+      const esLintJsonObject = JSON.parse(esLintJsonBuffer.toString());
+      const overrides = esLintJsonObject.overrides;
+      const tsOverride = overrides.find(
+        (it: any) => it.files && it.files.indexOf('*.ts') > -1
+      );
+      const htmlOverride = overrides.find(
+        (it: any) => it.files && it.files.indexOf('*.html') > -1
+      );
+
+      tsOverride.extends.push(
+        'plugin:@angular-eslint/template/process-inline-templates'
+      );
+      tsOverride.extends.push('prettier');
+      tsOverride.extends.push('plugin:prettier/recommended');
+      htmlOverride.extends.push('prettier');
+
+      tree.overwrite(
+        '.eslintrc.json',
+        JSON.stringify(esLintJsonObject, null, 2)
+      );
+
+      return tree;
+    }
   };
 }
 
