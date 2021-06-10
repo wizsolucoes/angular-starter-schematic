@@ -1,6 +1,6 @@
 {
   "name": "@wizsolucoes/angular-starter",
-  "version": "1.6.18",
+  "version": "1.6.19",
   "description": "Generates Wiz boilerplate Angular starter application.",
   "private": false,
   "publishConfig": {
@@ -13,8 +13,8 @@
     "format:check": "prettier **/*.{html,ts,json,scss} --check",
     "format:write": "prettier **/*.{html,ts,json,scss} --write",
     "test:generated:apps": "npm run test:generated:app && npm run test:generated:whitelabel",
-    "test:generated:app": "npx zx ./test-generated-app.mjs",
-    "test:generated:whitelabel": "npx zx ./test-generated-app-whitelabel.mjs",
+    "test:generated:app": "cross-env WHITE_LABEL=false npx zx ./test-generated-app.mjs",
+    "test:generated:whitelabel": "cross-env WHITE_LABEL=true npx zx ./test-generated-app.mjs",
     "pretest": "npm install -g @angular/cli && ng --version"
   },
   "keywords": [
@@ -35,6 +35,7 @@
   "devDependencies": {
     "@types/jasmine": "~3.5.0",
     "@types/node": "^12.11.1",
+    "cross-env": "^7.0.3",
     "jasmine": "^3.5.0",
     "prettier": "^2.2.1"
   }
