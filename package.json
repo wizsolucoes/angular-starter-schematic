@@ -1,6 +1,6 @@
 {
   "name": "@wizsolucoes/angular-starter",
-  "version": "1.6.19",
+  "version": "1.6.20",
   "description": "Generates Wiz boilerplate Angular starter application.",
   "private": false,
   "publishConfig": {
