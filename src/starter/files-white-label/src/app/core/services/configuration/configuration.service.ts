@@ -17,7 +17,7 @@ export class ConfigurationService {
     private inMemory: ConfigurationInMemoryService
   ) {}
 
-  tenantId: string | undefined;
+  tenantId = '';
 
   private isCacheEnabled = true;
 

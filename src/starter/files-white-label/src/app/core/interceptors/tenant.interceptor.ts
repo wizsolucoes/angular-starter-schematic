@@ -11,14 +11,16 @@ import { ConfigurationService } from '../services/configuration/configuration.se
 @Injectable()
 export class TenantInterceptor implements HttpInterceptor {
   constructor(private configurationService: ConfigurationService) {}
+
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     request = request.clone({
-      setHeaders: {
-        'X-Tenant': this.configurationService.tenantId,
-      },
+      headers: request.headers.append(
+        'X-Tenant',
+        this.configurationService.tenantId
+      ),
     });
     return next.handle(request);
   }
