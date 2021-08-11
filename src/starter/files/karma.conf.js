@@ -1,6 +1,5 @@
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
-
 module.exports = function (config) {
   config.set({
     basePath: '',
@@ -14,21 +13,28 @@ module.exports = function (config) {
       require('karma-coverage'),
     ],
     client: {
-      clearContext: false, // leave Jasmine Spec Runner output visible in browser
+      jasmine: {
+        // you can add configuration options for Jasmine here
+        // the possible options are listed at https://jasmine.github.io/api/edge/Configuration.html
+        // for example, you can disable the random execution with `random: false`
+        // or set a specific seed with `seed: 4321`
+      },
+      clearContext: false // leave Jasmine Spec Runner output visible in browser
+    },
+    jasmineHtmlReporter: {
+      suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      type: 'cobertura',
-      dir: 'coverage',
+      dir: require('path').join(__dirname, './coverage'),
       subdir: '.',
-      file: 'cobertura-coverage.xml',
       reporters: [
         { type: 'html' },
         { type: 'text-summary' },
         { type: 'lcovonly', file: 'lcov.info' },
-      ],
-      fixWebpackSourcePaths: true,
+        { type: 'cobertura' }
+      ]
     },
-    reporters: ['progress', 'kjhtml', 'coverage', 'junit'],
+    reporters: ['progress', 'kjhtml', 'junit'],
     junitReporter: {
       outputDir: './coverage/test-results',
       outputFile: 'junit.xml',
@@ -41,5 +47,7 @@ module.exports = function (config) {
     browsers: ['Chrome'],
     singleRun: false,
     restartOnFileChange: true,
+    browserNoActivityTimeout: 120000, // work around disconnections in CI/CD pipeline
+    disconnectTolerance: 5, // work around disconnections in CI/CD pipeline
   });
 };
