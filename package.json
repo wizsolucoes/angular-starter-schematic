@@ -38,5 +38,8 @@
     "cross-env": "^7.0.3",
     "jasmine": "^3.8.0",
     "prettier": "^2.2.1"
+  },
+  "ng-add": {
+    "save": false
   }
 }
