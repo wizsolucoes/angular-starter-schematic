@@ -14,6 +14,8 @@ import {
   externalSchematic,
 } from '@angular-devkit/schematics';
 
+import { parse, stringify } from 'comment-json';
+
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 
 import {
@@ -29,6 +31,8 @@ import { dependencies, devDependencies } from '../dependencies';
 
 let defaultPath: string;
 
+const SUPORTED_MAJOR_ANGULAR_VERSION = '12';
+
 export function main(_options: Schema): Rule {
   return async (tree: Tree, _context: SchematicContext) => {
     const workspaceConfigBuffer = tree.read('angular.json');
@@ -43,6 +47,7 @@ export function main(_options: Schema): Rule {
     defaultPath = await createDefaultPath(tree, projectName);
 
     return chain([
+      validateAngularVersion(),
       addScripts(),
       addHuskyHook(),
       addDependencies(),
@@ -55,6 +60,8 @@ export function main(_options: Schema): Rule {
       addESLint(_options),
       configureTSConfigJSON(),
       configureESLintrcJsonFile(),
+      addCodeCoverageExclude(),
+      updateTsConfigSpec(),
     ]);
   };
 }
@@ -125,25 +132,19 @@ function addDependencies(): Rule {
 
 function configureTSConfigJSON(): Rule {
   return (tree: Tree, _context: SchematicContext) => {
-    const stripJsonComments = require('strip-json-comments');
     const tsconfigJsonBuffer = tree.read('tsconfig.json');
 
     if (!tsconfigJsonBuffer) {
       throw new SchematicsException('No tsconfig.json file found');
     }
 
-    const tsconfigJsonObject = JSON.parse(
-      stripJsonComments(tsconfigJsonBuffer.toString())
-    );
+    const tsconfigJsonObject = parse(tsconfigJsonBuffer.toString());
     const compilerOptions = tsconfigJsonObject.compilerOptions;
 
     compilerOptions['resolveJsonModule'] = true;
     compilerOptions['allowSyntheticDefaultImports'] = true;
 
-    tree.overwrite(
-      'tsconfig.json',
-      JSON.stringify(tsconfigJsonObject, null, 2)
-    );
+    tree.overwrite('tsconfig.json', stringify(tsconfigJsonObject, null, 2));
 
     return tree;
   };
@@ -250,6 +251,82 @@ function createStagingEnvironment(): Rule {
       _createStagingEnvironmentFile(defaultPath),
       _createStagingEnvironmentConfig(),
     ])(tree, _context);
+  };
+}
+
+function addCodeCoverageExclude(): Rule {
+  return (tree: Tree, _context: SchematicContext) => {
+    const workspaceConfig = _getWorkspaceConfig(tree);
+    const projectName: string = workspaceConfig.defaultProject;
+    const projectArchitect = workspaceConfig.projects[projectName].architect;
+
+    const testOptions = projectArchitect.test.options;
+
+    testOptions['codeCoverageExclude'] = ['**/*.module.ts'];
+
+    tree.overwrite('angular.json', JSON.stringify(workspaceConfig, null, 2));
+
+    return tree;
+  };
+}
+
+function updateTsConfigSpec(): Rule {
+  return (tree: Tree, _context: SchematicContext) => {
+    const tsConfigSpecBuffer = tree.read('tsconfig.spec.json');
+
+    if (!tsConfigSpecBuffer) {
+      console.warn('tsconfig.spec.json not found');
+      return tree;
+    }
+
+    const tsConfigSpec = parse(tsConfigSpecBuffer.toString());
+
+    tsConfigSpec.include.unshift('**/*.ts');
+
+    tree.overwrite('tsconfig.spec.json', stringify(tsConfigSpec, null, 2));
+
+    return tree;
+  };
+}
+
+function validateAngularVersion(): Rule {
+  return (tree: Tree, _context: SchematicContext) => {
+    const packageJsonBuffer = tree.read('package.json');
+
+    if (!packageJsonBuffer) {
+      throw new SchematicsException('No package.json file found');
+    }
+
+    const packageJsonObject = JSON.parse(packageJsonBuffer.toString());
+    const packageDependencies = packageJsonObject.dependencies;
+
+    const angularVersionString = packageDependencies['@angular/core'];
+
+    var majorVersionRegexp = /^[~\^]*(?<major>\d+)\./;
+    var match = majorVersionRegexp.exec(angularVersionString);
+
+    if (!match || !match.groups) {
+      throw new SchematicsException(
+        'No @angular/core version found in package.json. Are you sure this is an Angular workspace?'
+      );
+    }
+
+    const angularMajorVersion = match.groups.major;
+
+    if (angularMajorVersion != SUPORTED_MAJOR_ANGULAR_VERSION) {
+      throw new SchematicsException(
+        `
+        ❌ @wizsolucoes/angular-starter detected Angular version ${angularMajorVersion}.
+        This Schematic must be run on an Angular application version 12.
+        `
+      );
+    }
+
+    console.log(
+      `✅ @wizsolucoes/angular-starter detected Angular version ${angularMajorVersion}.`
+    );
+
+    return tree;
   };
 }
 

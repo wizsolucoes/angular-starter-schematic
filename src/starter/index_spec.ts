@@ -60,13 +60,16 @@ describe('starter', () => {
 
     it('modifies tslint.json extends property', () => {
       const tsLintBuffer = appTree.read('tslint.json');
-      const tsLintObject = JSON.parse(tsLintBuffer!!.toString());
 
       if (tsLintBuffer) {
+        const tsLintObject = JSON.parse(tsLintBuffer.toString());
+
         expect(tsLintObject.extends).toEqual([
           'tslint:recommended',
           'tslint-config-prettier',
         ]);
+
+        return;
       }
       expect(true).toBeTruthy();
     });

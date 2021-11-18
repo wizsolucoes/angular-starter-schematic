@@ -4,7 +4,7 @@ let version = await $`node -p "require('./package.json').version"`;
 
 await $`npm install`;
 await $`npm run build`;
-$`npm pack`;
+await $`npm pack`;
 
 cd('..');
 

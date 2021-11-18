@@ -1,6 +1,6 @@
 {
   "name": "@wizsolucoes/angular-starter",
-  "version": "1.6.22",
+  "version": "1.6.23",
   "description": "Generates Wiz boilerplate Angular starter application.",
   "private": false,
   "publishConfig": {
@@ -15,7 +15,7 @@
     "test:generated:apps": "npm run test:generated:app && npm run test:generated:whitelabel",
     "test:generated:app": "cross-env WHITE_LABEL=false npx zx ./test-generated-app.mjs",
     "test:generated:whitelabel": "cross-env WHITE_LABEL=true npx zx ./test-generated-app.mjs",
-    "pretest": "npm install -g @angular/cli && ng --version"
+    "pretest": "npm install -g @angular/cli@v12-lts && ng --version"
   },
   "keywords": [
     "schematics"
@@ -24,13 +24,13 @@
   "license": "MIT",
   "schematics": "./src/collection.json",
   "dependencies": {
-    "@angular-devkit/core": "^10.2.0",
-    "@angular-devkit/schematics": "^10.2.0",
-    "@angular-eslint/schematics": "^12.0.0",
-    "@schematics/angular": "^10.2.0",
+    "@angular-devkit/core": "^12.2.13",
+    "@angular-devkit/schematics": "^12.2.13",
+    "@angular-eslint/schematics": "^12.6.1",
+    "@schematics/angular": "^12.2.13",
     "@wizsolucoes/ng-material-theme": "^1.1.2",
-    "strip-json-comments": "^3.1.1",
-    "typescript": "^4.0.5"
+    "comment-json": "^4.1.1",
+    "typescript": "^4.5.2"
   },
   "devDependencies": {
     "@types/jasmine": "~3.5.0",
@@ -38,5 +38,8 @@
     "cross-env": "^7.0.3",
     "jasmine": "^3.8.0",
     "prettier": "^2.2.1"
+  },
+  "ng-add": {
+    "save": false
   }
 }

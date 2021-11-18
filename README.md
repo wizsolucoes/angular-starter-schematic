@@ -22,7 +22,7 @@
 
 ## Sobre
 
-Schematic para gerar código boilerplate com a arquitetura de referência corporativa para aplicações Angular. Compatível com as [versões suportadas do Angular](https://angular.io/guide/releases#support-policy-and-schedule).
+Schematic para gerar código boilerplate com a arquitetura de referência corporativa para aplicações Angular. **Compatível somente com aplicações Angular 12.**
 
 ## Uso
 
@@ -41,11 +41,14 @@ ng add @wizsolucoes/angular-starter
 # Executar testes
 npm run test:ci
 
+# Executar lint
+ng lint
+
 # Rodar aplicação
 ng serve
 ```
 
-*Obs: se estiver usando o gitbash e encontrar o erro abaixo ao executar ng add @wizsolucoes/angular-starter, execute o comando no gitbash do VSCode ou no powershell.
+**Obs:** se você estiver usando o gitbash e encontrar o erro abaixo ao executar ng add @wizsolucoes/angular-starter, execute o comando no gitbash do VSCode ou em PowerShell.
 
 ```bash
 $ ng g @wizsolucoes/angular-starter:ng-add
@@ -54,6 +57,8 @@ Errors:
 
   Data path "" should have required property 'white-label'.
 ```
+
+**Obs:** é necessário fazer [a configuração da biblioteca NGX Wiz SSO](##configuração-sso) para explorar as funcionalidades do Starter.
 
 ### Opções
 
