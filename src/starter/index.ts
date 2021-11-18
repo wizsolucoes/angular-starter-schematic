@@ -31,6 +31,8 @@ import { dependencies, devDependencies } from '../dependencies';
 
 let defaultPath: string;
 
+const SUPORTED_MAJOR_ANGULAR_VERSION = '12';
+
 export function main(_options: Schema): Rule {
   return async (tree: Tree, _context: SchematicContext) => {
     const workspaceConfigBuffer = tree.read('angular.json');
@@ -45,6 +47,7 @@ export function main(_options: Schema): Rule {
     defaultPath = await createDefaultPath(tree, projectName);
 
     return chain([
+      validateAngularVersion(),
       addScripts(),
       addHuskyHook(),
       addDependencies(),
@@ -280,9 +283,48 @@ function updateTsConfigSpec(): Rule {
 
     tsConfigSpec.include.unshift('**/*.ts');
 
-    console.log('tsConfigSpec', tsConfigSpec);
-
     tree.overwrite('tsconfig.spec.json', stringify(tsConfigSpec, null, 2));
+
+    return tree;
+  };
+}
+
+function validateAngularVersion(): Rule {
+  return (tree: Tree, _context: SchematicContext) => {
+    const packageJsonBuffer = tree.read('package.json');
+
+    if (!packageJsonBuffer) {
+      throw new SchematicsException('No package.json file found');
+    }
+
+    const packageJsonObject = JSON.parse(packageJsonBuffer.toString());
+    const packageDependencies = packageJsonObject.dependencies;
+
+    const angularVersionString = packageDependencies['@angular/core'];
+
+    var majorVersionRegexp = /^[~\^]*(?<major>\d+)\./;
+    var match = majorVersionRegexp.exec(angularVersionString);
+
+    if (!match || !match.groups) {
+      throw new SchematicsException(
+        'No @angular/core version found in package.json. Are you sure this is an Angular workspace?'
+      );
+    }
+
+    const angularMajorVersion = match.groups.major;
+
+    if (angularMajorVersion != SUPORTED_MAJOR_ANGULAR_VERSION) {
+      throw new SchematicsException(
+        `
+        ❌ @wizsolucoes/angular-starter detected Angular version ${angularMajorVersion}.
+        This Schematic must be run on an Angular application version 12.
+        `
+      );
+    }
+
+    console.log(
+      `✅ @wizsolucoes/angular-starter detected Angular version ${angularMajorVersion}.`
+    );
 
     return tree;
   };
