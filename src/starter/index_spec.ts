@@ -89,7 +89,11 @@ describe('starter', () => {
       expect(appTree.files).toContain('/my-app/commitlint.config.js');
     });
 
-    it('adds git hook', async () => {
+
+  });
+
+  describe('git hooks', () => {
+    it('adds husky object', async () => {
       const packageJsonBuffer = appTree.read('package.json');
       const packageJsonObject = JSON.parse(packageJsonBuffer!!.toString());
 
@@ -97,9 +101,25 @@ describe('starter', () => {
         jasmine.objectContaining({
           husky: {
             hooks: {
+              'pre-commit': 'lint-staged',
               'commit-msg': 'commitlint -E HUSKY_GIT_PARAMS',
             },
           },
+        })
+      );
+    });
+
+    it('adds lint-staged object', async () => {
+      const packageJsonBuffer = appTree.read('package.json');
+      const packageJsonObject = JSON.parse(packageJsonBuffer!!.toString());
+
+      expect(packageJsonObject).toEqual(
+        jasmine.objectContaining({
+          "lint-staged": {
+            "*.{js,ts,tsx}": [
+              "eslint"
+            ]
+          }
         })
       );
     });
