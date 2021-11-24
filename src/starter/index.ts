@@ -49,7 +49,7 @@ export function main(_options: Schema): Rule {
     return chain([
       validateAngularVersion(),
       addScripts(),
-      addHuskyHook(),
+      addHuskyHooks(),
       addDependencies(),
       generateProjectFiles(_options),
       _options['white-label']
@@ -223,7 +223,7 @@ function configureESLintrcJsonFile(): Rule {
   };
 }
 
-function addHuskyHook(): Rule {
+function addHuskyHooks(): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     const packageJsonBuffer = tree.read('package.json');
 
@@ -235,8 +235,13 @@ function addHuskyHook(): Rule {
 
     packageJsonObject['husky'] = {
       hooks: {
+        'pre-commit': 'lint-staged',
         'commit-msg': 'commitlint -E HUSKY_GIT_PARAMS',
       },
+    };
+
+    packageJsonObject['lint-staged'] = {
+      '*.{js,ts,tsx}': ['eslint'],
     };
 
     tree.overwrite('package.json', JSON.stringify(packageJsonObject, null, 2));

@@ -22,4 +22,5 @@ export const devDependencies: { [key: string]: string } = {
   'eslint-plugin-prettier': '^3.4.0',
   'prettier-eslint': '^12.0.0',
   'eslint-config-prettier': '^8.3.0',
+  'lint-staged': '^12.1.2',
 };
