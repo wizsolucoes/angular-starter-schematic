@@ -22,8 +22,8 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
     const appConfig = this.configurationService.getConfigSync();
     if (appConfig) {
-      this.features = appConfig.features;
-      this.logoUrl = appConfig.logoImageUrl;
+      this.features = appConfig['features'];
+      this.logoUrl = appConfig['logoImageUrl'];
     }
 
     this.showNav = !!SSOConectorService.isLogged();

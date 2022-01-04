@@ -75,7 +75,7 @@ describe('AppComponent', () => {
     // Assert / Then
     expect(mockThemingService.setCSSVariables).toHaveBeenCalledWith(
       document,
-      data.theme
+      data['theme']
     );
   });
 
