@@ -8,19 +8,22 @@ export class ThemingService {
   setCSSVariables(document: Document, propertyMap: AppConfiguration): void {
     document.body.style.setProperty(
       `--primary-color`,
-      propertyMap.primaryColor
+      propertyMap['primaryColor']
     );
 
-    document.body.style.setProperty(`--accent-color`, propertyMap.accentColor);
+    document.body.style.setProperty(
+      `--accent-color`,
+      propertyMap['accentColor']
+    );
 
     document.body.style.setProperty(
       `--syz-primary-color`,
-      propertyMap.primaryColor
+      propertyMap['primaryColor']
     );
 
     document.body.style.setProperty(
       `--syz-accent-color`,
-      propertyMap.accentColor
+      propertyMap['accentColor']
     );
 
     // You can use this loop if the API retuns CSS properites in snake case (Eg. primary-color)

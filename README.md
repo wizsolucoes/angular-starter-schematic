@@ -22,7 +22,7 @@
 
 ## Sobre
 
-Schematic para gerar código boilerplate com a arquitetura de referência corporativa para aplicações Angular. **Compatível somente com aplicações Angular 12.**
+Schematic para gerar código boilerplate com a arquitetura de referência corporativa para aplicações Angular. **Compatível somente com aplicações Angular 13.**
 
 ## Uso
 

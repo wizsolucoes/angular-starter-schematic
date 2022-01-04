@@ -14,10 +14,14 @@
         placeholder="Email"
         required
       />
-      <mat-error *ngIf="email?.invalid && email?.errors?.required"
+      <mat-error
+        *ngIf="
+          email && email.invalid && email.errors && email.errors['required']
+        "
         >Email obrigatório</mat-error
       >
-      <mat-error *ngIf="email?.invalid && email?.errors?.email"
+      <mat-error
+        *ngIf="email && email.invalid && email.errors && email.errors['email']"
         >Email inválido</mat-error
       >
     </mat-form-field>
@@ -32,7 +36,13 @@
         placeholder="Senha"
         required
       />
-      <mat-error *ngIf="password?.invalid && password?.errors?.required"
+      <mat-error
+        *ngIf="
+          password &&
+          password.invalid &&
+          password.errors &&
+          password.errors['required']
+        "
         >Senha obrigatória</mat-error
       >
     </mat-form-field>

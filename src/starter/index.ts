@@ -31,7 +31,7 @@ import { dependencies, devDependencies } from '../dependencies';
 
 let defaultPath: string;
 
-const SUPORTED_MAJOR_ANGULAR_VERSION = '12';
+const SUPORTED_MAJOR_ANGULAR_VERSION = '13';
 
 export function main(_options: Schema): Rule {
   return async (tree: Tree, _context: SchematicContext) => {
