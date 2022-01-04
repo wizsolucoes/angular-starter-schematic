@@ -23,3 +23,4 @@ extends:
     technology: 'node-package'
     npmCustomEndpoint: 'npmjs'
     npmRunBuild: true
+    npmNodeVersion: '16.x'
