@@ -51,13 +51,13 @@ export function main(_options: Schema): Rule {
       addScripts(),
       addHuskyHooks(),
       addDependencies(),
-      generateProjectFiles(_options),
+      generateProjectFiles(),
       _options['white-label']
-        ? generateWhiteLabelProjectFiles(_options)
+        ? generateWhiteLabelProjectFiles()
         : noop(),
       createStagingEnvironment(),
       configureTSLint(),
-      addESLint(_options),
+      addESLint(),
       configureTSConfigJSON(),
       configureESLintrcJsonFile(),
       addCodeCoverageExclude(),
@@ -66,7 +66,7 @@ export function main(_options: Schema): Rule {
   };
 }
 
-function generateProjectFiles(_options: Schema): Rule {
+function generateProjectFiles(): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     const projectPath = defaultPath.replace('src/app', '');
 
@@ -84,7 +84,7 @@ function generateProjectFiles(_options: Schema): Rule {
   };
 }
 
-function generateWhiteLabelProjectFiles(_options: Schema): Rule {
+function generateWhiteLabelProjectFiles(): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     tree.delete(`${defaultPath}/core/interceptors/default.interceptor.ts`);
 
@@ -163,9 +163,9 @@ function configureTSLint(): Rule {
   };
 }
 
-function addESLint(_options: any): Rule {
+function addESLint(): Rule {
   return (_tree: Tree, _context: SchematicContext) => {
-    return externalSchematic('@angular-eslint/schematics', 'ng-add', _options);
+    return externalSchematic('@angular-eslint/schematics', 'ng-add', {});
   };
 }
 
