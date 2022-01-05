@@ -12,6 +12,7 @@
     - [Monitoramento com Application Insights](#monitoramento-com-application-insights)
     - [Commit lint](#commit-lint)
     - [Configuração Prettier](#configuração-prettier)
+    - [ReCAPTCHA](#recaptcha)
     - [CI/CD](#cicd)
 - [Desenvolvimento do schematic](#desenvolvimento-do-schematic)
   - [Por onde começar](#por-onde-começar)
@@ -48,17 +49,9 @@ ng lint
 ng serve
 ```
 
-**Obs:** se você estiver usando o gitbash e encontrar o erro abaixo ao executar ng add @wizsolucoes/angular-starter, execute o comando no gitbash do VSCode ou em PowerShell.
+**Obs:** Se você estiver usando o Git Bash e encontrar um erro ao executar `ng add @wizsolucoes/angular-starter`, execute o comando no Terminal do VSCode ou em PowerShell.
 
-```bash
-$ ng g @wizsolucoes/angular-starter:ng-add
-Schematic input does not validate against the Schema: {}
-Errors:
-
-  Data path "" should have required property 'white-label'.
-```
-
-**Obs:** é necessário fazer [a configuração da biblioteca NGX Wiz SSO](##configuração-sso) para explorar as funcionalidades do Starter.
+**Obs:** É necessário fazer [a configuração da biblioteca NGX Wiz SSO](##configuração-sso) para explorar as funcionalidades do Starter.
 
 ### Opções
 
@@ -237,6 +230,19 @@ O código gerado contem arquivos de configuração da ferramenta de formatação
     "format:check": "prettier **/*.{html,ts,js,json,scss} --check",
     "format:write": "prettier **/*.{html,ts,js,json,scss} --write"
   },
+```
+
+#### ReCAPTCHA
+
+Implementação de Google ReCAPTCHA na tela de login. Adicione a chave pública do seu projeto aos arquivos da pasta [src/environments](./src/starter/files/src/environments).
+
+```typescript
+export const environment = {
+  ...
+  reCaptcha: {
+    siteKey: 'YOUR-RECAPTCHA-KEY',
+  },
+};
 ```
 
 #### CI/CD

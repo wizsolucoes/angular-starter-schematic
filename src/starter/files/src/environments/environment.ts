@@ -22,6 +22,9 @@ export const environment = {
   appInsights: {
     instrumentationKey: '',
   },
+  reCaptcha: {
+    siteKey: 'YOUR-RECAPTCHA-KEY',
+  },
 };
 
 /*

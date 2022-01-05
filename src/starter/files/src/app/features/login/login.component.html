@@ -46,7 +46,16 @@
         >Senha obrigatória</mat-error
       >
     </mat-form-field>
-    <button type="submit" data-test="submit" mat-flat-button color="primary">
+
+    <re-captcha (resolved)="onCaptchaResolved($event)"></re-captcha>
+
+    <button
+      type="submit"
+      data-test="submit"
+      mat-flat-button
+      color="primary"
+      [disabled]="!captchaResolution"
+    >
       {{ loginButtonMessage }}
     </button>
   </form>

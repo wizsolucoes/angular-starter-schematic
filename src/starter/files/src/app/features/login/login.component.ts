@@ -1,10 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  FormControl,
-  AbstractControl,
-  FormBuilder,
-  Validators,
-} from '@angular/forms';
+import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { SSOConectorService } from '@wizsolucoes/ngx-wiz-sso';
 import { Router } from '@angular/router';
 @Component({
@@ -19,6 +14,7 @@ export class LoginComponent {
   });
   loginErrorMessage: string | undefined;
   loginButtonMessage = 'Entrar';
+  captchaResolution: string | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -53,5 +49,9 @@ export class LoginComponent {
           this.loginButtonMessage = 'Entrar';
         }
       );
+  }
+
+  onCaptchaResolved(captchaResponse: string): void {
+    this.captchaResolution = captchaResponse;
   }
 }
