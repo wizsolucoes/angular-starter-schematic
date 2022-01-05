@@ -6,7 +6,7 @@
   width: 90%;
   max-width: 450px;
   position: relative;
-  padding: 50px;
+  padding: 74px;
   -webkit-box-shadow: 0 30px 60px 0 rgb(0 0 0 / 30%);
   box-shadow: 0 30px 60px 0 rgb(0 0 0 / 30%);
   text-align: center;
@@ -15,13 +15,14 @@
   h1 {
     margin-bottom: 20px;
   }
+
   mat-form-field {
-    width: 85%;
-    margin: 5px;
+    width: 100%;
   }
 
   button {
-    width: 85%;
+    margin-top: 20px;
+    width: 100%;
     padding: 5px;
   }
 

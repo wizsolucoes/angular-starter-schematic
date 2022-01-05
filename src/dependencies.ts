@@ -6,6 +6,7 @@ export const dependencies: { [key: string]: string } = {
   '@wizsolucoes/ng-application-insights': '^1.1.2',
   'ng2-currency-mask': '^13.0.3',
   'ngx-mask': '^13.0.1',
+  'ng-recaptcha': '^9.0.0',
 };
 
 export const devDependencies: { [key: string]: string } = {

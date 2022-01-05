@@ -18,4 +18,7 @@ export const environment = {
   appInsights: {
     instrumentationKey: 'YOUR-APPLICATION-INSIGHTS-INSTRUMENTATION-KEY',
   },
+  reCaptcha: {
+    siteKey: 'YOUR-RECAPTCHA-KEY',
+  },
 };

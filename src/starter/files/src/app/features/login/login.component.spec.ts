@@ -123,4 +123,17 @@ describe('LoginComponent', () => {
       expect(mockSSO.loginWithCredentials).toHaveBeenCalled();
     });
   });
+
+  describe('captchaResolved', () => {
+    it('should define captchaResolution', () => {
+      // Given
+      component.captchaResolution = undefined;
+
+      // When
+      component.onCaptchaResolved('any');
+
+      // Then
+      expect(component.captchaResolution).toBeTruthy();
+    });
+  });
 });
