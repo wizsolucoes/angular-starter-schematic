@@ -1,6 +1,6 @@
 export const dependencies: { [key: string]: string } = {
   '@microsoft/applicationinsights-web': '^2.7.2',
-  '@wizsolucoes/ngx-wiz-sso': '^2.1.4',
+  '@wizsolucoes/ngx-wiz-sso': '^2.1.5',
   '@wizsolucoes/wiz-loader': '^2.1.0',
   '@wizsolucoes/wiz-alerts': '^2.2.0',
   '@wizsolucoes/ng-application-insights': '^1.1.2',
