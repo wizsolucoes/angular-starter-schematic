@@ -17,8 +17,12 @@
 - [Desenvolvimento do schematic](#desenvolvimento-do-schematic)
   - [Por onde começar](#por-onde-começar)
   - [Testando o schematic localmente](#testando-o-schematic-localmente)
-    - [1. Gere um distribuível do schematic](#1-gere-um-distribuível-do-schematic)
-    - [2. Gere uma nova aplicação e instale e execute o schematic](#2-gere-uma-nova-aplicação-e-instale-e-execute-o-schematic)
+  - [1. Gerando um distribuível do schematic](#1-gerando-um-distribuível-do-schematic)
+    - [1a. Gere um distribuível do schematic](#1a-gere-um-distribuível-do-schematic)
+    - [1b. Gere uma nova aplicação e instale e execute o schematic](#1b-gere-uma-nova-aplicação-e-instale-e-execute-o-schematic)
+  - [2. Executando o schematic referenciando o código fonte](#2-executando-o-schematic-referenciando-o-código-fonte)
+    - [2a. Faça o build do schematic](#2a-faça-o-build-do-schematic)
+    - [2b. Execute com a CLI @angular-devkit/schematics-cli](#2b-execute-com-a-cli-angular-devkitschematics-cli)
   - [Aprenda mais sobre schematics](#aprenda-mais-sobre-schematics)
 
 ## Sobre
@@ -272,7 +276,11 @@ npm test
 
 ### Testando o schematic localmente
 
-#### 1. Gere um distribuível do schematic
+Para testar o schematic localmente, você pode gerar um distribuível do schematic, instalar como pacote em uma aplicação angular ou você pode executar o schematic referenciando o código fonte diretamente. 
+
+### 1. Gerando um distribuível do schematic
+
+#### 1a. Gere um distribuível do schematic
 
 ```bash
 # Instalar as dependências
@@ -285,7 +293,7 @@ npm run build
 npm pack
 ```
 
-#### 2. Gere uma nova aplicação e instale e execute o schematic
+#### 1b. Gere uma nova aplicação e instale e execute o schematic
 
 ```bash
 # Gerar uma nova aplicação Angular em outra pasta para testar o schematic
@@ -294,11 +302,37 @@ ng new my-app --style=scss
 # Entrar na pasta da nova aplicação
 cd my-app
 
-# Instalar schematic
+# Instalar o distribuível do schematic
 npm i --no-save ../<path-to>/angular-starter-schematic/wizsolucoes-angular-starter-x.x.x.tgz
 
 # Executar schematic
 ng g @wizsolucoes/angular-starter:ng-add
+```
+
+### 2. Executando o schematic referenciando o código fonte
+
+#### 2a. Faça o build do schematic
+
+```bash
+# Instalar as dependências
+npm install
+
+# Buildar schematic
+npm run build
+```
+
+#### 2b. Execute com a CLI @angular-devkit/schematics-cli
+(É preciso ter instalado a CLI com `ng i -g @angular-devkit/schematics-cli`)
+
+```bash
+# Gerar uma nova aplicação Angular em outra pasta para testar o schematic
+ng new my-app --style=scss
+
+# Entrar na pasta da nova aplicação
+cd my-app
+
+# Exeucutar o schematic com @angular-devkit/schematics-cli
+schematics ../<path-to>/angular-starter-schematic/src/collection.json:starter
 ```
 
 ### Aprenda mais sobre schematics
