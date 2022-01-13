@@ -10,6 +10,8 @@ import { ConfigurationService } from '../services/configuration/configuration.se
 
 @Injectable()
 export class TenantInterceptor implements HttpInterceptor {
+  static X_TENANT_HEADER: string = 'X-Tenant';
+
   constructor(private configurationService: ConfigurationService) {}
 
   intercept(
@@ -18,7 +20,7 @@ export class TenantInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     request = request.clone({
       headers: request.headers.append(
-        'X-Tenant',
+        TenantInterceptor.X_TENANT_HEADER,
         this.configurationService.tenantId
       ),
     });

@@ -52,9 +52,7 @@ export function main(_options: Schema): Rule {
       addHuskyHooks(),
       addDependencies(),
       generateProjectFiles(),
-      _options['white-label']
-        ? generateWhiteLabelProjectFiles()
-        : noop(),
+      _options['white-label'] ? generateWhiteLabelProjectFiles() : noop(),
       createStagingEnvironment(),
       configureTSLint(),
       addESLint(),
@@ -87,6 +85,7 @@ function generateProjectFiles(): Rule {
 function generateWhiteLabelProjectFiles(): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     tree.delete(`${defaultPath}/core/interceptors/default.interceptor.ts`);
+    tree.delete(`${defaultPath}/core/interceptors/default.interceptor.spec.ts`);
 
     const projectPath = defaultPath.replace('src/app', '');
 
@@ -185,6 +184,8 @@ function addScripts(): Rule {
     scripts['format:write'] = 'prettier **/*.{html,ts,js,json,scss} --write';
     scripts['test:ci'] =
       'ng test --watch=false --code-coverage --browsers=ChromeHeadless';
+    scripts['test:coverage'] =
+      'ng test --code-coverage --browsers=ChromeHeadless';
 
     tree.overwrite('package.json', JSON.stringify(packageJsonObject, null, 2));
 
