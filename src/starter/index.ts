@@ -60,6 +60,7 @@ export function main(_options: Schema): Rule {
       configureESLintrcJsonFile(),
       addCodeCoverageExclude(),
       updateTsConfigSpec(),
+      upsertVSCodeRecommendations(),
     ]);
   };
 }
@@ -331,6 +332,38 @@ function validateAngularVersion(): Rule {
     console.log(
       `✅ @wizsolucoes/angular-starter detected Angular version ${angularMajorVersion}.`
     );
+
+    return tree;
+  };
+}
+
+function upsertVSCodeRecommendations(): Rule {
+  return (tree: Tree, _context: SchematicContext) => {
+    const filePath = '.vscode/extensions.json';
+    const ourRecommendations = ['WizSolucoes.devz-front-end-pack'];
+
+    const extensionsJSONBuffer = tree.read(filePath);
+
+    if (!extensionsJSONBuffer) {
+      console.log('VS Code Extensions file not found. Creating a new file.');
+
+      tree.create(
+        filePath,
+        stringify({ recommendations: ourRecommendations }, null, 2)
+      );
+
+      return tree;
+    }
+
+    const extensionsJSON = parse(extensionsJSONBuffer.toString());
+
+    const originalRecomendations = extensionsJSON.recommendations || [];
+
+    const set = new Set([...ourRecommendations, ...originalRecomendations]);
+
+    extensionsJSON.recommendations = Array.from(set);
+
+    tree.overwrite(filePath, stringify(extensionsJSON, null, 2));
 
     return tree;
   };
