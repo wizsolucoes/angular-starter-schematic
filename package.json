@@ -28,7 +28,7 @@
     "@angular-devkit/schematics": "^13.1.2",
     "@angular-eslint/schematics": "^13.0.1",
     "@schematics/angular": "^13.1.2",
-    "@wizsolucoes/ng-material-theme": "^1.1.2",
+    "@wizsolucoes/ng-material-theme": "^13.0.0",
     "comment-json": "^4.1.1",
     "typescript": "^4.5.2"
   },
