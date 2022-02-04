@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgSyzCpfSearchModule } from '@wizsolucoes/ng-syz';
 
 describe('SalesComponent', () => {
   let component: SalesComponent;
@@ -30,6 +31,7 @@ describe('SalesComponent', () => {
         MatButtonModule,
         MatFormFieldModule,
         MatInputModule,
+        NgSyzCpfSearchModule,
       ],
       declarations: [SalesComponent],
       providers: [
