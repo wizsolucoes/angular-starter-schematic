@@ -4,9 +4,12 @@ export const dependencies: { [key: string]: string } = {
   '@wizsolucoes/wiz-loader': '^2.1.0',
   '@wizsolucoes/wiz-alerts': '^2.2.0',
   '@wizsolucoes/ng-application-insights': '^1.1.2',
+  '@wizsolucoes/ng-syz': '^13.0.1',
   'ng2-currency-mask': '^13.0.3',
   'ngx-mask': '^13.0.1',
+  'ngx-swiper-wrapper': '^10.0.0',
   'ng-recaptcha': '^9.0.0',
+  swiper: '^6.8.4',
 };
 
 export const devDependencies: { [key: string]: string } = {
