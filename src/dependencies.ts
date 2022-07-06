@@ -23,7 +23,7 @@ export const devDependencies: { [key: string]: string } = {
   'tslint-config-prettier': '^1.18.0',
   '@typescript-eslint/eslint-plugin': '^4.23.0',
   'eslint-plugin-prettier': '^3.4.0',
-  'prettier-eslint': '^12.0.0',
+  'prettier-eslint': '^15.0.1',
   'eslint-config-prettier': '^8.3.0',
   'lint-staged': '^12.1.2',
 };

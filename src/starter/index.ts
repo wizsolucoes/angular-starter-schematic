@@ -1,17 +1,7 @@
 import {
-  Rule,
-  SchematicContext,
-  Tree,
-  url,
-  apply,
-  mergeWith,
-  SchematicsException,
-  move,
-  chain,
-  MergeStrategy,
-  forEach,
-  noop,
-  externalSchematic,
+  apply, chain, externalSchematic, forEach, MergeStrategy, mergeWith, move, noop, Rule,
+  SchematicContext, SchematicsException, Tree,
+  url
 } from '@angular-devkit/schematics';
 
 import { parse, stringify } from 'comment-json';
@@ -21,17 +11,17 @@ import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import {
   addPackageJsonDependency,
   NodeDependency,
-  NodeDependencyType,
+  NodeDependencyType
 } from '@schematics/angular/utility/dependencies';
 
-import { Schema } from './schema';
 import { createDefaultPath } from '@schematics/angular/utility/workspace';
+import { Schema } from './schema';
 
 import { dependencies, devDependencies } from '../dependencies';
 
 let defaultPath: string;
 
-const SUPORTED_MAJOR_ANGULAR_VERSION = '13';
+const SUPORTED_MAJOR_ANGULAR_VERSION = '14';
 
 export function main(_options: Schema): Rule {
   return async (tree: Tree, _context: SchematicContext) => {
@@ -324,7 +314,7 @@ function validateAngularVersion(): Rule {
       throw new SchematicsException(
         `
         ❌ @wizsolucoes/angular-starter detected Angular version ${angularMajorVersion}.
-        This Schematic must be run on an Angular application version 12.
+        This Schematic must be run on an Angular application version ${SUPORTED_MAJOR_ANGULAR_VERSION}.
         `
       );
     }
