@@ -128,8 +128,8 @@ function configureTSConfigJSON(): Rule {
       throw new SchematicsException('No tsconfig.json file found');
     }
 
-    const tsconfigJsonObject = parse(tsconfigJsonBuffer.toString());
-    const compilerOptions = tsconfigJsonObject.compilerOptions;
+    const tsconfigJsonObject: any = parse(tsconfigJsonBuffer.toString());
+    const compilerOptions: any = tsconfigJsonObject.compilerOptions;
 
     compilerOptions['resolveJsonModule'] = true;
     compilerOptions['allowSyntheticDefaultImports'] = true;
@@ -276,7 +276,7 @@ function updateTsConfigSpec(): Rule {
       return tree;
     }
 
-    const tsConfigSpec = parse(tsConfigSpecBuffer.toString());
+    const tsConfigSpec: any = parse(tsConfigSpecBuffer.toString());
 
     tsConfigSpec.include.unshift('**/*.ts');
 
@@ -345,9 +345,9 @@ function upsertVSCodeRecommendations(): Rule {
       return tree;
     }
 
-    const extensionsJSON = parse(extensionsJSONBuffer.toString());
+    const extensionsJSON: any = parse(extensionsJSONBuffer.toString());
 
-    const originalRecomendations = extensionsJSON.recommendations || [];
+    const originalRecomendations: any = extensionsJSON.recommendations || [];
 
     const set = new Set([...ourRecommendations, ...originalRecomendations]);
 

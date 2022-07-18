@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { SSOConectorService } from '@wizsolucoes/ngx-wiz-sso';
 import { Router } from '@angular/router';
+import { SSOConectorService } from '@wizsolucoes/ngx-wiz-sso';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -37,8 +37,8 @@ export class LoginComponent {
     this.loginButtonMessage = 'Entrando';
     this.sso
       .loginWithCredentials({
-        userName: this.form.value.email,
-        password: this.form.value.password,
+        userName: this.form.value.email || '',
+        password: this.form.value.password || '',
       })
       .subscribe(
         (data) => {
