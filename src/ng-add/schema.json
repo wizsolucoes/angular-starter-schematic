@@ -8,8 +8,8 @@
     "white-label": {
       "type": "boolean",
       "description": "Generate in specific Anuglar CLI workspace project",
-      "x-prompt": "Essa aplicação é 'White-Label'?"
+      "x-prompt": "Essa aplicação é 'White-Label'?",
+      "default": false
     }
-  },
-  "required": ["white-label"]
+  }
 }

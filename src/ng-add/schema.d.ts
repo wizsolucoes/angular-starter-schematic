@@ -1,3 +1,3 @@
 export interface Schema {
-  'white-label': boolean;
+  'white-label'?: boolean;
 }
