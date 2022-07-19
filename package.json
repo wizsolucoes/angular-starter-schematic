@@ -15,7 +15,7 @@
     "test:generated:apps": "npm run test:generated:app && npm run test:generated:whitelabel",
     "test:generated:app": "cross-env WHITE_LABEL=false npx zx ./test-generated-app.mjs",
     "test:generated:whitelabel": "cross-env WHITE_LABEL=true npx zx ./test-generated-app.mjs",
-    "pretest": "npm install -g @angular/cli@latest && ng --version"
+    "pretest": "npm install -g @angular/cli@latest && ng version"
   },
   "keywords": [
     "schematics"
