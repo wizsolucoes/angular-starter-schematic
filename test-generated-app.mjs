@@ -2,6 +2,8 @@
 
 let version = await $`node -p "require('./package.json').version"`;
 
+await $`rm -rf ../schematics-test-app`;
+
 await $`npm install`;
 await $`npm run build`;
 await $`npm pack`;
@@ -17,5 +19,5 @@ await $`ng g @wizsolucoes/angular-starter:ng-add --white-label=$WHITE_LABEL`;
 await $`npm run test:ci`;
 await $`ng lint`;
 
-cd('..');
-await $`rm -r schematics-test-app`;
+cd('../');
+await $`rm -rf schematics-test-app`;
