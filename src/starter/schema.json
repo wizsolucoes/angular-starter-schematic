@@ -11,7 +11,8 @@
     },
     "white-label": {
       "type": "boolean",
-      "description": "Tells if the project is a 'white-label' project or not"
+      "description": "Tells if the project is a 'white-label' project or not",
+      "default": false
     }
   }
 }

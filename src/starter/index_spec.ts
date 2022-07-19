@@ -1,257 +1,194 @@
 import {
   SchematicTestRunner,
-  UnitTestTree,
+  UnitTestTree
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
 
-const collectionPath = path.join(__dirname, '../collection.json');
-const runner = new SchematicTestRunner('schematics', collectionPath);
+let appTree: UnitTestTree;
+  const schematicRunner = new SchematicTestRunner(
+    'schematics',
+    path.join(__dirname, './../collection.json'),
+  )
+
+  const nameProject = 'my-app';
+
+  const workspaceOptions = {
+    name: 'workspace',
+    newProjectRoot: 'projects',
+    version: '14.0.0',
+  }
+
+  const appOptions = {
+    name: nameProject,
+    inlineTemplate: false,
+    routing: false,
+    skipTests: false,
+    skipPackageJson: false,
+  }
+
+
+
 
 describe('starter', () => {
-  let appTree: UnitTestTree;
-
-  beforeAll(async () => {
-    // Run ng g workspace schematic
-    appTree = await runner
-      .runExternalSchematicAsync(
-        '@schematics/angular',
-        'workspace',
-        { name: 'test', version: '10.0.5' },
-        appTree
-      )
-      .toPromise();
-
-    // Run ng g application schematic
-    appTree = await runner
-      .runExternalSchematicAsync(
-        '@schematics/angular',
-        'application',
-        { name: 'my-app', style: 'scss' },
-        appTree
-      )
-      .toPromise();
-
-    // Our schematic
-    await runner
-      .runSchematicAsync(
-        'starter',
-        { 'white-label': !!Math.round(Math.random()) },
-        appTree
-      )
-      .toPromise();
-  });
+  
+  beforeEach(async () => {
+    appTree = await schematicRunner.runExternalSchematicAsync('@schematics/angular', 'workspace', workspaceOptions).toPromise()
+    appTree = await schematicRunner.runExternalSchematicAsync('@schematics/angular', 'application', appOptions, appTree).toPromise()
+  })
 
   it('works', async () => {
-    expect(appTree.files).toContain('/my-app/src/app/app.module.ts');
+    expect(appTree.files).toContain('/projects/' + nameProject + '/src/app/app.module.ts');
   });
 
-  describe('prettier', () => {
-    it('adds scripts to package.json', () => {
-      const packageJsonBuffer = appTree.read('package.json');
-      const packageJsonObject = JSON.parse(packageJsonBuffer!!.toString());
+  beforeEach(async () => {
+    await schematicRunner.runSchematicAsync('ng-add', { }, appTree).toPromise()
+  })
 
-      expect(packageJsonObject.scripts).toEqual(
-        jasmine.objectContaining({
-          'format:check': 'prettier **/*.{html,ts,js,json,scss} --check',
-          'format:write': 'prettier **/*.{html,ts,js,json,scss} --write',
-        })
-      );
-    });
-
-    it('modifies tslint.json extends property', () => {
-      const tsLintBuffer = appTree.read('tslint.json');
-
-      if (tsLintBuffer) {
-        const tsLintObject = JSON.parse(tsLintBuffer.toString());
-
-        expect(tsLintObject.extends).toEqual([
-          'tslint:recommended',
-          'tslint-config-prettier',
-        ]);
-
-        return;
-      }
-      expect(true).toBeTruthy();
-    });
-
-    it('adds configuration files', () => {
-      expect(appTree.files).toEqual(
-        jasmine.arrayContaining([
-          '/my-app/.prettierrc',
-          '/my-app/.prettierignore',
-        ])
-      );
-    });
+  ////////////////
+  //// Prettier
+  ////////////////
+  it('Prettier: adds scripts to package.json', async () => {
+    const packageJsonBuffer = appTree.read('package.json');
+    const packageJsonObject = JSON.parse(packageJsonBuffer!!.toString());
+    expect(packageJsonObject.scripts).toEqual(
+      jasmine.objectContaining({
+        'format:check': 'prettier **/*.{html,ts,js,json,scss} --check',
+        'format:write': 'prettier **/*.{html,ts,js,json,scss} --write',
+      })
+    );
   });
 
-  describe('commit lint', () => {
-    it('adds commitlint.config.js file', async () => {
-      expect(appTree.files).toContain('/my-app/commitlint.config.js');
-    });
+  it('Prettier: modifies tslint.json extends property', () => {
+    const tsLintBuffer = appTree.read('tslint.json');
 
-
+    if (tsLintBuffer) {
+      const tsLintObject = JSON.parse(tsLintBuffer.toString());
+      expect(tsLintObject.extends).toEqual([
+        'tslint:recommended',
+        'tslint-config-prettier',
+      ]);
+      return;
+    }
+    expect(true).toBeTruthy();
   });
 
-  describe('git hooks', () => {
-    it('adds husky object', async () => {
-      const packageJsonBuffer = appTree.read('package.json');
-      const packageJsonObject = JSON.parse(packageJsonBuffer!!.toString());
+  it('Prettier: adds configuration files', () => {
+    expect(appTree.files).toEqual(
+      jasmine.arrayContaining([
+        '/projects/' + nameProject + '/.prettierrc',
+        '/projects/' + nameProject + '/.prettierignore',
+      ])
+    );
+  });
 
-      expect(packageJsonObject).toEqual(
-        jasmine.objectContaining({
-          husky: {
-            hooks: {
-              'pre-commit': 'lint-staged',
-              'commit-msg': 'commitlint -E HUSKY_GIT_PARAMS',
-            },
+  ////////////////
+  //// Commit lint
+  ////////////////
+  it('commit lint: adds commitlint.config.js file', async () => {
+    expect(appTree.files).toContain( '/projects/' + nameProject + '/commitlint.config.js');
+  });
+
+
+  ////////////////
+  //// Git hooks
+  ////////////////
+  it('git hooks:adds husky object', async () => {
+    const packageJsonBuffer = appTree.read('package.json');
+    const packageJsonObject = JSON.parse(packageJsonBuffer!!.toString());
+    expect(packageJsonObject).toEqual(
+      jasmine.objectContaining({
+        husky: {
+          hooks: {
+            'pre-commit': 'lint-staged',
+            'commit-msg': 'commitlint -E HUSKY_GIT_PARAMS',
           },
-        })
-      );
-    });
-
-    it('adds lint-staged object', async () => {
-      const packageJsonBuffer = appTree.read('package.json');
-      const packageJsonObject = JSON.parse(packageJsonBuffer!!.toString());
-
-      expect(packageJsonObject).toEqual(
-        jasmine.objectContaining({
-          "lint-staged": {
-            "*.{js,ts,tsx}": [
-              "eslint"
-            ]
-          }
-        })
-      );
-    });
+        },
+      })
+    );
   });
 
-  describe('create staging environment', () => {
-    it('creates staging environment file', () => {
-      expect(appTree.files).toContain(
-        '/my-app/src/environments/environment.staging.ts'
-      );
-    });
+  ////////////////
+  //// Lint Stage
+  ////////////////
+  it('adds lint-staged object', async () => {
+    const packageJsonBuffer = appTree.read('package.json');
+    const packageJsonObject = JSON.parse(packageJsonBuffer!!.toString());
 
-    it('adds staging configurations to angular.json', () => {
-      const workspaceConfigBuffer = appTree.read('angular.json');
-      const workspaceConfig = JSON.parse(workspaceConfigBuffer!.toString());
-      const projectName: string = workspaceConfig.defaultProject;
-      const projectArchitect = workspaceConfig.projects[projectName].architect;
+    expect(packageJsonObject).toEqual(
+      jasmine.objectContaining({
+        "lint-staged": {
+          "*.{js,ts,tsx}": [
+            "eslint"
+          ]
+        }
+      })
+    );
+  });
+  
+  it('creates staging environment file', () => {
+    expect(appTree.files).toContain(
+      '/projects/' + nameProject + '/src/environments/environment.staging.ts'
+    );
+  });
 
-      const buildConfigs = projectArchitect.build.configurations;
-      const serveConfigs = projectArchitect.serve.configurations;
+  it('adds staging configurations to angular.json', () => {
+    const workspaceConfigBuffer = appTree.read('angular.json');
+    const workspaceConfig = JSON.parse(workspaceConfigBuffer!.toString());
+    const projectName: string = workspaceConfig.defaultProject;
 
-      expect(buildConfigs.staging.fileReplacements).toContain(
-        jasmine.objectContaining({
-          replace: 'my-app/src/environments/environment.ts',
-          with: 'my-app/src/environments/environment.staging.ts',
-        })
-      );
+    
+    expect(workspaceConfig.projects[nameProject].architect.build.configurations.staging).toBeDefined();
+    expect(projectName).toBe(nameProject);
+    
+    const projectArchitect = workspaceConfig.projects[projectName].architect;
 
-      expect(serveConfigs).toEqual(
-        jasmine.objectContaining({
-          staging: {
-            browserTarget: 'my-app:build:staging',
-          },
-        })
-      );
-    });
+    const serveConfigs = projectArchitect.serve.configurations;
+
+    expect(serveConfigs).toEqual(
+      jasmine.objectContaining({
+        staging: {
+          browserTarget: 'my-app:build:staging',
+        },
+      })
+    );
   });
 });
 
+
 describe('starter no white label', () => {
-  let appTree: UnitTestTree;
 
-  beforeAll(async () => {
-    // Run ng g workspace schematic
-    appTree = await runner
-      .runExternalSchematicAsync(
-        '@schematics/angular',
-        'workspace',
-        { name: 'test', version: '10.0.5' },
-        appTree
-      )
-      .toPromise();
+  /// Reset the appTree before each test
+  beforeEach(async () => {
+    appTree = await schematicRunner.runExternalSchematicAsync('@schematics/angular', 'workspace', workspaceOptions).toPromise()
+    appTree = await schematicRunner.runExternalSchematicAsync('@schematics/angular', 'application', appOptions, appTree).toPromise()
+  })
 
-    // Run ng g application schematic
-    appTree = await runner
-      .runExternalSchematicAsync(
-        '@schematics/angular',
-        'application',
-        { name: 'my-app', style: 'scss' },
-        appTree
-      )
-      .toPromise();
-
-    // Our schematic
-    await runner
-      .runSchematicAsync('starter', { 'white-label': false }, appTree)
-      .toPromise();
-  });
-
-  it('should not contain: tenant, configuration, theme, api responses and tsconfigs files', () => {
-    expect(appTree.files).not.toContain('/my-app/tsconfig.base.json');
-    expect(appTree.files).not.toContain('/my-app/tsconfig.json');
-    expect(appTree.files).not.toContain(
-      '/my-app/src/testing/fakes/api-responses/get-config.json'
-    );
-    expect(appTree.files).not.toContain(
-      '/my-app/src/app/core/interceptors/tenant.interceptor.ts'
-    );
-    expect(appTree.files).not.toContain(
-      '/my-app/src/app/core/services/configuration/configuration.ts'
-    );
-    expect(appTree.files).not.toContain(
-      '/my-app/src/app/core/services/theming/theming.service.ts'
-    );
+  it('should not contain: tenant, configuration, theme, api responses and tsconfigs files', async () => {
+    return schematicRunner.runSchematicAsync('ng-add', { }, appTree).toPromise().then(() => {
+      expect(appTree.files).not.toContain( nameProject + '/tsconfig.base.json');
+      expect(appTree.files).not.toContain( nameProject + '/tsconfig.json');
+      expect(appTree.files).not.toContain( nameProject + '/src/testing/fakes/api-responses/get-config.json');
+      expect(appTree.files).not.toContain( nameProject + '/src/app/core/interceptors/tenant.interceptor.ts');
+      expect(appTree.files).not.toContain( nameProject + '/src/app/core/services/configuration/configuration.ts');
+      expect(appTree.files).not.toContain( nameProject + '/src/app/core/services/theming/theming.service.ts');
+    })
   });
 });
 
 describe('starter white label', () => {
-  let appTree: UnitTestTree;
 
-  beforeAll(async () => {
-    // Run ng g workspace schematic
-    appTree = await runner
-      .runExternalSchematicAsync(
-        '@schematics/angular',
-        'workspace',
-        { name: 'test', version: '10.0.5' },
-        appTree
-      )
-      .toPromise();
+  beforeEach(async () => {
+    appTree = await schematicRunner.runExternalSchematicAsync('@schematics/angular', 'workspace', workspaceOptions).toPromise()
+    appTree = await schematicRunner.runExternalSchematicAsync('@schematics/angular', 'application', appOptions, appTree).toPromise()
+  })
 
-    // Run ng g application schematic
-    appTree = await runner
-      .runExternalSchematicAsync(
-        '@schematics/angular',
-        'application',
-        { name: 'my-app', style: 'scss' },
-        appTree
-      )
-      .toPromise();
-
-    // Our schematic
-    await runner
-      .runSchematicAsync('starter', { 'white-label': true }, appTree)
-      .toPromise();
-  });
-
-  it('should contain: tenant, configuration, theme, api responses and tsconfigs files', () => {
-    expect(appTree.files).toContain(
-      '/my-app/src/testing/fakes/api-responses/get-config.json'
-    );
-    expect(appTree.files).toContain(
-      '/my-app/src/app/core/interceptors/tenant.interceptor.ts'
-    );
-    expect(appTree.files).not.toContain(
-      '/my-app/src/app/core/interceptors/default.interceptor.ts'
-    );
-    expect(appTree.files).toContain(
-      '/my-app/src/app/core/services/configuration/configuration.ts'
-    );
-    expect(appTree.files).toContain(
-      '/my-app/src/app/core/services/theming/theming.service.ts'
-    );
+  it('should contain: tenant, configuration, theme, api responses and tsconfigs files', async () => {
+    return schematicRunner.runSchematicAsync('ng-add', { 'white-label': true }, appTree).toPromise().then(() => {
+      expect(appTree.files).toContain('/projects/' + nameProject + '/src/testing/fakes/api-responses/get-config.json');
+      expect(appTree.files).toContain('/projects/' + nameProject + '/src/app/core/interceptors/tenant.interceptor.ts');
+      expect(appTree.files).not.toContain('/projects/' + nameProject + '/src/app/core/interceptors/default.interceptor.ts');
+      expect(appTree.files).toContain('/projects/' + nameProject + '/src/app/core/services/configuration/configuration.ts');
+      expect(appTree.files).toContain('/projects/' + nameProject + '/src/app/core/services/theming/theming.service.ts');
+    })
   });
 });

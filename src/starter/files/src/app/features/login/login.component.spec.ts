@@ -1,13 +1,13 @@
-import { HomeComponent } from './../home/home.component';
-import { SharedModule } from 'src/app/shared/shared.module';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { HomeComponent } from './../home/home.component';
 
-import { LoginComponent } from './login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { SSOConectorService } from '@wizsolucoes/ngx-wiz-sso';
 import { of, throwError } from 'rxjs';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Router } from '@angular/router';
+import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -83,8 +83,8 @@ describe('LoginComponent', () => {
 
       // Then
       expect(mockSSO.loginWithCredentials).toHaveBeenCalledWith({
-        userName: component.form.value.email,
-        password: component.form.value.password,
+        userName: component.form.value.email || '',
+        password: component.form.value.password || '',
       });
       expect(router.navigate).toHaveBeenCalledWith(['/home']);
     });
