@@ -1,7 +1,17 @@
 import {
-  apply, chain, externalSchematic, forEach, MergeStrategy, mergeWith, move, noop, Rule,
-  SchematicContext, SchematicsException, Tree,
-  url
+  apply,
+  chain,
+  externalSchematic,
+  forEach,
+  MergeStrategy,
+  mergeWith,
+  move,
+  noop,
+  Rule,
+  SchematicContext,
+  SchematicsException,
+  Tree,
+  url,
 } from '@angular-devkit/schematics';
 
 import { parse, stringify } from 'comment-json';
@@ -11,7 +21,7 @@ import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import {
   addPackageJsonDependency,
   NodeDependency,
-  NodeDependencyType
+  NodeDependencyType,
 } from '@schematics/angular/utility/dependencies';
 
 import { createDefaultPath } from '@schematics/angular/utility/workspace';
@@ -21,7 +31,7 @@ import { dependencies, devDependencies } from '../dependencies';
 
 let defaultPath: string;
 
-const SUPORTED_MAJOR_ANGULAR_VERSION = '14';
+const SUPORTED_MAJOR_ANGULAR_VERSION = '15';
 
 export function main(_options: Schema): Rule {
   return async (tree: Tree, _context: SchematicContext) => {
@@ -244,6 +254,7 @@ function addHuskyHooks(): Rule {
 
 function createStagingEnvironment(): Rule {
   return (tree: Tree, _context: SchematicContext) => {
+    console.log('Creating staging environment');
     return chain([
       _createStagingEnvironmentFile(defaultPath),
       _createStagingEnvironmentConfig(),
@@ -391,18 +402,11 @@ function _createStagingEnvironmentConfig(): Rule {
     const stagingEnvironmentBuildConfig = _copyObject(buildConfigs.production);
     const stagingEnvironmentServeConfig = _copyObject(serveConfigs.production);
 
-    stagingEnvironmentBuildConfig.fileReplacements.forEach(
-      (replacement: { [key: string]: string }) => {
-        if (replacement.with) {
-          replacement.with = replacement.with.replace('prod', 'staging');
-        }
-      }
-    );
-
-    stagingEnvironmentServeConfig.browserTarget = stagingEnvironmentServeConfig.browserTarget.replace(
-      'production',
-      'staging'
-    );
+    stagingEnvironmentServeConfig.browserTarget =
+      stagingEnvironmentServeConfig.browserTarget.replace(
+        'production',
+        'staging'
+      );
 
     buildConfigs['staging'] = stagingEnvironmentBuildConfig;
     serveConfigs['staging'] = stagingEnvironmentServeConfig;

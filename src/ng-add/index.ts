@@ -1,7 +1,11 @@
 import {
-  chain, externalSchematic, Rule, schematic, SchematicContext,
+  chain,
+  externalSchematic,
+  Rule,
+  schematic,
+  SchematicContext,
   SchematicsException,
-  Tree
+  Tree,
 } from '@angular-devkit/schematics';
 import { Schema } from './schema';
 
@@ -19,7 +23,6 @@ export function ngAdd(_options: Schema): Rule {
   };
 }
 
-
 function defaultProject(): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     const packageJsonBuffer = tree.read('angular.json');
@@ -29,9 +32,8 @@ function defaultProject(): Rule {
     }
     const packageJsonObject = JSON.parse(packageJsonBuffer.toString());
 
-
     /// Has to be the same name of the project
-    if(packageJsonObject['defaultProject']) {
+    if (packageJsonObject['defaultProject']) {
       return tree;
     }
 
@@ -41,9 +43,9 @@ function defaultProject(): Rule {
     if (!projects[0]) {
       throw new SchematicsException('Not found projects in angular.json');
     }
-    
+
     packageJsonObject['defaultProject'] = projects[0];
-    
+
     tree.overwrite('angular.json', JSON.stringify(packageJsonObject, null, 2));
 
     return tree;

@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
 import {
-  HttpRequest,
-  HttpHandler,
   HttpEvent,
+  HttpHandler,
   HttpInterceptor,
+  HttpRequest,
 } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {
-  static X_HEADER: string = 'X-Header';
+  static X_HEADER = 'X-Header';
 
   intercept(
     request: HttpRequest<any>,

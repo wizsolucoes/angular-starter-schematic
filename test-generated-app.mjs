@@ -4,7 +4,8 @@ let version = await $`node -p "require('./package.json').version"`;
 
 await $`rm -rf ../schematics-test-app`;
 
-await $`npm install --legacy-peer-deps`;
+await $`npm config set legacy-peer-deps true`;
+await $`npm install`;
 await $`npm run build`;
 await $`npm pack`;
 

@@ -1,6 +1,6 @@
 {
   "name": "@wizsolucoes/angular-starter",
-  "version": "14.0.1",
+  "version": "15.0.1",
   "description": "Generates Wiz boilerplate Angular starter application.",
   "private": false,
   "publishConfig": {
@@ -12,7 +12,7 @@
     "test": "npm run build && jasmine src/**/*_spec.js && npm run test:generated:app",
     "test:watch": "npm run build && jasmine src/**/*_spec.js --watch=true ",
     "format:check": "prettier **/*.{html,ts,json,scss} --check",
-    "format:write": "prettier **/*.{html,ts,json,scss} --write",
+    "format:write": "prettier ./src/{starter,ng-add}/**/*.{html,ts,json,scss} --write",
     "test:generated:apps": "npm run test:generated:app && npm run test:generated:whitelabel",
     "test:generated:app": "npx zx ./test-generated-app.mjs",
     "test:generated:whitelabel": "cross-env WHITE_LABEL=true npx zx ./test-generated-app.mjs",
@@ -25,20 +25,20 @@
   "license": "MIT",
   "schematics": "./src/collection.json",
   "dependencies": {
-    "@angular-devkit/core": "^14.0.6",
-    "@angular-devkit/schematics": "^14.0.6",
-    "@angular-eslint/schematics": "^14.0.0",
-    "@schematics/angular": "^14.0.6",
+    "@angular-devkit/core": "^15.1.3",
+    "@angular-devkit/schematics": "^15.1.3",
+    "@angular-eslint/schematics": "^15.2.0",
+    "@schematics/angular": "^15.1.3",
     "@wizsolucoes/ng-material-theme": "^13.0.0",
-    "comment-json": "^4.1.1",
-    "typescript": "~4.7.2"
+    "comment-json": "^4.2.3",
+    "typescript": "~4.9.4"
   },
   "devDependencies": {
-    "@types/jasmine": "~3.5.0",
-    "@types/node": "^12.11.1",
+    "@types/jasmine": "~4.3.1",
+    "@types/node": "^18.11.18",
     "cross-env": "^7.0.3",
-    "jasmine": "^3.8.0",
-    "prettier": "^2.2.1"
+    "jasmine": "^4.5.0",
+    "prettier": "^2.8.3"
   },
   "ng-add": {
     "save": false
