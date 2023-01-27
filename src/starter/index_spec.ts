@@ -24,18 +24,25 @@ const appOptions = {
   routing: false,
   skipTests: false,
   skipPackageJson: false,
-};
+} as const;
 
 describe('starter', () => {
   beforeEach(async () => {
-    appTree = await schematicRunner.runSchematic(
-      '@schematics/angular',
-      workspaceOptions
-    );
-    appTree = await schematicRunner.runSchematic(
-      '@schematics/angular',
-      appOptions
-    );
+    appTree = await schematicRunner
+      .runExternalSchematicAsync(
+        '@schematics/angular',
+        'workspace',
+        workspaceOptions
+      )
+      .toPromise();
+    appTree = await schematicRunner
+      .runExternalSchematicAsync(
+        '@schematics/angular',
+        'application',
+        appOptions,
+        appTree
+      )
+      .toPromise();
   });
 
   it('works', async () => {
@@ -180,27 +187,22 @@ describe('starter no white label', () => {
   });
 
   it('should not contain: tenant, configuration, theme, api responses and tsconfigs files', async () => {
-    return schematicRunner
-      .runSchematicAsync('ng-add', {}, appTree)
-      .toPromise()
-      .then(() => {
-        expect(appTree.files).not.toContain(
-          nameProject + '/tsconfig.base.json'
-        );
-        expect(appTree.files).not.toContain(nameProject + '/tsconfig.json');
-        expect(appTree.files).not.toContain(
-          nameProject + '/src/testing/fakes/api-responses/get-config.json'
-        );
-        expect(appTree.files).not.toContain(
-          nameProject + '/src/app/core/interceptors/tenant.interceptor.ts'
-        );
-        expect(appTree.files).not.toContain(
-          nameProject + '/src/app/core/services/configuration/configuration.ts'
-        );
-        expect(appTree.files).not.toContain(
-          nameProject + '/src/app/core/services/theming/theming.service.ts'
-        );
-      });
+    return schematicRunner.runSchematic('ng-add', {}, appTree).then(() => {
+      expect(appTree.files).not.toContain(nameProject + '/tsconfig.base.json');
+      expect(appTree.files).not.toContain(nameProject + '/tsconfig.json');
+      expect(appTree.files).not.toContain(
+        nameProject + '/src/testing/fakes/api-responses/get-config.json'
+      );
+      expect(appTree.files).not.toContain(
+        nameProject + '/src/app/core/interceptors/tenant.interceptor.ts'
+      );
+      expect(appTree.files).not.toContain(
+        nameProject + '/src/app/core/services/configuration/configuration.ts'
+      );
+      expect(appTree.files).not.toContain(
+        nameProject + '/src/app/core/services/theming/theming.service.ts'
+      );
+    });
   });
 });
 
