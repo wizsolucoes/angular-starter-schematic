@@ -3,19 +3,19 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import localePt from '@angular/common/locales/pt';
 import {
   CUSTOM_ELEMENTS_SCHEMA,
+  ErrorHandler,
   LOCALE_ID,
   NgModule,
-  ErrorHandler,
 } from '@angular/core';
 import {
-  NgApplicationInsightsModule,
   NgApplicationInsightsErrorHandler,
+  NgApplicationInsightsModule,
 } from '@wizsolucoes/ng-application-insights';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { SharedModule } from './shared/shared.module';
 import { TenantInterceptor } from './core/interceptors/tenant.interceptor';
+import { SharedModule } from './shared/shared.module';
 
 registerLocaleData(localePt, 'pt-BR');
 

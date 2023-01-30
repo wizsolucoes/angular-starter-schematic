@@ -10,7 +10,7 @@ import { DefaultInterceptor } from './default.interceptor';
 
 @Injectable()
 export class AnyHttpService {
-  static ANY_PATH: string = '/any';
+  static ANY_PATH = '/any';
 
   constructor(private http: HttpClient) {}
 

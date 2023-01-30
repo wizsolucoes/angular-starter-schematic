@@ -1,16 +1,16 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { SharedModule } from 'src/app/shared/shared.module';
-import { SalesComponent } from './sales.component';
-import { SimulationService } from 'src/app/core/services/business/simulation/simulation.service';
-import { of } from 'rxjs';
-import { SimulationRequest } from 'src/app/shared/models/simulation-request';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgSyzCpfSearchModule } from '@wizsolucoes/ng-syz';
+import { of } from 'rxjs';
+import { SimulationService } from 'src/app/core/services/business/simulation/simulation.service';
+import { SimulationRequest } from 'src/app/shared/models/simulation-request';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { SalesComponent } from './sales.component';
 
 describe('SalesComponent', () => {
   let component: SalesComponent;

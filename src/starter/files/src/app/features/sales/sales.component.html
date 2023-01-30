@@ -92,7 +92,8 @@
         <th scope="auto">Valor a ser financiado:</th>
         <td>
           {{
-            simulationResult.amountFinanced | currency: 'BRL':'':'1.2-2':'pt-BR'
+            simulationResult.amountFinanced
+              | currency : 'BRL' : '' : '1.2-2' : 'pt-BR'
           }}
         </td>
       </tr>
@@ -100,7 +101,8 @@
         <th scope="auto">Prestação:</th>
         <td>
           {{
-            simulationResult.installment | currency: 'BRL':'':'1.2-2':'pt-BR'
+            simulationResult.installment
+              | currency : 'BRL' : '' : '1.2-2' : 'pt-BR'
           }}
         </td>
       </tr>
@@ -128,16 +130,18 @@
       <tr *ngFor="let item of simulationResult.itens">
         <th scope="auto">{{ item.number }}</th>
         <td class="app-money">
-          {{ item.installment | currency: 'BRL':'':'1.2-2':'pt-BR' }}
+          {{ item.installment | currency : 'BRL' : '' : '1.2-2' : 'pt-BR' }}
         </td>
         <td class="app-money">
-          {{ item.amortization | currency: 'BRL':'':'1.2-2':'pt-BR' }}
+          {{ item.amortization | currency : 'BRL' : '' : '1.2-2' : 'pt-BR' }}
         </td>
         <td class="app-money">
-          {{ item.tax | currency: 'BRL':'':'1.2-2':'pt-BR' }}
+          {{ item.tax | currency : 'BRL' : '' : '1.2-2' : 'pt-BR' }}
         </td>
         <td class="app-money">
-          {{ item.outstandingBalance | currency: 'BRL':'':'1.2-2':'pt-BR' }}
+          {{
+            item.outstandingBalance | currency : 'BRL' : '' : '1.2-2' : 'pt-BR'
+          }}
         </td>
       </tr>
     </tbody>
